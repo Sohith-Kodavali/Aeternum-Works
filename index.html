@@ -54,9 +54,26 @@ section:not(.hero){scroll-margin-top:30px;position:relative;isolation:isolate}
 .services{--ac1:var(--rose);--ac2:var(--rose2);--ac3:var(--rose3)}
 .services .eyebrow{color:var(--ac1)}.services .section-head>p:last-child{color:oklch(68% .025 75)}.services .service-card{background:linear-gradient(160deg,oklch(14% .03 16/.95),oklch(8% .02 16/.95))}.services .service-card::before{background:conic-gradient(from var(--border-angle),var(--ac3),transparent 25%,var(--ac1) 50%,transparent 75%,var(--ac3))}.services .service-card::after{background:radial-gradient(circle at var(--mx,50%) var(--my,50%),oklch(65% .18 16/.22),transparent 55%)}.services .service-card:hover{border:none;box-shadow:0 24px 60px oklch(0% 0 0/.4),0 0 40px oklch(65% .18 16/.12)}.services .service-icon-ring{border-color:var(--ac3);animation:iconRingPulseRose 2.5s ease-in-out infinite}.services .service-card:hover .service-icon-ring{border-color:var(--ac1);box-shadow:0 0 25px oklch(65% .18 16/.45)}.services .service-card h3{color:var(--ac2)}.services .service-arrow{color:var(--ac1);background:oklch(65% .18 16/.12)}.services .service-card:hover .service-arrow{background:var(--ac1);color:var(--black)}.services .service-icon{color:var(--ac1)}@keyframes iconRingPulseRose{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.2);opacity:.9}}
 
-/* Projects — Sapphire */
+/* Projects — Sapphire Grid */
 .projects{--ac1:var(--sapphire);--ac2:var(--sapphire2);--ac3:var(--sapphire3)}
-.projects .eyebrow{color:var(--ac1)}.projects .section-head>p:last-child{color:oklch(68% .025 75)}.projects .mockup-screen{border-color:oklch(65% .1 248);box-shadow:0 20px 50px oklch(0% 0 0/.6),0 0 30px oklch(68% .15 248/.12)}.projects .mockup-screen::before{border-color:oklch(68% .15 248/.3);background:radial-gradient(ellipse at 55% 30%,oklch(65% .12 248/.25),transparent 40%),linear-gradient(160deg,oklch(18% .02 75),oklch(6% .01 75))}.projects .mockup-screen::after{background:linear-gradient(to bottom,oklch(68% .15 248/.12),transparent)}.projects .mockup-glow{background:radial-gradient(ellipse at 50% 50%,oklch(68% .15 248/.1),transparent 60%)}.projects .project-desc{color:oklch(68% .025 75)}.projects .project-meta span{border-color:oklch(38% .08 248/.5);background:oklch(38% .08 248/.08);color:var(--ac2)}.projects .project-cta{border-color:var(--ac3);color:var(--ac1)}.projects .project-cta:hover{background:var(--ac1);border-color:var(--ac1);color:var(--black)}.projects .project-arrow-btn{border-color:var(--ac3);color:var(--ac2)}.projects .project-arrow-btn:hover{background:var(--ac1);border-color:var(--ac1);color:var(--black)}.projects .project-dot{background:var(--ac3)}.projects .project-dot.active{background:var(--ac1)}.projects .project-progress-fill{background:linear-gradient(90deg,var(--ac3),var(--ac1))}.projects .project-details h2{color:var(--ac1)}
+.projects .eyebrow{color:var(--ac1)}.projects .section-head>p:last-child{color:oklch(68% .025 75)}
+.project-grid-new{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;perspective:1200px}
+.project-card-new{position:relative;display:grid;grid-template-rows:auto 1fr auto;border-radius:18px;background:linear-gradient(170deg,oklch(14% .025 248/.9),oklch(7% .012 248/.95));border:1px solid oklch(28% .06 248/.5);overflow:hidden;transition:transform .45s var(--spring),box-shadow .4s,border-color .4s;cursor:default;transform-style:preserve-3d}.project-card-new:hover{transform:translateY(-8px) translateZ(20px);border-color:var(--ac2);box-shadow:0 28px 60px oklch(0% 0 0/.5),0 0 45px oklch(68% .15 248/.14)}
+.project-card-new::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--ac1),var(--ac2),transparent);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease)}.project-card-new:hover::after{transform:scaleX(1)}
+.preview-area{position:relative;height:220px;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 30%,oklch(68% .15 248/.2),transparent 55%),linear-gradient(180deg,oklch(10% .03 248),oklch(5% .01 248));overflow:hidden;isolation:isolate}
+.preview-area::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,oklch(68% .15 248/.08) 0%,transparent 50%,oklch(68% .15 248/.05) 100%);z-index:1}
+.preview-shine{position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 50% 50%,oklch(68% .15 248/.15),transparent 40%);z-index:2;pointer-events:none;opacity:0;transition:opacity .3s}.project-card-new:hover .preview-shine{opacity:1}
+.preview-placeholder{position:relative;z-index:3;display:grid;justify-items:center;gap:14px}
+.preview-icon{width:72px;height:72px;display:grid;place-items:center;font-size:2.2rem;border-radius:22px;background:oklch(68% .15 248/.15);border:1px solid oklch(68% .15 248/.3);transition:transform .4s var(--spring),box-shadow .4s}.project-card-new:hover .preview-icon{transform:scale(1.08);box-shadow:0 0 30px oklch(68% .15 248/.3)}
+.preview-label{font:500 1.3rem/1 var(--serif);color:var(--white);letter-spacing:.02em;text-shadow:0 0 20px oklch(68% .15 248/.25)}.preview-sub{font-size:.62rem;color:oklch(68% .15 248/.55);letter-spacing:.1em;text-transform:uppercase}
+.card-body{padding:28px 24px 20px;position:relative;z-index:1}.card-body .eyebrow{font-size:.65rem;margin-bottom:6px}.card-body h3{font:500 1.6rem/1.1 var(--serif);letter-spacing:-.03em;color:var(--ac1);margin-bottom:10px}.card-body .project-desc{color:var(--muted);font-size:.8rem;line-height:1.55;margin-bottom:14px;max-width:32ch}.card-tags{display:flex;flex-wrap:wrap;gap:7px}.card-tags span{padding:5px 11px;border:1px solid oklch(38% .08 248/.5);border-radius:20px;background:oklch(38% .08 248/.1);color:var(--ac2);font-size:.63rem;font-weight:500;letter-spacing:.03em}
+.card-footer{padding:0 24px 22px;position:relative;z-index:1}.card-footer .project-cta{display:inline-flex;align-items:center;gap:8px;color:var(--ac1);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;border:1px solid var(--ac3);border-radius:999px;transition:background .3s,color .3s,box-shadow .3s,transform .3s}.card-footer .project-cta:hover{background:var(--ac1);border-color:var(--ac1);color:var(--black);box-shadow:0 0 30px oklch(68% .15 248/.3);transform:translateY(-2px)}
+
+/* hide old carousel */
+.project-showcase,.project-nav{display:none}
+
+@media(max-width:980px){.project-grid-new{grid-template-columns:repeat(2,1fr);gap:18px}.preview-area{height:180px}.card-body{padding:22px 18px 16px}.card-body h3{font-size:1.4rem}.card-footer{padding:0 18px 18px}}
+@media(max-width:680px){.project-grid-new{grid-template-columns:1fr;gap:16px}.preview-area{height:200px}.preview-icon{width:60px;height:60px;font-size:1.8rem}.preview-label{font-size:1.1rem}.card-body{padding:20px 16px 14px}.card-body h3{font-size:1.3rem}.card-footer{padding:0 16px 16px}}
 
 /* Proof — Amber/Copper */
 .proof{--ac1:var(--amber);--ac2:var(--amber2);--ac3:var(--amber3)}
@@ -254,57 +271,70 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 </section>
 
 <!-- ===== PROJECTS ===== -->
-<section class="projects reveal" data-reveal="scale-in" id="work">
+<section class="projects reveal" data-reveal="fade-up" id="work">
   <div class="wrap">
     <div class="section-head"><p class="eyebrow">Featured projects</p><p>Selected work built to make the right people stop scrolling.</p></div>
-    <div class="project-showcase" id="projectShowcase">
-      <div class="project-slide active" data-index="0">
-        <div class="project-mockup">
-          <div class="mockup-glow"></div>
-          <div class="mockup-screen"></div>
+    <div class="project-grid-new">
+      <!-- Nexora -->
+      <article class="project-card-new">
+        <div class="preview-area">
+          <div class="preview-shine"></div>
+          <div class="preview-placeholder">
+            <div class="preview-icon">◈</div>
+            <div class="preview-label">Nexora</div>
+            <div class="preview-sub">Business Platform</div>
+          </div>
         </div>
-        <div class="project-details">
+        <div class="card-body">
           <p class="eyebrow">Business / Corporate</p>
-          <h2>Nexora</h2>
-          <div class="project-meta"><span>Next.js</span><span>Tailwind CSS</span><span>GSAP</span></div>
+          <h3>Nexora</h3>
           <p class="project-desc">A bold corporate platform merging luxury aesthetics with uncompromising performance. Crafted for leaders who demand presence.</p>
+          <div class="card-tags"><span>Next.js</span><span>Tailwind CSS</span><span>GSAP</span></div>
+        </div>
+        <div class="card-footer">
           <a class="project-cta" href="#contact">View project <span>↗</span></a>
         </div>
-      </div>
-      <div class="project-slide" data-index="1">
-        <div class="project-mockup">
-          <div class="mockup-glow"></div>
-          <div class="mockup-screen" style="aspect-ratio:.65;border-radius:20px"></div>
+      </article>
+      <!-- Velora -->
+      <article class="project-card-new">
+        <div class="preview-area">
+          <div class="preview-shine"></div>
+          <div class="preview-placeholder">
+            <div class="preview-icon">◆</div>
+            <div class="preview-label">Velora</div>
+            <div class="preview-sub">E-commerce Store</div>
+          </div>
         </div>
-        <div class="project-details">
+        <div class="card-body">
           <p class="eyebrow">E-commerce</p>
-          <h2>Velora</h2>
-          <div class="project-meta"><span>Next.js</span><span>Stripe</span><span>Framer Motion</span></div>
+          <h3>Velora</h3>
           <p class="project-desc">Immersive shopping redefined. Every pixel engineered to convert browsers into believers through motion-rich storytelling.</p>
+          <div class="card-tags"><span>Next.js</span><span>Stripe</span><span>Framer Motion</span></div>
+        </div>
+        <div class="card-footer">
           <a class="project-cta" href="#contact">View project <span>↗</span></a>
         </div>
-      </div>
-      <div class="project-slide" data-index="2">
-        <div class="project-mockup">
-          <div class="mockup-glow"></div>
-          <div class="mockup-screen"></div>
+      </article>
+      <!-- Ignite -->
+      <article class="project-card-new">
+        <div class="preview-area">
+          <div class="preview-shine"></div>
+          <div class="preview-placeholder">
+            <div class="preview-icon">◉</div>
+            <div class="preview-label">Ignite</div>
+            <div class="preview-sub">SaaS Dashboard</div>
+          </div>
         </div>
-        <div class="project-details">
+        <div class="card-body">
           <p class="eyebrow">SaaS / Dashboard</p>
-          <h2>Ignite</h2>
-          <div class="project-meta"><span>React</span><span>Node.js</span><span>MongoDB</span></div>
+          <h3>Ignite</h3>
           <p class="project-desc">Analytics elevated to art. A dashboard experience where data breathes, insights flow, and complexity becomes clarity.</p>
+          <div class="card-tags"><span>React</span><span>Node.js</span><span>MongoDB</span></div>
+        </div>
+        <div class="card-footer">
           <a class="project-cta" href="#contact">View project <span>↗</span></a>
         </div>
-      </div>
-    </div>
-    <div class="project-nav">
-      <button class="project-arrow-btn" id="projectPrev" aria-label="Previous project">←</button>
-      <button class="project-dot active" data-index="0" aria-label="Project 1"></button>
-      <button class="project-dot" data-index="1" aria-label="Project 2"></button>
-      <button class="project-dot" data-index="2" aria-label="Project 3"></button>
-      <div class="project-progress"><div class="project-progress-fill" id="projectProgressFill"></div></div>
-      <button class="project-arrow-btn" id="projectNext" aria-label="Next project">→</button>
+      </article>
     </div>
   </div>
 </section>
@@ -591,70 +621,6 @@ doc.querySelectorAll('.service-card').forEach(function(card){
     card.style.setProperty('--my','50%');
   });
 });
-
-// ===== PROJECTS CAROUSEL =====
-(function(){
-  var slides=doc.querySelectorAll('.project-slide');
-  var dots=doc.querySelectorAll('.project-dot');
-  var progressFill=doc.getElementById('projectProgressFill');
-  var showcase=doc.getElementById('projectShowcase');
-  var current=0,autoTimer,progressTimer;
-  var totalSlides=slides.length;
-
-  function goToSlide(n){
-    if(n===current) return;
-    slides.forEach(function(s,i){
-      s.classList.remove('active','prev','next');
-      if(i===n) s.classList.add('active');
-      else if(i===((n-1+totalSlides)%totalSlides)) s.classList.add('prev');
-      else if(i===((n+1)%totalSlides)) s.classList.add('next');
-    });
-    dots.forEach(function(d,i){d.classList.toggle('active',i===n)});
-    current=n;
-    resetProgress();
-  }
-
-  function resetProgress(){
-    if(progressFill){progressFill.style.transition='none';progressFill.style.width='0';void progressFill.offsetWidth;progressFill.style.transition='width 5s linear';progressFill.style.width='100%'}
-    clearTimeout(autoTimer);
-    autoTimer=setTimeout(function(){nextSlide()},5000);
-  }
-
-  function nextSlide(){goToSlide((current+1)%totalSlides)}
-  function prevSlide(){goToSlide((current-1+totalSlides)%totalSlides)}
-
-  doc.getElementById('projectPrev').addEventListener('click',prevSlide);
-  doc.getElementById('projectNext').addEventListener('click',nextSlide);
-
-  dots.forEach(function(d){
-    d.addEventListener('click',function(){goToSlide(parseInt(d.dataset.index))});
-  });
-
-  showcase.addEventListener('mouseenter',function(){
-    clearTimeout(autoTimer);
-    if(progressFill) progressFill.style.animationPlayState='paused';
-  });
-  showcase.addEventListener('mouseleave',function(){
-    resetProgress();
-    if(progressFill) progressFill.style.animationPlayState='running';
-  });
-
-  // keyboard navigation
-  doc.addEventListener('keydown',function(e){
-    if(e.key==='ArrowLeft') prevSlide();
-    if(e.key==='ArrowRight') nextSlide();
-  });
-
-  // touch swipe
-  var touchStartX=0;
-  showcase.addEventListener('touchstart',function(e){touchStartX=e.touches[0].clientX},{passive:true});
-  showcase.addEventListener('touchend',function(e){
-    var diff=e.changedTouches[0].clientX-touchStartX;
-    if(Math.abs(diff)>50){diff>0?prevSlide():nextSlide()}
-  });
-
-  resetProgress();
-})();
 
 // ===== PROOF TIMELINE ANIMATION =====
 (function(){
