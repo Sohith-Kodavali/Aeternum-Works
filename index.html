@@ -14,8 +14,8 @@
 @property --border-angle{syntax:'<angle>';initial-value:0deg;inherits:false}@keyframes borderSpin{to{--border-angle:360deg}}
 /* ===== AMBIENT CANVAS ===== */
 .ambient-canvas{position:absolute;inset:0;z-index:0;pointer-events:none}
-/* ===== PRELOADER ===== */
-.preloader{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:var(--black);transition:opacity .7s var(--ease),visibility .7s var(--ease)}.preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}.preloader-inner{display:grid;justify-items:center;gap:20px}.preloader-logo{width:72px;height:72px}.preloader-logo svg{width:100%;height:100%}.preloader-line{width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);position:relative;overflow:hidden}.preloader-line:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--white),transparent);animation:shimmerLine 1.2s ease-in-out infinite}@keyframes shimmerLine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}.preloader-text{color:var(--muted);font:.62rem var(--sans);letter-spacing:.22em;text-transform:uppercase;animation:pulseText 1.5s ease-in-out infinite}@keyframes pulseText{50%{opacity:.4}}
+/* ===== VIDEO PRELOADER ===== */
+.video-preloader{position:fixed;inset:0;z-index:9999;overflow:hidden;background:var(--black);transition:opacity .8s var(--ease),visibility .8s var(--ease)}.video-preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}.preloader-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}.preloader-video::-webkit-media-controls{display:none!important}.preloader-brand{position:absolute;bottom:14%;left:50%;transform:translateX(-50%);z-index:3;display:grid;justify-items:center;gap:16px}.preloader-brand .brandname{font:500 clamp(2rem,4vw,3rem)/1 var(--serif);letter-spacing:.17em;text-transform:uppercase;color:var(--gold);text-shadow:0 0 30px oklch(78% .16 82/.5),0 0 60px oklch(78% .16 82/.25)}.preloader-brand .brandsub{font-size:.58rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}.preloader-vignette{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to top,var(--black) 0%,transparent 30%,transparent 70%,var(--black) 100%)}.preloader-skip{position:absolute;bottom:32px;right:32px;z-index:4;padding:8px 18px;border:1px solid oklch(78% .16 82/.4);border-radius:999px;background:oklch(0% 0 0/.5);color:var(--gold);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .3s,border-color .3s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}.preloader-skip:hover{background:var(--gold);border-color:var(--gold);color:var(--black)}
 
 /* ===== NOISE OVERLAY ===== */
 .noise-overlay{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.035;mix-blend-mode:overlay}.noise-overlay svg{width:100%;height:100%}
@@ -35,7 +35,7 @@
 .hero-content{padding:174px 0 24px;position:relative;z-index:1;width:min(1240px,calc(100% - 72px));margin:0 auto 0 36px}.hero-grid{display:grid;grid-template-columns:1fr;gap:28px;align-items:end;max-width:680px}.hero-copy{padding-bottom:10px}.hero-copy .eyebrow{margin-bottom:19px;opacity:0;animation:fadeUp .6s var(--ease) .5s forwards}
 
 /* ===== SPLIT-REVEAL TEXT ===== */
-.split-word{display:inline-block;overflow:hidden;vertical-align:bottom;line-height:.82}.split-word span{display:inline-block;transform:translateY(105%);transition:transform .9s var(--ease)}.split-word.revealed span{transform:translateY(0)}.split-word:nth-child(1) span{transition-delay:.6s}.split-word:nth-child(2) span{transition-delay:.75s}.split-word:nth-child(3) span{transition-delay:.9s}.hero-title{max-width:8ch;font:500 clamp(4rem,7.6vw,7.6rem)/.82 var(--serif);letter-spacing:-.055em;background:linear-gradient(90deg,var(--white) 0%,var(--white) 25%,var(--gold) 55%,var(--gold2) 70%,var(--gold3) 85%,var(--gold) 100%);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:goldSweepHero 5s ease-in-out infinite alternate}.hero-title .gold-word{color:var(--gold);-webkit-text-fill-color:var(--gold);text-shadow:0 0 calc(28px + var(--audio-pulse) * 18px) oklch(78% .16 82/calc(.2 + var(--audio-pulse) * .4))}@keyframes goldSweepHero{0%{background-position:left center}100%{background-position:right center}}
+.split-word{display:inline-block;overflow:hidden;vertical-align:bottom;line-height:.82}.split-word span{display:inline-block;transform:translateY(105%);transition:transform .9s var(--ease)}.split-word.revealed span{transform:translateY(0)}.split-word:nth-child(1) span{transition-delay:.6s}.split-word:nth-child(2) span{transition-delay:.75s}.split-word:nth-child(3) span{transition-delay:.9s}.hero-title{max-width:8ch;font:500 clamp(4rem,7.6vw,7.6rem)/.82 var(--serif);letter-spacing:-.055em}.hero-title .gold-word{color:var(--gold);text-shadow:0 0 calc(28px + var(--audio-pulse) * 18px) oklch(78% .16 82/calc(.2 + var(--audio-pulse) * .4))}
 
 /* ===== LIQUID HOVER ===== */
 .liquid-text{position:relative;display:inline-block;transition:text-shadow .3s ease,filter .3s ease}.liquid-text:hover{text-shadow:2px 0 0 oklch(78% .16 82/.12),-1px 0 0 oklch(78% .16 82/.08);filter:url(#liquidDisplacement)}.hero-title .gold-word.liquid-text:hover{text-shadow:3px 0 0 oklch(78% .16 82/.2),-2px 0 0 oklch(78% .16 82/.14),0 0 40px oklch(78% .16 82/.35)}
@@ -155,15 +155,17 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
   </defs>
 </svg>
 
-<!-- ===== PRELOADER ===== -->
-<div class="preloader" id="preloader">
-  <div class="preloader-inner">
-    <div class="preloader-logo">
-      <img src="aeternum_solutions.png" alt="Aeternum Works" style="width:100%;height:100%;object-fit:contain">
-    </div>
-    <div class="preloader-line"></div>
-    <div class="preloader-text">Design Beyond Ordinary</div>
+<!-- ===== VIDEO PRELOADER ===== -->
+<div class="video-preloader" id="preloader">
+  <video autoplay loop muted playsinline class="preloader-video" id="preloaderVideo" poster="aeternum_solutions.png">
+    <source src="final_design.mp4" type="video/mp4">
+  </video>
+  <div class="preloader-vignette"></div>
+  <div class="preloader-brand">
+    <span class="brandname">Aeternum</span>
+    <span class="brandsub">Design Beyond Ordinary</span>
   </div>
+  <button class="preloader-skip" id="preloaderSkip">Skip intro</button>
 </div>
 
 <div class="cursor-glow" aria-hidden="true"></div>
@@ -427,15 +429,33 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 (function(){
 var doc=document,body=doc.body,html=doc.documentElement;
 
-// ===== PRELOADER =====
-window.addEventListener('load',function(){
-  body.classList.remove('loading');
-  setTimeout(function(){
-    var pl=doc.getElementById('preloader');
-    if(pl) pl.classList.add('hidden');
+// ===== VIDEO PRELOADER =====
+  var preloader=doc.getElementById('preloader');
+  var preloaderVideo=doc.getElementById('preloaderVideo');
+  var skipBtn=doc.getElementById('preloaderSkip');
+  var dismissed=false;
+
+  function dismissPreloader(){
+    if(dismissed) return; dismissed=true;
+    if(!preloader) return;
+    preloader.classList.add('hidden');
+    body.classList.remove('loading');
     doc.querySelectorAll('.split-word').forEach(function(w){w.classList.add('revealed')});
-  },600);
-});
+    if(preloaderVideo) preloaderVideo.pause();
+  }
+
+  if(skipBtn) skipBtn.addEventListener('click',dismissPreloader);
+
+  if(preloaderVideo){
+    preloaderVideo.addEventListener('ended',dismissPreloader);
+    // fallback: auto-dismiss after 8s if video gets stuck
+    setTimeout(function(){
+      if(!dismissed && preloaderVideo.currentTime<1) dismissPreloader();
+    },8000);
+    preloaderVideo.play().catch(function(){dismissPreloader()});
+  } else {
+    setTimeout(dismissPreloader,800);
+  }
 
 // ===== MOBILE MENU =====
 var menu=doc.querySelector('.menu'),navLinks=doc.querySelector('.links');
