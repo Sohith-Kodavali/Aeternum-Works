@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Careers — Join Aeternum Works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#FF6B6B;--purple:#845EC2;--blue:#2C73D2;--gold:#FFD166;--emerald:#06D6A0;--navy:#1a1a2e;--bg:#F8F9FE;--card:#fff;--muted:#6b7280;--border:#e0e4f0;--serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.56,.64,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font:16px/1.6 var(--sans);color:var(--navy);background:linear-gradient(135deg,#f0f2ff 0%,#fdf2f8 40%,#fef9f0 70%,#f0f4ff 100%);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+.bg-blobs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(100px);opacity:.35;animation:blobFloat 20s ease-in-out infinite}
+.blob:nth-child(1){width:600px;height:600px;background:var(--coral);top:-200px;right:-150px;animation-delay:0s;animation-duration:24s}
+.blob:nth-child(2){width:450px;height:450px;background:var(--purple);bottom:-150px;left:-100px;animation-delay:-8s;animation-duration:22s}
+.blob:nth-child(3){width:350px;height:350px;background:var(--blue);top:40%;left:50%;animation-delay:-15s;animation-duration:26s}
+.blob:nth-child(4){width:300px;height:300px;background:var(--gold);top:20%;right:30%;animation-delay:-5s;animation-duration:20s}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(60px,-80px) scale(1.1)}50%{transform:translate(-40px,-120px) scale(.9)}75%{transform:translate(-80px,40px) scale(1.05)}}
+
+nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;max-width:1280px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo img{width:42px;height:42px;border-radius:50%}
+.logo-text{font:600 1.15rem/1 var(--serif);color:var(--navy);letter-spacing:-.02em}
+.nav-cta{font-size:.78rem;font-weight:600;color:var(--blue);text-decoration:none;padding:8px 20px;border:1.5px solid var(--blue);border-radius:999px;transition:all .25s}
+.nav-cta:hover{background:var(--blue);color:#fff}
+
+.page-wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:20px 32px 80px}
+
+.hero-text{text-align:center;padding:40px 0 50px}
+.hero-text .tag{display:inline-block;padding:6px 16px;background:linear-gradient(135deg,var(--coral),var(--purple));color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;margin-bottom:20px}
+.hero-text h1{font:600 clamp(2.5rem,5vw,3.6rem)/1.1 var(--serif);letter-spacing:-.04em;background:linear-gradient(135deg,var(--navy),var(--purple),var(--coral));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:titleShimmer 4s ease-in-out infinite}
+.hero-text p{max-width:540px;margin:16px auto 0;color:var(--muted);font-size:1.05rem;line-height:1.65}
+@keyframes titleShimmer{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+
+.step-label{display:flex;align-items:center;gap:10px;margin-bottom:28px}
+.step-label .num{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--coral),var(--purple));color:#fff;font-size:.85rem;font-weight:700}
+.step-label span{font:500 1.2rem/1 var(--serif);letter-spacing:-.02em}
+
+/* Job Cards Grid */
+.job-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:60px}
+.job-card{position:relative;padding:32px 24px;background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(255,255,255,.78));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.6);border-radius:20px;cursor:pointer;transition:all .45s var(--spring);overflow:hidden;transform-style:preserve-3d;perspective:800px}
+.job-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--coral),var(--purple),var(--blue));transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.job-card::after{content:'';position:absolute;inset:0;border-radius:20px;background:radial-gradient(circle at 50% 0%,rgba(132,94,194,.08),transparent 60%);opacity:0;transition:opacity .3s}
+.job-card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,.1),0 0 40px rgba(132,94,194,.1)}
+.job-card:hover::before{transform:scaleX(1)}
+.job-card:hover::after{opacity:1}
+.job-card.selected{border-color:var(--purple);box-shadow:0 20px 50px rgba(132,94,194,.18),0 0 0 3px rgba(132,94,194,.15);transform:translateY(-6px)}
+.job-card.selected::before{transform:scaleX(1);height:100%;background:rgba(132,94,194,.06)}
+.job-icon{display:grid;place-items:center;width:56px;height:56px;border-radius:16px;margin-bottom:18px;font-size:1.6rem;position:relative;z-index:1}
+.job-card.selected .job-icon{animation:iconPulse .8s var(--spring)}
+.job-icon-1{background:linear-gradient(135deg,rgba(255,107,107,.15),rgba(255,107,107,.08));color:var(--coral)}
+.job-icon-2{background:linear-gradient(135deg,rgba(132,94,194,.15),rgba(132,94,194,.08));color:var(--purple)}
+.job-icon-3{background:linear-gradient(135deg,rgba(6,214,160,.15),rgba(6,214,160,.08));color:var(--emerald)}
+.job-icon-4{background:linear-gradient(135deg,rgba(44,115,210,.15),rgba(44,115,210,.08));color:var(--blue)}
+.job-icon-5{background:linear-gradient(135deg,rgba(255,209,102,.2),rgba(255,209,102,.1));color:#d4a017}
+.job-card h3{font:600 1.25rem/1.2 var(--serif);letter-spacing:-.02em;margin-bottom:6px;position:relative;z-index:1}
+.job-card .job-desc{font-size:.82rem;color:var(--muted);line-height:1.5;margin-bottom:14px;position:relative;z-index:1}
+.job-card .job-tags{display:flex;flex-wrap:wrap;gap:6px;position:relative;z-index:1}
+.job-card .job-tags span{padding:5px 12px;font-size:.66rem;font-weight:500;border-radius:20px;background:rgba(132,94,194,.08);color:var(--purple)}
+.job-check{position:absolute;top:16px;right:16px;width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:grid;place-items:center;font-size:.75rem;color:transparent;transition:all .3s;z-index:1}
+.job-card.selected .job-check{background:linear-gradient(135deg,var(--coral),var(--purple));border-color:transparent;color:#fff}
+@keyframes iconPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+
+/* Form Section */
+.form-section{opacity:0;transform:translateY(30px);pointer-events:none;transition:all .6s var(--ease)}
+.form-section.visible{opacity:1;transform:none;pointer-events:all}
+.form-card{background:linear-gradient(160deg,rgba(255,255,255,.95),rgba(255,255,255,.82));backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.7);border-radius:24px;padding:44px;box-shadow:0 8px 32px rgba(0,0,0,.04)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.form-field{display:flex;flex-direction:column;gap:6px}
+.form-field.full{grid-column:1/-1}
+.form-field label{font-size:.78rem;font-weight:600;color:var(--navy);letter-spacing:.01em}
+.form-field input,
+.form-field select,
+.form-field textarea{width:100%;padding:13px 16px;font:500 .9rem var(--sans);color:var(--navy);background:#f8f9fc;border:1.5px solid var(--border);border-radius:12px;transition:all .25s;outline:0}
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus{border-color:var(--purple);box-shadow:0 0 0 4px rgba(132,94,194,.1);background:#fff}
+.form-field textarea{min-height:120px;resize:vertical}
+.form-field input::placeholder{color:#bfc7d9}
+.form-field .helper{font-size:.67rem;color:var(--muted)}
+
+.file-upload{position:relative;border:2px dashed var(--border);border-radius:14px;padding:32px;text-align:center;transition:all .3s;cursor:pointer;background:#f8f9fc}
+.file-upload:hover{border-color:var(--purple);background:rgba(132,94,194,.03)}
+.file-upload.active{border-color:var(--purple);background:rgba(132,94,194,.06)}
+.file-upload input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.file-icon{font-size:2rem;margin-bottom:8px}
+.file-text{font-size:.85rem;color:var(--muted)}
+.file-text b{color:var(--purple)}
+.file-name{margin-top:8px;font-size:.78rem;font-weight:500;color:var(--emerald)}
+
+.checkbox-wrap{display:flex;align-items:center;gap:10px;margin-top:8px}
+.checkbox-wrap input[type="checkbox"]{width:18px;height:18px;accent-color:var(--purple);cursor:pointer}
+.checkbox-wrap label{font-size:.82rem;color:var(--muted);cursor:pointer}
+
+.submit-btn{display:inline-flex;align-items:center;gap:10px;margin-top:28px;padding:16px 40px;background:linear-gradient(135deg,var(--coral),var(--purple),var(--blue));background-size:200% 100%;color:#fff;font:600 1rem var(--sans);border:0;border-radius:999px;cursor:pointer;transition:all .4s var(--spring);animation:btnShimmer 4s ease-in-out infinite;position:relative;overflow:hidden}
+.submit-btn:hover{transform:translateY(-3px);box-shadow:0 20px 40px rgba(132,94,194,.35)}
+.submit-btn:active{transform:translateY(-1px)}
+.submit-btn:disabled{opacity:.6;pointer-events:none}
+.submit-btn.loading{gap:12px}
+.spinner{width:20px;height:20px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:none}
+.submit-btn.loading .spinner{display:block}
+.submit-btn.loading .btn-text{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes btnShimmer{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+
+.error-text{font-size:.72rem;color:var(--coral);display:none;margin-top:4px}
+.form-field.error input,
+.form-field.error select,
+.form-field.error textarea{border-color:var(--coral);box-shadow:0 0 0 4px rgba(255,107,107,.1)}
+.form-field.error .error-text{display:block}
+
+/* Success Screen */
+.success{display:none;text-align:center;padding:60px 0}
+.success.visible{display:block}
+.success-icon{display:grid;place-items:center;width:90px;height:90px;margin:0 auto 24px;border-radius:50%;background:linear-gradient(135deg,var(--emerald),#05b884);font-size:2.5rem;color:#fff;animation:successBounce .8s var(--spring)}
+.success h2{font:600 clamp(2rem,4vw,2.8rem)/1.2 var(--serif);letter-spacing:-.03em;margin-bottom:12px}
+.success p{color:var(--muted);font-size:1rem;max-width:440px;margin:0 auto 28px}
+.success .return-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--navy);color:#fff;border-radius:999px;font-weight:600;text-decoration:none;transition:all .3s}
+.success .return-btn:hover{background:var(--purple);transform:translateY(-2px)}
+@keyframes successBounce{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);z-index:100;padding:14px 28px;border-radius:12px;font-size:.82rem;font-weight:500;box-shadow:0 12px 30px rgba(0,0,0,.15);opacity:0;pointer-events:none;transition:opacity .3s}
+.toast.show{opacity:1}
+.toast.error{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+.toast.success{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+
+footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--muted);font-size:.72rem}
+
+@media(max-width:860px){.job-grid{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}.form-card{padding:28px 20px}.page-wrap{padding:10px 16px 60px}nav{padding:16px 24px}}
+@media(max-width:560px){.job-grid{grid-template-columns:1fr}.hero-text h1{font-size:2rem}.hero-text p{font-size:.9rem}}
+</style>
+</head>
+<body>
+
+<div class="bg-blobs">
+  <div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div>
+</div>
+
+<nav>
+  <a class="logo" href="index.html">
+    <img src="aeternum_solutions.png" alt="Logo">
+    <span class="logo-text">Aeternum</span>
+  </a>
+  <a class="nav-cta" href="index.html">Back to Home</a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- Hero -->
+  <div class="hero-text">
+    <span class="tag">We're Hiring</span>
+    <h1>Build the future<br>with us.</h1>
+    <p>Join a team that crafts digital experiences at the highest level. Pick a role below and start your journey.</p>
+  </div>
+
+  <!-- Step 1: Job Selection -->
+  <div class="step-label"><span class="num">1</span><span>Choose a position</span></div>
+  <div class="job-grid" id="jobGrid">
+    <article class="job-card" data-job="Frontend Developer">
+      <span class="job-icon job-icon-1">&lt;/&gt;</span>
+      <h3>Frontend Developer</h3>
+      <p class="job-desc">Build stunning, performant interfaces for premium brands and businesses.</p>
+      <div class="job-tags"><span>React</span><span>Next.js</span><span>Tailwind</span></div>
+      <span class="job-check">✓</span>
+    </article>
+    <article class="job-card" data-job="Backend Developer">
+      <span class="job-icon job-icon-2">⬡</span>
+      <h3>Backend Developer</h3>
+      <p class="job-desc">Architect scalable, secure systems that power high-traffic digital products.</p>
+      <div class="job-tags"><span>Node.js</span><span>PostgreSQL</span><span>REST APIs</span></div>
+      <span class="job-check">✓</span>
+    </article>
+    <article class="job-card" data-job="UI/UX Designer">
+      <span class="job-icon job-icon-3">◆</span>
+      <h3>UI/UX Designer</h3>
+      <p class="job-desc">Create beautiful, intuitive interfaces that delight users and elevate brands.</p>
+      <div class="job-tags"><span>Figma</span><span>Design Systems</span><span>Prototyping</span></div>
+      <span class="job-check">✓</span>
+    </article>
+    <article class="job-card" data-job="DevOps Engineer">
+      <span class="job-icon job-icon-4">☁</span>
+      <h3>DevOps Engineer</h3>
+      <p class="job-desc">Keep infrastructure reliable, scalable, and lightning-fast for global audiences.</p>
+      <div class="job-tags"><span>AWS</span><span>Docker</span><span>CI/CD</span></div>
+      <span class="job-check">✓</span>
+    </article>
+    <article class="job-card" data-job="Project Manager">
+      <span class="job-icon job-icon-5">✦</span>
+      <h3>Project Manager</h3>
+      <p class="job-desc">Orchestrate complex projects, align teams, and deliver world-class results on time.</p>
+      <div class="job-tags"><span>Agile</span><span>Scrum</span><span>Client Mgmt</span></div>
+      <span class="job-check">✓</span>
+    </article>
+  </div>
+
+  <!-- Step 2: Form -->
+  <div id="formSection" class="form-section">
+    <div class="step-label"><span class="num">2</span><span>Tell us about yourself</span></div>
+    <form id="applicationForm" class="form-card">
+      <div class="form-grid">
+        <div class="form-field">
+          <label>Full Name *</label>
+          <input type="text" name="full_name" placeholder="Jane Doe" required>
+          <span class="error-text">Please enter your full name</span>
+        </div>
+        <div class="form-field">
+          <label>Email *</label>
+          <input type="email" name="email" placeholder="jane@example.com" required>
+          <span class="error-text">Please enter a valid email</span>
+        </div>
+        <div class="form-field">
+          <label>Phone *</label>
+          <input type="tel" name="phone" placeholder="+91 98765 43210" required>
+          <span class="error-text">Please enter your phone number</span>
+        </div>
+        <div class="form-field">
+          <label>Education *</label>
+          <select name="education" required>
+            <option value="">Select qualification</option>
+            <option value="High School">High School</option>
+            <option value="Diploma">Diploma</option>
+            <option value="Bachelors">Bachelor's Degree</option>
+            <option value="Masters">Master's Degree</option>
+            <option value="PhD">PhD</option>
+          </select>
+          <span class="error-text">Please select your education level</span>
+        </div>
+        <div class="form-field">
+          <label>University / College</label>
+          <input type="text" name="university" placeholder="MIT, Stanford, etc.">
+        </div>
+        <div class="form-field">
+          <label>Graduation Year</label>
+          <input type="text" name="grad_year" placeholder="2024">
+        </div>
+        <div class="form-field full">
+          <label>Skills (comma separated)</label>
+          <input type="text" name="skills" placeholder="React, TypeScript, Node.js, Figma, Docker...">
+          <span class="helper">Separate each skill with a comma</span>
+        </div>
+        <div class="form-field">
+          <label>Experience Level *</label>
+          <select name="experience_level" required>
+            <option value="">Select experience</option>
+            <option value="Fresher">Fresher</option>
+            <option value="1-2 years">1 - 2 years</option>
+            <option value="3-5 years">3 - 5 years</option>
+            <option value="5+ years">5+ years</option>
+          </select>
+          <span class="error-text">Please select your experience level</span>
+        </div>
+        <div class="form-field">
+          <label>LinkedIn Profile</label>
+          <input type="url" name="linkedin" placeholder="https://linkedin.com/in/...">
+        </div>
+        <div class="form-field">
+          <label>Portfolio / GitHub</label>
+          <input type="url" name="portfolio" placeholder="https://github.com/...">
+        </div>
+        <div class="form-field">
+          <label>Current Location</label>
+          <input type="text" name="location" placeholder="City, Country">
+        </div>
+        <div class="form-field">
+          <label style="visibility:hidden">_</label>
+          <div class="checkbox-wrap">
+            <input type="checkbox" name="willing_to_relocate" id="relocate">
+            <label for="relocate">Willing to relocate</label>
+          </div>
+        </div>
+        <div class="form-field full">
+          <label>Resume (PDF, DOCX) *</label>
+          <div class="file-upload" id="fileDrop">
+            <div class="file-icon">📄</div>
+            <div class="file-text"><b>Click to upload</b> or drag and drop</div>
+            <div class="file-name" id="fileName" style="display:none"></div>
+            <input type="file" name="resume_file" id="resumeInput" accept=".pdf,.doc,.docx" required>
+          </div>
+          <span class="error-text" style="display:block;text-align:center">Please upload your resume</span>
+        </div>
+        <div class="form-field full">
+          <label>Cover Letter / Why you'd be a great fit</label>
+          <textarea name="cover_letter" placeholder="Tell us what makes you excited about this role and what you'd bring to the team..."></textarea>
+        </div>
+      </div>
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span class="spinner"></span>
+        <span class="btn-text">Submit Application ✦</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- Success -->
+  <div class="success" id="successScreen">
+    <div class="success-icon">✓</div>
+    <h2>Application received!</h2>
+    <p>Thanks for your interest. We'll review your application and get back to you within 5-7 business days.</p>
+    <a class="return-btn" href="index.html">← Back to Aeternum</a>
+  </div>
+
+</div>
+
+<footer>© 2026 Aeternum Works. Career opportunities.</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  var selectedJob='',formSection=document.getElementById('formSection'),
+      successScreen=document.getElementById('successScreen'),
+      toast=document.getElementById('toast'),
+      submitBtn=document.getElementById('submitBtn'),
+      jobGrid=document.getElementById('jobGrid');
+
+  // Supabase init — replace with your project credentials
+  var SUPABASE_URL='YOUR_SUPABASE_URL';
+  var SUPABASE_KEY='YOUR_SUPABASE_ANON_KEY';
+  var supabase=null;
+  try{supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY)}catch(e){}
+
+  // Job card selection
+  jobGrid.addEventListener('click',function(e){
+    var card=e.target.closest('.job-card');
+    if(!card) return;
+    document.querySelectorAll('.job-card').forEach(function(c){c.classList.remove('selected')});
+    card.classList.add('selected');
+    selectedJob=card.dataset.job;
+    formSection.classList.add('visible');
+    formSection.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  // File upload visual
+  var fileDrop=document.getElementById('fileDrop'),
+      resumeInput=document.getElementById('resumeInput'),
+      fileName=document.getElementById('fileName');
+  fileDrop.addEventListener('dragover',function(e){e.preventDefault();fileDrop.classList.add('active')});
+  fileDrop.addEventListener('dragleave',function(){fileDrop.classList.remove('active')});
+  fileDrop.addEventListener('drop',function(e){
+    e.preventDefault();fileDrop.classList.remove('active');
+    if(e.dataTransfer.files.length){resumeInput.files=e.dataTransfer.files;updateFileName()}
+  });
+  resumeInput.addEventListener('change',updateFileName);
+  function updateFileName(){
+    if(resumeInput.files.length){fileName.textContent='📎 '+resumeInput.files[0].name;fileName.style.display='block'}
+    else{fileName.style.display='none'}
+  }
+
+  // Toast
+  var toastTimer;
+  function showToast(msg,type){
+    clearTimeout(toastTimer);
+    toast.textContent=msg;toast.className='toast '+type+' show';
+    toastTimer=setTimeout(function(){toast.classList.remove('show')},4000);
+  }
+
+  // Form validation
+  function validateField(field){
+    var wrap=field.closest('.form-field');
+    if(!wrap) return true;
+    var valid=field.checkValidity();
+    if(!valid) wrap.classList.add('error');
+    else wrap.classList.remove('error');
+    return valid;
+  }
+
+  var formFields=document.querySelectorAll('#applicationForm input[required], #applicationForm select[required]');
+  formFields.forEach(function(f){
+    f.addEventListener('blur',function(){validateField(f)});
+    f.addEventListener('input',function(){if(f.closest('.form-field').classList.contains('error')) validateField(f)});
+  });
+
+  document.getElementById('applicationForm').addEventListener('submit',async function(e){
+    e.preventDefault();
+    var form=e.target;
+    var valid=true;
+
+    // Validate required fields
+    formFields.forEach(function(f){if(!validateField(f)) valid=false});
+
+    // Validate job selection
+    if(!selectedJob){showToast('Please select a position first','error');return}
+
+    // Validate file
+    var fileField=form.querySelector('.form-field.full .error-text');
+    if(!resumeInput.files.length){
+      form.querySelector('.file-upload').style.borderColor='var(--coral)';
+      fileField.style.display='block';
+      valid=false;
+    }else{
+      form.querySelector('.file-upload').style.borderColor='var(--border)';
+      fileField.style.display='none';
+    }
+
+    if(!valid) return;
+
+    submitBtn.classList.add('loading');
+    submitBtn.disabled=true;
+
+    try{
+      var formData=new FormData(form);
+      var skillsRaw=formData.get('skills')||'';
+      var skills=skillsRaw?skillsRaw.split(',').map(function(s){return s.trim()}).filter(Boolean):[];
+      var relocate=formData.get('willing_to_relocate')==='on';
+
+      var resumeFile=resumeInput.files[0];
+      var resumeUrl='';
+
+      if(supabase && SUPABASE_URL!=='YOUR_SUPABASE_URL'){
+        // Upload resume
+        var filePath=Date.now()+'_'+resumeFile.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+        var uploadRes=await supabase.storage.from('resumes').upload(filePath,resumeFile);
+        if(uploadRes.error) throw uploadRes.error;
+        var urlRes=supabase.storage.from('resumes').getPublicUrl(filePath);
+        resumeUrl=urlRes.data.publicUrl;
+
+        // Insert candidate
+        var insertRes=await supabase.from('candidates').insert({
+          full_name:formData.get('full_name'),
+          email:formData.get('email'),
+          phone:formData.get('phone'),
+          education:formData.get('education'),
+          university:formData.get('university')||null,
+          grad_year:formData.get('grad_year')||null,
+          skills:skills.length?skills:null,
+          experience_level:formData.get('experience_level'),
+          linkedin:formData.get('linkedin')||null,
+          portfolio:formData.get('portfolio')||null,
+          resume_url:resumeUrl,
+          job_post:selectedJob,
+          cover_letter:formData.get('cover_letter')||null,
+          location:formData.get('location')||null,
+          willing_to_relocate:relocate
+        });
+        if(insertRes.error) throw insertRes.error;
+      } else {
+        // No Supabase configured — store in localStorage as fallback
+        var candidates=JSON.parse(localStorage.getItem('aeternum_candidates')||'[]');
+        candidates.push({
+          id:Date.now().toString(36)+Math.random().toString(36).slice(2),
+          full_name:formData.get('full_name'),
+          email:formData.get('email'),
+          phone:formData.get('phone'),
+          education:formData.get('education'),
+          university:formData.get('university')||null,
+          grad_year:formData.get('grad_year')||null,
+          skills:skills,
+          experience_level:formData.get('experience_level'),
+          linkedin:formData.get('linkedin')||null,
+          portfolio:formData.get('portfolio')||null,
+          resume_url:'local_file:'+resumeFile.name,
+          job_post:selectedJob,
+          cover_letter:formData.get('cover_letter')||null,
+          location:formData.get('location')||null,
+          willing_to_relocate:relocate,
+          status:'new',
+          created_at:new Date().toISOString()
+        });
+        localStorage.setItem('aeternum_candidates',JSON.stringify(candidates));
+      }
+
+      formSection.style.display='none';
+      successScreen.classList.add('visible');
+      successScreen.scrollIntoView({behavior:'smooth',block:'start'});
+      showToast('Application submitted successfully!','success');
+
+    }catch(err){
+      console.error(err);
+      showToast('Something went wrong. Please try again.','error');
+    }finally{
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled=false;
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

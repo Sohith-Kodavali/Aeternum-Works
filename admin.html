@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin — Aeternum Recruitment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#FF6B6B;--purple:#845EC2;--blue:#2C73D2;--gold:#FFD166;--emerald:#06D6A0;--navy:#1a1a2e;--sidebar:#0f0f23;--sidebar2:#1a1d36;--bg:#f0f2f5;--card:#fff;--muted:#6b7280;--border:#e0e4f0;--serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.56,.64,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font:16px/1.6 var(--sans);color:var(--navy);background:var(--bg);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ===== PASSWORD GATE ===== */
+.gate{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f0f2ff,#fdf2f8,#fef9f0);transition:opacity .5s,visibility .5s}
+.gate.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.gate-card{background:rgba(255,255,255,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.6);border-radius:24px;padding:48px 40px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.08);max-width:420px;width:calc(100% - 48px)}
+.gate-card .lock-icon{display:grid;place-items:center;width:72px;height:72px;margin:0 auto 24px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--purple));font-size:2rem;color:#fff}
+.gate-card h2{font:600 1.6rem/1.2 var(--serif);letter-spacing:-.02em;margin-bottom:8px}
+.gate-card p{color:var(--muted);font-size:.85rem;margin-bottom:24px}
+.gate-card input{width:100%;padding:14px 18px;font:500 1rem var(--sans);color:var(--navy);background:#f8f9fc;border:1.5px solid var(--border);border-radius:14px;text-align:center;letter-spacing:.15em;outline:0;transition:all .25s}
+.gate-card input:focus{border-color:var(--purple);box-shadow:0 0 0 4px rgba(132,94,194,.1);background:#fff}
+.gate-card input.error{border-color:var(--coral);box-shadow:0 0 0 4px rgba(255,107,107,.1);animation:shake .4s ease-in-out}
+.gate-card .gate-btn{margin-top:20px;padding:14px 40px;background:linear-gradient(135deg,var(--coral),var(--purple),var(--blue));background-size:200% 100%;color:#fff;font:600 1rem var(--sans);border:0;border-radius:999px;cursor:pointer;transition:all .4s var(--spring);animation:btnShimmer 4s ease-in-out infinite}
+.gate-card .gate-btn:hover{transform:translateY(-2px);box-shadow:0 16px 32px rgba(132,94,194,.3)}
+.gate-error{color:var(--coral);font-size:.75rem;margin-top:12px;display:none}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+@keyframes btnShimmer{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+
+/* ===== LAYOUT ===== */
+.layout{display:flex;min-height:100vh;opacity:0;transition:opacity .4s}
+.layout.visible{opacity:1}
+
+/* Sidebar */
+.sidebar{width:260px;flex-shrink:0;background:linear-gradient(180deg,var(--sidebar),var(--sidebar2));color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:50;transition:transform .3s var(--ease)}
+.side-header{padding:28px 24px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.side-header .brand{display:flex;align-items:center;gap:8px}
+.side-header img{width:34px;height:34px;border-radius:50%}
+.side-header .brand-text{font:600 1rem/1 var(--serif);letter-spacing:-.01em;color:#fff}
+.side-header .brand-sub{font-size:.58rem;color:rgba(255,255,255,.45);margin-top:2px}
+.side-nav{padding:16px 0;flex:1;overflow-y:auto}
+.side-nav a,.side-nav .nav-section{display:flex;align-items:center;gap:10px;padding:11px 24px;font-size:.78rem;color:rgba(255,255,255,.6);text-decoration:none;transition:all .2s;cursor:pointer}
+.side-nav a:hover,.side-nav .nav-section:hover{color:#fff;background:rgba(255,255,255,.04)}
+.side-nav a.active{color:#fff;background:rgba(132,94,194,.2);border-right:3px solid var(--purple)}
+.side-nav .badge{margin-left:auto;padding:3px 10px;font-size:.62rem;font-weight:700;border-radius:20px;background:rgba(132,94,194,.3);color:#fff}
+.side-nav .nav-section{font-weight:700;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:16px;pointer-events:none}
+.side-footer{padding:16px 24px;border-top:1px solid rgba(255,255,255,.08)}
+.side-footer button{width:100%;padding:10px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.1);border-radius:10px;font-size:.72rem;font-weight:600;cursor:pointer;transition:all .2s}
+.side-footer button:hover{background:rgba(255,107,107,.15);color:var(--coral);border-color:rgba(255,107,107,.3)}
+
+/* Main */
+.main{flex:1;margin-left:260px;padding:28px 32px;transition:opacity .3s}
+.main.loading{opacity:.5;pointer-events:none}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px}
+.topbar h1{font:600 1.7rem/1.2 var(--serif);letter-spacing:-.03em}
+.topbar-actions{display:flex;align-items:center;gap:12px}
+.search-input{padding:10px 18px;font:.82rem var(--sans);border:1.5px solid var(--border);border-radius:999px;outline:0;width:240px;transition:all .25s;background:#fff}
+.search-input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(132,94,194,.1);width:280px}
+.export-btn{padding:10px 22px;background:#fff;border:1.5px solid var(--border);border-radius:999px;font:.78rem var(--sans);font-weight:600;color:var(--navy);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.export-btn:hover{border-color:var(--purple);color:var(--purple);background:rgba(132,94,194,.04)}
+.menu-toggle{display:none;width:40px;height:40px;border-radius:10px;background:#fff;border:1px solid var(--border);font-size:1.2rem;cursor:pointer;align-items:center;justify-content:center;color:var(--navy)}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px}
+.stat-card{padding:24px;background:#fff;border-radius:18px;border:1px solid var(--border);position:relative;overflow:hidden;transition:all .3s var(--spring)}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px rgba(0,0,0,.06)}
+.stat-card .stat-icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:1.2rem;margin-bottom:14px}
+.stat-card .stat-icon.coral{background:rgba(255,107,107,.12);color:var(--coral)}
+.stat-card .stat-icon.purple{background:rgba(132,94,194,.12);color:var(--purple)}
+.stat-card .stat-icon.blue{background:rgba(44,115,210,.12);color:var(--blue)}
+.stat-card .stat-icon.emerald{background:rgba(6,214,160,.12);color:var(--emerald)}
+.stat-card .stat-number{font:700 2rem/1 var(--sans);letter-spacing:-.03em}
+.stat-card .stat-label{font-size:.72rem;color:var(--muted);margin-top:4px}
+.stat-card .stat-glow{position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;filter:blur(50px);opacity:.15;pointer-events:none}
+
+/* Table */
+.table-wrap{background:#fff;border-radius:18px;border:1px solid var(--border);overflow:hidden}
+.table-header{padding:18px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px}
+.table-header h3{font:600 1.05rem var(--sans)}
+.table-header .filter-chips{display:flex;gap:8px;flex-wrap:wrap}
+.table-header .chip{padding:6px 14px;font-size:.68rem;font-weight:600;border-radius:999px;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;transition:all .2s}
+.table-header .chip:hover,.table-header .chip.active{border-color:var(--purple);color:var(--purple);background:rgba(132,94,194,.06)}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead th{padding:14px 18px;text-align:left;font-size:.67rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:#fafbfc;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap}
+thead th:hover{color:var(--purple)}
+thead th .sort-arrow{margin-left:4px;font-size:.6rem}
+tbody td{padding:14px 18px;font-size:.82rem;border-bottom:1px solid #f3f4f6;white-space:nowrap}
+tbody tr{cursor:pointer;transition:background .15s}
+tbody tr:hover{background:rgba(132,94,194,.025)}
+tbody tr.expanded{background:rgba(132,94,194,.04)}
+
+/* Status Badges */
+.status-badge{display:inline-block;padding:4px 14px;font-size:.68rem;font-weight:700;border-radius:20px;letter-spacing:.02em}
+.status-badge.new{background:rgba(44,115,210,.1);color:var(--blue)}
+.status-badge.reviewed{background:rgba(255,209,102,.15);color:#b8860b}
+.status-badge.shortlisted{background:rgba(6,214,160,.12);color:var(--emerald)}
+.status-badge.rejected{background:rgba(255,107,107,.1);color:var(--coral)}
+
+.status-select{font:.72rem var(--sans);font-weight:600;padding:4px 10px;border:1.5px solid var(--border);border-radius:8px;background:#fff;color:var(--navy);cursor:pointer;outline:0}
+.status-select:focus{border-color:var(--purple)}
+
+/* Expandable Row */
+.expand-row{display:none}
+.expand-row.open{display:table-row}
+.expand-row td{padding:0 18px 20px;font-size:.78rem;border-bottom:1px solid #f3f4f6;background:rgba(132,94,194,.015)}
+.detail-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:16px;background:#fafbfc;border-radius:12px}
+.detail-item{display:flex;flex-direction:column;gap:2px}
+.detail-item .detail-label{font-size:.63rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.detail-item .detail-value{font-size:.82rem;color:var(--navy)}
+.detail-item a{color:var(--purple);text-decoration:underline}
+
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty-state .empty-icon{font-size:3rem;margin-bottom:16px;opacity:.5}
+.empty-state h3{font:500 1.3rem var(--serif);margin-bottom:6px;color:var(--navy)}
+.loading-spinner{margin:40px auto;width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Overlay for mobile sidebar */
+.sidebar-overlay{display:none;position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.4)}
+
+@media(max-width:860px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay.open{display:block}
+  .main{margin-left:0}
+  .menu-toggle{display:flex}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .detail-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .detail-grid{grid-template-columns:1fr}
+  .main{padding:20px 12px}
+  .search-input{width:160px}
+  .topbar h1{font-size:1.3rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== PASSWORD GATE ===== -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="lock-icon">🔒</div>
+    <h2>Admin Access</h2>
+    <p>Enter your password to view candidate applications</p>
+    <input type="password" id="gatePassword" placeholder="••••••••" autofocus>
+    <button class="gate-btn" id="gateBtn">Unlock</button>
+    <p class="gate-error" id="gateError">Incorrect password. Try again.</p>
+  </div>
+</div>
+
+<!-- ===== LAYOUT ===== -->
+<div class="layout" id="layout">
+  <div class="sidebar" id="sidebar">
+    <div class="side-header">
+      <div class="brand">
+        <img src="aeternum_solutions.png" alt="Logo">
+        <div><div class="brand-text">Aeternum</div><div class="brand-sub">Admin Portal</div></div>
+      </div>
+    </div>
+    <nav class="side-nav" id="sideNav">
+      <a href="#" class="active" data-filter="all">
+        <span>📋</span> All Candidates <span class="badge" id="badgeAll">0</span>
+      </a>
+      <span class="nav-section">By Position</span>
+      <a href="#" data-filter="Frontend Developer"><span>💻</span> Frontend Developer <span class="badge" id="badgeFrontend Developer">0</span></a>
+      <a href="#" data-filter="Backend Developer"><span>⬡</span> Backend Developer <span class="badge" id="badgeBackend Developer">0</span></a>
+      <a href="#" data-filter="UI/UX Designer"><span>🎨</span> UI/UX Designer <span class="badge" id="badgeUI/UX Designer">0</span></a>
+      <a href="#" data-filter="DevOps Engineer"><span>☁️</span> DevOps Engineer <span class="badge" id="badgeDevOps Engineer">0</span></a>
+      <a href="#" data-filter="Project Manager"><span>📊</span> Project Manager <span class="badge" id="badgeProject Manager">0</span></a>
+      <span class="nav-section">By Status</span>
+      <a href="#" data-filter="status:new"><span>🆕</span> New <span class="badge" id="badgeNew">0</span></a>
+      <a href="#" data-filter="status:reviewed"><span>👁</span> Reviewed <span class="badge" id="badgeReviewed">0</span></a>
+      <a href="#" data-filter="status:shortlisted"><span>⭐</span> Shortlisted <span class="badge" id="badgeShortlisted">0</span></a>
+      <a href="#" data-filter="status:rejected"><span>🚫</span> Rejected <span class="badge" id="badgeRejected">0</span></a>
+    </nav>
+    <div class="side-footer">
+      <button id="logoutBtn">🚪 Logout</button>
+    </div>
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="main" id="mainContent">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+        <h1>Candidate Dashboard</h1>
+      </div>
+      <div class="topbar-actions">
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search by name or email...">
+        <button class="export-btn" id="exportBtn">📥 Export CSV</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card"><div class="stat-icon coral">👥</div><div class="stat-number" id="statTotal">0</div><div class="stat-label">Total Candidates</div><div class="stat-glow" style="background:var(--coral)"></div></div>
+      <div class="stat-card"><div class="stat-icon blue">🆕</div><div class="stat-number" id="statNew">0</div><div class="stat-label">New Applications</div><div class="stat-glow" style="background:var(--blue)"></div></div>
+      <div class="stat-card"><div class="stat-icon emerald">⭐</div><div class="stat-number" id="statShortlisted">0</div><div class="stat-label">Shortlisted</div><div class="stat-glow" style="background:var(--emerald)"></div></div>
+      <div class="stat-card"><div class="stat-icon purple">📌</div><div class="stat-number" id="statPosts">5</div><div class="stat-label">Active Job Posts</div><div class="stat-glow" style="background:var(--purple)"></div></div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <div class="table-header">
+        <h3>Candidates</h3>
+        <div class="filter-chips">
+          <span class="chip active" data-chip="all">All</span>
+          <span class="chip" data-chip="new">New</span>
+          <span class="chip" data-chip="reviewed">Reviewed</span>
+          <span class="chip" data-chip="shortlisted">Shortlisted</span>
+          <span class="chip" data-chip="rejected">Rejected</span>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th data-sort="full_name">Name <span class="sort-arrow">↕</span></th>
+              <th data-sort="email">Email <span class="sort-arrow">↕</span></th>
+              <th data-sort="job_post">Position <span class="sort-arrow">↕</span></th>
+              <th data-sort="experience_level">Experience <span class="sort-arrow">↕</span></th>
+              <th data-sort="status">Status <span class="sort-arrow">↕</span></th>
+              <th data-sort="created_at">Date Applied <span class="sort-arrow">↕</span></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+          </tbody>
+        </table>
+      </div>
+      <div class="loading-spinner" id="tableLoader" style="margin:40px auto"></div>
+      <div class="empty-state" id="emptyState" style="display:none">
+        <div class="empty-icon">📭</div>
+        <h3>No candidates found</h3>
+        <p>Applications will appear here once students submit the registration form.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  // Supabase init
+  var SUPABASE_URL='YOUR_SUPABASE_URL';
+  var SUPABASE_KEY='YOUR_SUPABASE_ANON_KEY';
+  var supabase=null;
+  try{supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY)}catch(e){}
+
+  var candidates=[],activeFilter='all',activeStatusChip='all',sortKey=null,sortDir='asc',expandedRow=null;
+
+  var gate=document.getElementById('gate'),layout=document.getElementById('layout'),
+      gatePassword=document.getElementById('gatePassword'),gateError=document.getElementById('gateError'),
+      tableBody=document.getElementById('tableBody'),tableLoader=document.getElementById('tableLoader'),
+      emptyState=document.getElementById('emptyState'),searchInput=document.getElementById('searchInput');
+
+  // ===== PASSWORD GATE =====
+  var ADMIN_PASSWORD_HASH='5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'; // "password"
+
+  function sha256(str){
+    async function digest(str){
+      var buf=new TextEncoder().encode(str);
+      var hash=await crypto.subtle.digest('SHA-256',buf);
+      return Array.from(new Uint8Array(hash)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
+    }
+    return digest(str);
+  }
+
+  if(sessionStorage.getItem('admin_authed')==='true'){hideGate()}
+
+  document.getElementById('gateBtn').addEventListener('click',async function(){
+    var pw=gatePassword.value.trim();
+    if(!pw) return;
+    var hash=await sha256(pw);
+    var storedHash=ADMIN_PASSWORD_HASH;
+
+    // Try Supabase first
+    if(supabase && SUPABASE_URL!=='YOUR_SUPABASE_URL'){
+      try{
+        var res=await supabase.from('settings').select('value').eq('key','admin_password').single();
+        if(res.data) storedHash=res.data.value;
+      }catch(e){}
+    }
+
+    if(hash===storedHash){
+      sessionStorage.setItem('admin_authed','true');
+      hideGate();
+    }else{
+      gatePassword.classList.add('error');
+      gateError.style.display='block';
+      setTimeout(function(){gatePassword.classList.remove('error')},400);
+    }
+  });
+
+  gatePassword.addEventListener('keydown',function(e){if(e.key==='Enter') document.getElementById('gateBtn').click()});
+
+  function hideGate(){
+    gate.classList.add('hidden');
+    layout.classList.add('visible');
+    loadCandidates();
+  }
+
+  // ===== LOGOUT =====
+  document.getElementById('logoutBtn').addEventListener('click',function(){
+    sessionStorage.removeItem('admin_authed');
+    location.reload();
+  });
+
+  // ===== MOBILE SIDEBAR =====
+  var sidebar=document.getElementById('sidebar'),sidebarOverlay=document.getElementById('sidebarOverlay');
+  document.getElementById('menuToggle').addEventListener('click',function(){
+    sidebar.classList.toggle('open');sidebarOverlay.classList.toggle('open');
+  });
+  sidebarOverlay.addEventListener('click',function(){
+    sidebar.classList.remove('open');sidebarOverlay.classList.remove('open');
+  });
+
+  // ===== LOAD CANDIDATES =====
+  async function loadCandidates(){
+    tableLoader.style.display='block';
+    emptyState.style.display='none';
+
+    try{
+      if(supabase && SUPABASE_URL!=='YOUR_SUPABASE_URL'){
+        var res=await supabase.from('candidates').select('*').order('created_at',{ascending:false});
+        if(res.error) throw res.error;
+        candidates=res.data||[];
+      } else {
+        candidates=JSON.parse(localStorage.getItem('aeternum_candidates')||'[]');
+        candidates.sort(function(a,b){return new Date(b.created_at)-new Date(a.created_at)});
+      }
+    }catch(e){
+      console.error(e);
+      candidates=JSON.parse(localStorage.getItem('aeternum_candidates')||'[]');
+    }
+
+    tableLoader.style.display='none';
+    updateStats();
+    updateSidebarBadges();
+    renderTable();
+  }
+
+  // ===== STATS =====
+  function updateStats(){
+    document.getElementById('statTotal').textContent=candidates.length;
+    document.getElementById('statNew').textContent=candidates.filter(function(c){return c.status==='new'}).length;
+    document.getElementById('statShortlisted').textContent=candidates.filter(function(c){return c.status==='shortlisted'}).length;
+  }
+
+  // ===== SIDEBAR BADGES =====
+  function updateSidebarBadges(){
+    var roles=['Frontend Developer','Backend Developer','UI/UX Designer','DevOps Engineer','Project Manager'];
+    var allBadge=document.getElementById('badgeAll');
+    if(allBadge) allBadge.textContent=candidates.length;
+
+    roles.forEach(function(role){
+      var badge=document.getElementById('badge'+role);
+      if(badge) badge.textContent=candidates.filter(function(c){return c.job_post===role}).length;
+    });
+
+    document.getElementById('badgeNew').textContent=candidates.filter(function(c){return c.status==='new'}).length;
+    document.getElementById('badgeReviewed').textContent=candidates.filter(function(c){return c.status==='reviewed'}).length;
+    document.getElementById('badgeShortlisted').textContent=candidates.filter(function(c){return c.status==='shortlisted'}).length;
+    document.getElementById('badgeRejected').textContent=candidates.filter(function(c){return c.status==='rejected'}).length;
+  }
+
+  // ===== FILTERING =====
+  function getFiltered(){
+    var filtered=candidates.slice();
+
+    // Sidebar filter
+    if(activeFilter!=='all'){
+      if(activeFilter.startsWith('status:')){
+        var s=activeFilter.replace('status:','');
+        filtered=filtered.filter(function(c){return c.status===s});
+      }else{
+        filtered=filtered.filter(function(c){return c.job_post===activeFilter});
+      }
+    }
+
+    // Chip filter
+    if(activeStatusChip!=='all'){
+      filtered=filtered.filter(function(c){return c.status===activeStatusChip});
+    }
+
+    // Search
+    var q=searchInput.value.trim().toLowerCase();
+    if(q){
+      filtered=filtered.filter(function(c){
+        return (c.full_name||'').toLowerCase().includes(q)||(c.email||'').toLowerCase().includes(q);
+      });
+    }
+
+    // Sort
+    if(sortKey){
+      filtered.sort(function(a,b){
+        var va=a[sortKey]||'',vb=b[sortKey]||'';
+        if(sortKey==='created_at'){va=new Date(va);vb=new Date(vb)}
+        if(va<vb) return sortDir==='asc'?-1:1;
+        if(va>vb) return sortDir==='asc'?1:-1;
+        return 0;
+      });
+    }
+
+    return filtered;
+  }
+
+  // ===== RENDER TABLE =====
+  function renderTable(){
+    var filtered=getFiltered();
+    if(!filtered.length){tableBody.innerHTML='';emptyState.style.display='block';return}
+    emptyState.style.display='none';
+
+    tableBody.innerHTML=filtered.map(function(c,i){
+      var dateStr=c.created_at?new Date(c.created_at).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}):'—';
+      var status=c.status||'new';
+      var initials=(c.full_name||'?')[0].toUpperCase();
+      var edu=c.education||'—';
+      var skills=Array.isArray(c.skills)?c.skills.join(', '):(c.skills||'—');
+      var resumeLink=c.resume_url?(c.resume_url.startsWith('local_file:')?c.resume_url.replace('local_file:',''):'<a href="'+c.resume_url+'" target="_blank">View Resume ↗</a>'):'—';
+
+      return '<tr data-idx="'+i+'" data-id="'+(c.id||'')+'">'+
+        '<td><strong>'+esc(c.full_name)+'</strong></td>'+
+        '<td>'+esc(c.email)+'</td>'+
+        '<td>'+esc(c.job_post)+'</td>'+
+        '<td>'+esc(c.experience_level)+'</td>'+
+        '<td><span class="status-badge '+status+'">'+status.charAt(0).toUpperCase()+status.slice(1)+'</span></td>'+
+        '<td>'+dateStr+'</td>'+
+      '</tr>'+
+      '<tr class="expand-row" id="expand-'+i+'"><td colspan="6"><div class="detail-grid">'+
+        '<div class="detail-item"><span class="detail-label">Phone</span><span class="detail-value">'+esc(c.phone||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Education</span><span class="detail-value">'+esc(edu)+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">University</span><span class="detail-value">'+esc(c.university||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Grad Year</span><span class="detail-value">'+esc(c.grad_year||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Skills</span><span class="detail-value">'+esc(skills)+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">LinkedIn</span><span class="detail-value">'+(c.linkedin?'<a href="'+esc(c.linkedin)+'" target="_blank">Profile ↗</a>':'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Portfolio</span><span class="detail-value">'+(c.portfolio?'<a href="'+esc(c.portfolio)+'" target="_blank">Link ↗</a>':'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Resume</span><span class="detail-value">'+resumeLink+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Location</span><span class="detail-value">'+esc(c.location||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Relocate</span><span class="detail-value">'+(c.willing_to_relocate?'Yes':'No')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Cover Letter</span><span class="detail-value">'+esc(c.cover_letter||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Update Status</span><span class="detail-value"><select class="status-select" data-id="'+(c.id||'')+'" data-idx="'+i+'">'+
+          '<option value="new"'+('new'===status?' selected':'')+'>New</option>'+
+          '<option value="reviewed"'+('reviewed'===status?' selected':'')+'>Reviewed</option>'+
+          '<option value="shortlisted"'+('shortlisted'===status?' selected':'')+'>Shortlisted</option>'+
+          '<option value="rejected"'+('rejected'===status?' selected':'')+'>Rejected</option>'+
+        '</select></span></div>'+
+      '</div></td></tr>';
+    }).join('');
+  }
+
+  function esc(s){if(!s) return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+  // Row click to expand
+  tableBody.addEventListener('click',function(e){
+    var select=e.target.closest('.status-select');
+    if(select){
+      e.stopPropagation();
+      updateStatus(select);
+      return;
+    }
+    var row=e.target.closest('tr');
+    if(!row||row.classList.contains('expand-row')) return;
+    var idx=row.dataset.idx;
+    if(idx===undefined) return;
+    var expandRow=document.getElementById('expand-'+idx);
+    if(!expandRow) return;
+    if(expandedRow && expandedRow!==expandRow) expandedRow.classList.remove('open');
+    expandRow.classList.toggle('open');
+    expandedRow=expandRow.classList.contains('open')?expandRow:null;
+  });
+
+  // Status update
+  async function updateStatus(select){
+    var id=select.dataset.id;
+    var newStatus=select.value;
+    var candidate=candidates.find(function(c){return c.id===id});
+    if(!candidate) return;
+    candidate.status=newStatus;
+
+    try{
+      if(supabase && SUPABASE_URL!=='YOUR_SUPABASE_URL'){
+        await supabase.from('candidates').update({status:newStatus}).eq('id',id);
+      }
+      localStorage.setItem('aeternum_candidates',JSON.stringify(candidates));
+    }catch(e){console.error(e)}
+
+    updateStats();
+    updateSidebarBadges();
+    renderTable();
+  }
+
+  // ===== SIDEBAR FILTERS =====
+  document.getElementById('sideNav').addEventListener('click',function(e){
+    var a=e.target.closest('a');
+    if(!a||!a.dataset.filter) return;
+    e.preventDefault();
+    document.querySelectorAll('#sideNav a').forEach(function(l){l.classList.remove('active')});
+    a.classList.add('active');
+    activeFilter=a.dataset.filter;
+    renderTable();
+    sidebar.classList.remove('open');sidebarOverlay.classList.remove('open');
+  });
+
+  // ===== CHIP FILTERS =====
+  document.querySelector('.filter-chips').addEventListener('click',function(e){
+    var chip=e.target.closest('.chip');
+    if(!chip) return;
+    document.querySelectorAll('.filter-chips .chip').forEach(function(c){c.classList.remove('active')});
+    chip.classList.add('active');
+    activeStatusChip=chip.dataset.chip;
+    renderTable();
+  });
+
+  // ===== SORT =====
+  document.querySelector('thead').addEventListener('click',function(e){
+    var th=e.target.closest('th');
+    if(!th||!th.dataset.sort) return;
+    var key=th.dataset.sort;
+    if(sortKey===key) sortDir=sortDir==='asc'?'desc':'asc';
+    else{sortKey=key;sortDir='asc'}
+    renderTable();
+  });
+
+  // ===== SEARCH =====
+  var searchTimer;
+  searchInput.addEventListener('input',function(){
+    clearTimeout(searchTimer);
+    searchTimer=setTimeout(renderTable,300);
+  });
+
+  // ===== EXPORT CSV =====
+  document.getElementById('exportBtn').addEventListener('click',function(){
+    var filtered=getFiltered();
+    if(!filtered.length) return;
+    var headers=['Full Name','Email','Phone','Education','University','Grad Year','Skills','Experience','LinkedIn','Portfolio','Resume URL','Job Post','Location','Relocate','Status','Cover Letter','Date Applied'];
+    var rows=filtered.map(function(c){
+      return [
+        c.full_name||'',c.email||'',c.phone||'',c.education||'',c.university||'',c.grad_year||'',
+        Array.isArray(c.skills)?c.skills.join('; '):(c.skills||''),c.experience_level||'',
+        c.linkedin||'',c.portfolio||'',c.resume_url||'',c.job_post||'',c.location||'',
+        c.willing_to_relocate?'Yes':'No',c.status||'new',c.cover_letter||'',
+        c.created_at?new Date(c.created_at).toLocaleDateString():''
+      ].map(function(v){return'"'+String(v).replace(/"/g,'""')+'"'}).join(',');
+    });
+    var csv=headers.join(',')+'\n'+rows.join('\n');
+    var blob=new Blob([csv],{type:'text/csv'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='aeternum_candidates_'+new Date().toISOString().slice(0,10)+'.csv';
+    a.click();
+  });
+
+})();
+</script>
+</body>
+</html>
