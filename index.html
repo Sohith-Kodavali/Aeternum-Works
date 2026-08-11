@@ -17,8 +17,8 @@
 @property --border-angle{syntax:'<angle>';initial-value:0deg;inherits:false}@keyframes borderSpin{to{--border-angle:360deg}}
 /* ===== AMBIENT CANVAS ===== */
 .ambient-canvas{position:absolute;inset:0;z-index:0;pointer-events:none}
-/* ===== VIDEO PRELOADER ===== */
-.video-preloader{position:fixed;inset:0;z-index:9999;overflow:hidden;background:var(--black);transition:opacity .8s var(--ease),visibility .8s var(--ease)}.video-preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}.preloader-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}.preloader-video::-webkit-media-controls{display:none!important}.preloader-brand{position:absolute;bottom:14%;left:50%;transform:translateX(-50%);z-index:3;display:grid;justify-items:center;gap:16px}.preloader-brand .brandname{font:500 clamp(2rem,4vw,3rem)/1 var(--serif);letter-spacing:.17em;text-transform:uppercase;color:var(--gold);text-shadow:0 0 30px oklch(78% .16 82/.5),0 0 60px oklch(78% .16 82/.25)}.preloader-brand .brandsub{font-size:.58rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}.preloader-vignette{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to top,var(--black) 0%,transparent 30%,transparent 70%,var(--black) 100%)}.preloader-skip{position:absolute;bottom:32px;right:32px;z-index:4;padding:8px 18px;border:1px solid oklch(78% .16 82/.4);border-radius:999px;background:oklch(0% 0 0/.5);color:var(--gold);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .3s,border-color .3s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}.preloader-skip:hover{background:var(--gold);border-color:var(--gold);color:var(--black)}
+/* ===== LOADING SCREEN ===== */
+.loading-screen{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 50%,oklch(10% .015 75),var(--black));transition:opacity .6s var(--ease),visibility .6s var(--ease);opacity:1;visibility:visible}.loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}.loader-inner{display:flex;flex-direction:column;align-items:center;gap:28px;position:relative;z-index:1}.loader-logo{width:90px;height:90px;border-radius:50%;filter:drop-shadow(0 0 28px oklch(78% .16 82/.5)) drop-shadow(0 0 60px oklch(78% .16 82/.2));animation:loaderPulse 2s ease-in-out infinite}.loader-logo img{width:100%;height:100%;object-fit:cover;border-radius:50%}@keyframes loaderPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 28px oklch(78% .16 82/.5)) drop-shadow(0 0 60px oklch(78% .16 82/.2))}50%{transform:scale(1.06);filter:drop-shadow(0 0 40px oklch(78% .16 82/.7)) drop-shadow(0 0 80px oklch(78% .16 82/.35))}}.loader-bar-wrap{width:260px;height:3px;border-radius:3px;background:oklch(20% .025 75);overflow:hidden;position:relative}.loader-bar-wrap::after{content:'';position:absolute;inset:0;border-radius:inherit;border:1px solid oklch(78% .16 82/.15)}.loader-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold3),var(--gold),var(--gold2));background-size:200% 100%;animation:barShimmer 1.5s linear infinite;width:0%;transition:width .3s cubic-bezier(.22,.61,.36,1)}@keyframes barShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}.loader-status{display:flex;flex-direction:column;align-items:center;gap:6px}.loader-status .status-line{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);opacity:.9;text-shadow:0 0 12px oklch(78% .16 82/.3)}.loader-status .status-detail{font-family:'Courier New',monospace;font-size:.58rem;letter-spacing:.06em;color:var(--dim);transition:opacity .3s}.loader-percent{font-family:var(--serif);font-size:2rem;color:var(--gold);letter-spacing:.04em;text-shadow:0 0 20px oklch(78% .16 82/.35)}
 
 /* ===== NOISE OVERLAY ===== */
 .noise-overlay{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.035;mix-blend-mode:overlay}.noise-overlay svg{width:100%;height:100%}
@@ -162,17 +162,21 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
   </defs>
 </svg>
 
-<!-- ===== VIDEO PRELOADER ===== -->
-<div class="video-preloader" id="preloader">
-  <video autoplay loop muted playsinline class="preloader-video" id="preloaderVideo" poster="aeternum_solutions.png">
-    <source src="final_design.mp4" type="video/mp4">
-  </video>
-  <div class="preloader-vignette"></div>
-  <div class="preloader-brand">
-    <span class="brandname">Aeternum</span>
-    <span class="brandsub">Design Beyond Ordinary</span>
+<!-- ===== LOADING SCREEN ===== -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loader-inner">
+    <div class="loader-logo">
+      <img src="aeternum_solutions.png" alt="Aeternum Works">
+    </div>
+    <div class="loader-percent" id="loaderPercent">0%</div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar-fill" id="loaderBar"></div>
+    </div>
+    <div class="loader-status">
+      <span class="status-line" id="statusLine">Initializing</span>
+      <span class="status-detail" id="statusDetail">Booting core systems...</span>
+    </div>
   </div>
-  <button class="preloader-skip" id="preloaderSkip">Skip intro</button>
 </div>
 
 <div class="cursor-glow" aria-hidden="true"></div>
@@ -460,33 +464,63 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 (function(){
 var doc=document,body=doc.body,html=doc.documentElement;
 
-// ===== VIDEO PRELOADER =====
-  var preloader=doc.getElementById('preloader');
-  var preloaderVideo=doc.getElementById('preloaderVideo');
-  var skipBtn=doc.getElementById('preloaderSkip');
+// ===== LOADING SCREEN =====
+  var loadingScreen=doc.getElementById('loadingScreen');
+  var loaderBar=doc.getElementById('loaderBar');
+  var loaderPercent=doc.getElementById('loaderPercent');
+  var statusLine=doc.getElementById('statusLine');
+  var statusDetail=doc.getElementById('statusDetail');
   var dismissed=false;
 
-  function dismissPreloader(){
+  var statuses=[
+    {line:'Initializing',detail:'Booting core systems...'},
+    {line:'Loading assets',detail:'Parsing stylesheets & fonts...'},
+    {line:'Rendering page',detail:'Building DOM & layout tree...'},
+    {line:'Hydrating modules',detail:'Wiring interactivity hooks...'},
+    {line:'Optimizing',detail:'Pre-caching shaders & textures...'},
+    {line:'Ready',detail:'Welcome to Aeternum Works.'}
+  ];
+
+  function dismissLoader(){
     if(dismissed) return; dismissed=true;
-    if(!preloader) return;
-    preloader.classList.add('hidden');
+    if(!loadingScreen) return;
+    loadingScreen.classList.add('hidden');
     body.classList.remove('loading');
     doc.querySelectorAll('.split-word').forEach(function(w){w.classList.add('revealed')});
-    if(preloaderVideo) preloaderVideo.pause();
   }
 
-  if(skipBtn) skipBtn.addEventListener('click',dismissPreloader);
+  (function simulateLoad(){
+    var progress=0;
+    var interval=setInterval(function(){
+      progress+=Math.random()*18+6;
+      if(progress>=100){progress=100;clearInterval(interval)}
+      var p=Math.round(progress);
+      loaderBar.style.width=p+'%';
+      loaderPercent.textContent=p+'%';
+      var idx=Math.min(Math.floor(p/20),statuses.length-1);
+      if(statusLine.textContent!==statuses[idx].line){
+        statusLine.textContent=statuses[idx].line;
+        statusDetail.textContent=statuses[idx].detail;
+      }
+    },280);
 
-  if(preloaderVideo){
-    preloaderVideo.addEventListener('ended',dismissPreloader);
-    // fallback: auto-dismiss after 8s if video gets stuck
+    window.addEventListener('load',function(){
+      if(!dismissed){
+        clearInterval(interval);
+        progress=100;
+        loaderBar.style.width='100%';
+        loaderPercent.textContent='100%';
+        statusLine.textContent=statuses[statuses.length-1].line;
+        statusDetail.textContent=statuses[statuses.length-1].detail;
+        setTimeout(dismissLoader,600);
+      }
+    });
+
+    // fallback dismiss
     setTimeout(function(){
-      if(!dismissed && preloaderVideo.currentTime<1) dismissPreloader();
-    },8000);
-    preloaderVideo.play().catch(function(){dismissPreloader()});
-  } else {
-    setTimeout(dismissPreloader,800);
-  }
+      if(!dismissed) dismissLoader();
+    },5000);
+  })();
 
 // ===== MOBILE MENU =====
 var menu=doc.querySelector('.menu'),navLinks=doc.querySelector('.links');
