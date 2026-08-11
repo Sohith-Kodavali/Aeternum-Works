@@ -18,7 +18,17 @@
 /* ===== AMBIENT CANVAS ===== */
 .ambient-canvas{position:absolute;inset:0;z-index:0;pointer-events:none}
 /* ===== LOADING SCREEN ===== */
-.loading-screen{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 50%,oklch(10% .015 75),var(--black));transition:opacity .6s var(--ease),visibility .6s var(--ease);opacity:1;visibility:visible}.loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}.loader-inner{display:flex;flex-direction:column;align-items:center;gap:28px;position:relative;z-index:1}.loader-logo{width:90px;height:90px;border-radius:50%;filter:drop-shadow(0 0 28px oklch(78% .16 82/.5)) drop-shadow(0 0 60px oklch(78% .16 82/.2));animation:loaderPulse 2s ease-in-out infinite}.loader-logo img{width:100%;height:100%;object-fit:cover;border-radius:50%}@keyframes loaderPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 28px oklch(78% .16 82/.5)) drop-shadow(0 0 60px oklch(78% .16 82/.2))}50%{transform:scale(1.06);filter:drop-shadow(0 0 40px oklch(78% .16 82/.7)) drop-shadow(0 0 80px oklch(78% .16 82/.35))}}.loader-bar-wrap{width:260px;height:3px;border-radius:3px;background:oklch(20% .025 75);overflow:hidden;position:relative}.loader-bar-wrap::after{content:'';position:absolute;inset:0;border-radius:inherit;border:1px solid oklch(78% .16 82/.15)}.loader-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold3),var(--gold),var(--gold2));background-size:200% 100%;animation:barShimmer 1.5s linear infinite;width:0%;transition:width .3s cubic-bezier(.22,.61,.36,1)}@keyframes barShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}.loader-status{display:flex;flex-direction:column;align-items:center;gap:6px}.loader-status .status-line{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);opacity:.9;text-shadow:0 0 12px oklch(78% .16 82/.3)}.loader-status .status-detail{font-family:'Courier New',monospace;font-size:.58rem;letter-spacing:.06em;color:var(--dim);transition:opacity .3s}.loader-percent{font-family:var(--serif);font-size:2rem;color:var(--gold);letter-spacing:.04em;text-shadow:0 0 20px oklch(78% .16 82/.35)}
+.loading-screen{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--black);overflow:hidden;transition:opacity .7s var(--ease),visibility .7s var(--ease)}.loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}.loader-bg-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,oklch(78% .16 82/.12) 0%,transparent 55%),radial-gradient(ellipse at 50% 55%,oklch(43% .09 82/.08) 0%,transparent 50%)}.loader-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}.loader-particle{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--gold);opacity:0;animation:particleFloat 4s ease-in-out infinite}.loader-particle:nth-child(1){left:15%;top:70%;animation-delay:0s}.loader-particle:nth-child(2){left:25%;top:20%;animation-delay:.6s}.loader-particle:nth-child(3){left:75%;top:75%;animation-delay:1.2s}.loader-particle:nth-child(4){left:80%;top:15%;animation-delay:1.8s}.loader-particle:nth-child(5){left:40%;top:85%;animation-delay:2.4s}.loader-particle:nth-child(6){left:55%;top:10%;animation-delay:3s}.loader-particle:nth-child(7){left:90%;top:45%;animation-delay:.3s}.loader-particle:nth-child(8){left:10%;top:40%;animation-delay:1.5s}.loader-particle:nth-child(9){left:60%;top:90%;animation-delay:2.7s}.loader-particle:nth-child(10){left:35%;top:30%;animation-delay:.9s}@keyframes particleFloat{0%{opacity:0;transform:translateY(0) scale(1)}10%{opacity:.9}90%{opacity:.3}100%{opacity:0;transform:translateY(-120px) scale(.4)}}
+
+.loader-frame{position:relative;display:flex;flex-direction:column;align-items:center;gap:32px}.loader-ring-wrap{position:relative;width:180px;height:180px;display:grid;place-items:center}.loader-ring-svg{position:absolute;inset:0;width:180px;height:180px;transform:rotate(-90deg)}.loader-ring-track{fill:none;stroke:oklch(27% .04 75/.4);stroke-width:1.5}.loader-ring-fill{fill:none;stroke:var(--gold);stroke-width:1.5;stroke-linecap:round;stroke-dasharray:502;stroke-dashoffset:502;transition:stroke-dashoffset .4s cubic-bezier(.22,.61,.36,1);filter:drop-shadow(0 0 6px oklch(78% .16 82/.6))}.loader-ring-glow{fill:none;stroke:oklch(78% .16 82/.25);stroke-width:6;stroke-linecap:round;stroke-dasharray:502;stroke-dashoffset:502;transition:stroke-dashoffset .4s cubic-bezier(.22,.61,.36,1);filter:blur(8px)}.loader-logo{width:100px;height:100px;border-radius:50%;position:relative;z-index:1;filter:drop-shadow(0 0 30px oklch(78% .16 82/.5)) drop-shadow(0 0 60px oklch(78% .16 82/.2));animation:loaderPulse 2.5s ease-in-out infinite}.loader-logo img{width:100%;height:100%;object-fit:cover;border-radius:50%}@keyframes loaderPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 30px oklch(78% .16 82/.5)) drop-shadow(0 0 60px oklch(78% .16 82/.2))}50%{transform:scale(1.05);filter:drop-shadow(0 0 45px oklch(78% .16 82/.75)) drop-shadow(0 0 90px oklch(78% .16 82/.4))}}
+
+.loader-ornament{display:flex;align-items:center;gap:16px}.loader-orn-line{width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--gold3),var(--gold),transparent)}.loader-orn-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px oklch(78% .16 82/.6);animation:ornDotPulse 2s ease-in-out infinite}@keyframes ornDotPulse{0%,100%{box-shadow:0 0 8px oklch(78% .16 82/.6)}50%{box-shadow:0 0 16px oklch(78% .16 82/.9)}}
+
+.loader-brand-block{display:flex;flex-direction:column;align-items:center;gap:2px}.loader-brand-name{font:500 1.6rem/1 var(--serif);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);text-shadow:0 0 25px oklch(78% .16 82/.4)}.loader-brand-sub{font-size:.5rem;letter-spacing:.22em;color:var(--dim);text-transform:uppercase}
+
+.loader-progress-block{display:flex;flex-direction:column;align-items:center;gap:12px}.loader-percent{font-family:var(--serif);font-size:2.4rem;line-height:1;color:var(--white);letter-spacing:.02em}.loader-percent sup{font-size:.9rem;color:var(--gold);vertical-align:super;margin-left:1px}.loader-bar-wrap{width:240px;height:2px;border-radius:2px;background:oklch(18% .02 75);overflow:hidden;position:relative}.loader-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--gold3),var(--gold),var(--gold));width:0%;transition:width .35s cubic-bezier(.22,.61,.36,1);position:relative}.loader-bar-fill::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:20px;height:2px;border-radius:2px;background:var(--white);box-shadow:0 0 10px oklch(78% .16 82/.8);opacity:.8;filter:blur(1px)}
+
+.loader-status{display:flex;flex-direction:column;align-items:center;gap:4px}.loader-status .status-line{font-size:.65rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);opacity:.85}.loader-status .status-detail{font-family:'Courier New',Courier,monospace;font-size:.56rem;letter-spacing:.05em;color:var(--dim);min-height:1em}
 
 /* ===== NOISE OVERLAY ===== */
 .noise-overlay{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.035;mix-blend-mode:overlay}.noise-overlay svg{width:100%;height:100%}
@@ -164,13 +174,38 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 
 <!-- ===== LOADING SCREEN ===== -->
 <div class="loading-screen" id="loadingScreen">
-  <div class="loader-inner">
-    <div class="loader-logo">
-      <img src="aeternum_solutions.png" alt="Aeternum Works">
+  <div class="loader-bg-glow"></div>
+  <div class="loader-particles">
+    <span class="loader-particle"></span><span class="loader-particle"></span><span class="loader-particle"></span>
+    <span class="loader-particle"></span><span class="loader-particle"></span><span class="loader-particle"></span>
+    <span class="loader-particle"></span><span class="loader-particle"></span><span class="loader-particle"></span>
+    <span class="loader-particle"></span>
+  </div>
+  <div class="loader-frame">
+    <div class="loader-ring-wrap">
+      <svg class="loader-ring-svg" viewBox="0 0 180 180">
+        <circle class="loader-ring-track" cx="90" cy="90" r="80"/>
+        <circle class="loader-ring-glow" id="ringGlow" cx="90" cy="90" r="80"/>
+        <circle class="loader-ring-fill" id="ringFill" cx="90" cy="90" r="80"/>
+      </svg>
+      <div class="loader-logo">
+        <img src="aeternum_solutions.png" alt="Aeternum Works">
+      </div>
     </div>
-    <div class="loader-percent" id="loaderPercent">0%</div>
-    <div class="loader-bar-wrap">
-      <div class="loader-bar-fill" id="loaderBar"></div>
+    <div class="loader-ornament">
+      <span class="loader-orn-line"></span>
+      <span class="loader-orn-dot"></span>
+      <span class="loader-orn-line"></span>
+    </div>
+    <div class="loader-brand-block">
+      <span class="loader-brand-name">Aeternum</span>
+      <span class="loader-brand-sub">Design Beyond Ordinary</span>
+    </div>
+    <div class="loader-progress-block">
+      <div class="loader-percent" id="loaderPercent">0<sup>%</sup></div>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar-fill" id="loaderBar"></div>
+      </div>
     </div>
     <div class="loader-status">
       <span class="status-line" id="statusLine">Initializing</span>
@@ -468,9 +503,12 @@ var doc=document,body=doc.body,html=doc.documentElement;
   var loadingScreen=doc.getElementById('loadingScreen');
   var loaderBar=doc.getElementById('loaderBar');
   var loaderPercent=doc.getElementById('loaderPercent');
+  var ringFill=doc.getElementById('ringFill');
+  var ringGlow=doc.getElementById('ringGlow');
   var statusLine=doc.getElementById('statusLine');
   var statusDetail=doc.getElementById('statusDetail');
   var dismissed=false;
+  var circumference=2*Math.PI*80; // ~502
 
   var statuses=[
     {line:'Initializing',detail:'Booting core systems...'},
@@ -480,6 +518,19 @@ var doc=document,body=doc.body,html=doc.documentElement;
     {line:'Optimizing',detail:'Pre-caching shaders & textures...'},
     {line:'Ready',detail:'Welcome to Aeternum Works.'}
   ];
+
+  function setProgress(pct){
+    var offset=circumference-(circumference*pct/100);
+    ringFill.style.strokeDashoffset=offset;
+    ringGlow.style.strokeDashoffset=offset;
+    loaderBar.style.width=pct+'%';
+    loaderPercent.innerHTML=pct+'<sup>%</sup>';
+  }
+
+  ringFill.style.strokeDasharray=circumference;
+  ringGlow.style.strokeDasharray=circumference;
+  ringFill.style.strokeDashoffset=circumference;
+  ringGlow.style.strokeDashoffset=circumference;
 
   function dismissLoader(){
     if(dismissed) return; dismissed=true;
@@ -495,8 +546,7 @@ var doc=document,body=doc.body,html=doc.documentElement;
       progress+=Math.random()*18+6;
       if(progress>=100){progress=100;clearInterval(interval)}
       var p=Math.round(progress);
-      loaderBar.style.width=p+'%';
-      loaderPercent.textContent=p+'%';
+      setProgress(p);
       var idx=Math.min(Math.floor(p/20),statuses.length-1);
       if(statusLine.textContent!==statuses[idx].line){
         statusLine.textContent=statuses[idx].line;
@@ -507,16 +557,13 @@ var doc=document,body=doc.body,html=doc.documentElement;
     window.addEventListener('load',function(){
       if(!dismissed){
         clearInterval(interval);
-        progress=100;
-        loaderBar.style.width='100%';
-        loaderPercent.textContent='100%';
+        setProgress(100);
         statusLine.textContent=statuses[statuses.length-1].line;
         statusDetail.textContent=statuses[statuses.length-1].detail;
         setTimeout(dismissLoader,600);
       }
     });
 
-    // fallback dismiss
     setTimeout(function(){
       if(!dismissed) dismissLoader();
     },5000);
