@@ -70,7 +70,7 @@ section:not(.hero){scroll-margin-top:30px;position:relative;isolation:isolate}
 /* Projects — Sapphire Grid */
 .projects{--ac1:var(--sapphire);--ac2:var(--sapphire2);--ac3:var(--sapphire3)}
 .projects .eyebrow{color:var(--ac1)}.projects .section-head>p:last-child{color:oklch(68% .025 75)}
-.project-grid-new{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;perspective:1200px}
+.project-grid-new{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;perspective:1200px}
 .project-card-new{position:relative;display:grid;grid-template-rows:auto 1fr auto;border-radius:18px;background:linear-gradient(170deg,oklch(14% .025 248/.9),oklch(7% .012 248/.95));border:1px solid oklch(28% .06 248/.5);overflow:hidden;transition:transform .45s var(--spring),box-shadow .4s,border-color .4s;cursor:default;transform-style:preserve-3d}.project-card-new:hover{transform:translateY(-8px) translateZ(20px);border-color:var(--ac2);box-shadow:0 28px 60px oklch(0% 0 0/.5),0 0 45px oklch(68% .15 248/.14)}
 .project-card-new::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--ac1),var(--ac2),transparent);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease)}.project-card-new:hover::after{transform:scaleX(1)}
 .preview-area{position:relative;height:220px;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 30%,oklch(68% .15 248/.2),transparent 55%),linear-gradient(180deg,oklch(10% .03 248),oklch(5% .01 248));overflow:hidden;isolation:isolate}
@@ -105,7 +105,7 @@ section:not(.hero){scroll-margin-top:30px;position:relative;isolation:isolate}
 .founder-card{position:relative;width:100%;max-width:440px;padding:40px 32px;border-radius:24px;background:linear-gradient(160deg,oklch(14% .025 75/.9),oklch(8% .015 75/.95));border:1px solid oklch(30% .05 82/.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);overflow:hidden;transform-style:preserve-3d;transition:transform .5s var(--spring),box-shadow .5s}.founder-card:hover{transform:translateY(-6px);box-shadow:0 28px 60px oklch(0% 0 0/.45),0 0 50px oklch(78% .16 82/.1)}.founder-card::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:conic-gradient(from var(--border-angle),var(--gold3),transparent 30%,var(--gold) 50%,transparent 70%,var(--gold3));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:borderSpin 5s linear infinite;opacity:.5;transition:opacity .4s}.founder-card:hover::before{opacity:.8}.founder-card::after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(ellipse at 50% 0%,oklch(78% .16 82/.08),transparent 60%);pointer-events:none}
 .founder-photo-wrap{position:relative;width:140px;height:140px;margin:0 auto 24px;border-radius:50%}.founder-photo-ring{position:absolute;inset:-6px;border-radius:50%;border:2px solid oklch(78% .16 82/.45);animation:founderRingPulse 3s ease-in-out infinite}.founder-photo-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,oklch(18% .03 75),oklch(8% .01 75));border:2px solid oklch(65% .12 82/.5);display:grid;place-items:center;font:4rem var(--serif);color:var(--gold);position:relative;z-index:1}.founder-photo-inner img{width:100%;height:100%;object-fit:cover}.founder-photo-glow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle,oklch(78% .16 82/.18),transparent 60%);pointer-events:none;animation:founderGlowPulse 3s ease-in-out infinite}@keyframes founderRingPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.06);opacity:.85}}@keyframes founderGlowPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.15);opacity:.9}}
 .founder-info{text-align:center}.founder-name{font:500 1.7rem/1.1 var(--serif);letter-spacing:-.03em;color:var(--white);margin-bottom:4px}.founder-role{display:inline-block;padding:4px 14px;background:oklch(78% .16 82/.12);border:1px solid oklch(78% .16 82/.25);border-radius:999px;color:var(--gold);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px}
-.founder-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px}.founder-stat{text-align:center;padding:14px 8px;border-radius:14px;background:oklch(12% .02 75/.5);border:1px solid oklch(27% .04 75/.3);transition:background .3s,border-color .3s}.founder-stat:hover{background:oklch(78% .16 82/.06);border-color:oklch(78% .16 82/.25)}.founder-stat .stat-num{display:block;font:600 1.2rem/1 var(--sans);color:var(--gold);margin-bottom:3px}.founder-stat .stat-label{display:block;font-size:.58rem;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.founder-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:20px}.founder-stat{text-align:center;padding:14px 8px;border-radius:14px;background:oklch(12% .02 75/.5);border:1px solid oklch(27% .04 75/.3);transition:background .3s,border-color .3s}.founder-stat:hover{background:oklch(78% .16 82/.06);border-color:oklch(78% .16 82/.25)}.founder-stat .stat-num{display:block;font:600 1.2rem/1 var(--sans);color:var(--gold);margin-bottom:3px}.founder-stat .stat-label{display:block;font-size:.58rem;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
 .founder-details{display:grid;gap:8px}.founder-detail{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:10px;background:oklch(12% .02 75/.3);border:1px solid oklch(27% .04 75/.25);font-size:.72rem;color:var(--muted);transition:background .3s,border-color .3s}.founder-detail:hover{background:oklch(12% .02 75/.5);border-color:oklch(78% .16 82/.2)}.founder-detail .detail-icon{flex-shrink:0;width:32px;height:32px;display:grid;place-items:center;border-radius:8px;background:oklch(78% .16 82/.08);color:var(--gold);font-size:.85rem}.founder-detail .detail-label{font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}.founder-detail .detail-value{font-size:.72rem;color:var(--white)}.founder-socials{display:flex;justify-content:center;gap:10px;margin-top:20px}.founder-social{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;border:1px solid oklch(27% .04 75/.5);color:var(--dim);font-size:.75rem;transition:all .3s var(--spring)}.founder-social:hover{background:var(--gold);border-color:var(--gold);color:var(--black);transform:translateY(-3px);box-shadow:0 6px 18px oklch(78% .16 82/.2)}
 .about-copy{position:relative;z-index:1}.title{font:500 clamp(2.8rem,5vw,4.8rem)/.9 var(--serif);letter-spacing:-.05em}.title em{font-style:normal;background:linear-gradient(90deg,var(--gold),oklch(93% .018 75),var(--gold),var(--gold2),var(--gold));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmerTitle 4s ease-in-out infinite}.about-copy p:not(.eyebrow){max-width:53ch;margin-top:24px;color:var(--muted);font-size:.93rem;line-height:1.75}@keyframes shimmerTitle{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 
@@ -139,7 +139,7 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:980px){.wrap{width:min(100% - 48px,760px)}.links{gap:22px}.hero{min-height:100vh}.hero-grid{max-width:100%}.about-grid{gap:38px}.service-grid{grid-template-columns:repeat(3,1fr)}.project-showcase{height:400px}.project-slide{grid-template-columns:1fr;gap:20px}.project-mockup{height:200px}.project-details{text-align:center;padding:0}.project-cta{margin:0 auto}.proof-grid{grid-template-columns:1fr}.process{padding-right:0;border-right:0;border-bottom:1px solid var(--line)}.metrics{padding:32px 0}.timeline{gap:2px}.step-node small{font-size:.57rem}.testimonial-marquee::before,.testimonial-marquee::after{width:80px}.quote-card{flex:0 0 320px}.footergrid{grid-template-columns:1.4fr 1fr 1fr}.footergrid .footercol:last-child{grid-column:2/-1}.cta-orb{width:450px;height:450px}}
-@media(max-width:680px){.wrap{width:min(100% - 32px,520px)}.nav{padding-top:14px}.nav .pill{display:none}.menu{display:grid;place-items:center}.links{position:fixed;inset:0;z-index:5;display:none;flex-direction:column;align-items:flex-start;justify-content:center;gap:24px;padding:32px;background:var(--black)}body.menu-open .links{display:flex}body.menu-open .menu{position:fixed;z-index:6;top:14px;right:16px}.links a{font:500 2.3rem var(--serif);letter-spacing:-.03em;text-transform:none}.hero{min-height:100vh}.hero-content{padding-top:130px;margin-left:16px;width:calc(100% - 32px)}.hero-video{object-fit:contain;object-position:center top!important}.hero-title{font-size:clamp(3.5rem,17vw,5.3rem)}.hero-lead{font-size:.91rem}.since{max-width:165px;font-size:.62rem}.scroll{display:none}.about{padding-top:80px}.about-grid{grid-template-columns:1fr;gap:20px}.about-illustration{order:-1;padding:0}.founder-card{padding:32px 24px;max-width:100%}.principles{gap:10px}.principle-card{padding:14px 16px}.section-head{display:block;margin-bottom:24px}.section-head>p:last-child{margin-top:12px}.service-grid{grid-template-columns:1fr 1fr;gap:10px}.service-card{min-height:220px;padding:22px 12px 18px}.service-card h3{font-size:1rem}.project-showcase{height:340px}.project-slide{grid-template-columns:1fr;gap:12px}.project-mockup{height:170px}.project-nav{gap:8px;margin-top:20px}.project-progress{width:120px}.steps,.timeline{gap:0}.step-node small{font-size:.55rem}.step-node strong{font-size:.85rem}.metric-grid{grid-template-columns:repeat(2,1fr);row-gap:22px}.metric:nth-child(2){border-right:0}.metric:nth-child(3),.metric:nth-child(4){padding-top:20px;border-top:1px solid var(--line)}.metric:nth-child(3){padding-left:0}.metric:nth-child(4){padding-right:0}.testimonial-marquee::before,.testimonial-marquee::after{width:50px}.quote-card{flex:0 0 300px;padding:18px}.cta{padding:70px 0 80px}.cta-orb{width:350px;height:350px}.cta-ray{height:200px}.footergrid{grid-template-columns:1fr 1fr;gap:28px 18px}.footerbrand{grid-column:1/-1}.footergrid .footercol:last-child{grid-column:auto}.footbottom{align-items:flex-start;flex-wrap:wrap}}
+@media(max-width:680px){.wrap{width:min(100% - 32px,520px)}.nav{padding-top:14px}.nav .pill{display:none}.menu{display:grid;place-items:center}.links{position:fixed;inset:0;z-index:5;display:none;flex-direction:column;align-items:flex-start;justify-content:center;gap:24px;padding:32px;background:var(--black)}body.menu-open .links{display:flex}body.menu-open .menu{position:fixed;z-index:6;top:14px;right:16px}.links a{font:500 2.3rem var(--serif);letter-spacing:-.03em;text-transform:none}.hero{min-height:100vh}.hero-content{padding-top:130px;margin:0 auto;width:calc(100% - 32px);text-align:center}.hero-grid{max-width:100%;align-items:center;justify-items:center}.hero-copy{display:flex;flex-direction:column;align-items:center}.hero-lead{font-size:.91rem;text-align:center}.actions{justify-content:center}.hero-art{justify-content:center}.hero-video{object-fit:contain;object-position:center top!important}.hero-title{font-size:clamp(3.5rem,17vw,5.3rem)}.since{max-width:165px;font-size:.62rem}.scroll{display:none}.about{padding-top:80px}.about-grid{grid-template-columns:1fr;gap:20px}.about-illustration{order:-1;padding:0}.founder-card{padding:32px 24px;max-width:100%}.principles{gap:10px}.principle-card{padding:14px 16px}.section-head{display:block;margin-bottom:24px}.section-head>p:last-child{margin-top:12px}.service-grid{grid-template-columns:1fr 1fr;gap:10px}.service-card{min-height:220px;padding:22px 12px 18px}.service-card h3{font-size:1rem}.project-showcase{height:340px}.project-slide{grid-template-columns:1fr;gap:12px}.project-mockup{height:170px}.project-nav{gap:8px;margin-top:20px}.project-progress{width:120px}.steps,.timeline{gap:0}.step-node small{font-size:.55rem}.step-node strong{font-size:.85rem}.metric-grid{grid-template-columns:repeat(2,1fr);row-gap:22px}.metric:nth-child(2){border-right:0}.metric:nth-child(3),.metric:nth-child(4){padding-top:20px;border-top:1px solid var(--line)}.metric:nth-child(3){padding-left:0}.metric:nth-child(4){padding-right:0}.testimonial-marquee::before,.testimonial-marquee::after{width:50px}.quote-card{flex:0 0 300px;padding:18px}.cta{padding:70px 0 80px}.cta-orb{width:350px;height:350px}.cta-ray{height:200px}.footergrid{grid-template-columns:1fr 1fr;gap:28px 18px}.footerbrand{grid-column:1/-1}.footergrid .footercol:last-child{grid-column:auto}.footbottom{align-items:flex-start;flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:1ms!important;transition-duration:1ms!important;scroll-behavior:auto!important}.split-word span{transform:none!important;transition:none!important}}
 </style>
 </head>
@@ -304,13 +304,12 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
           </div>
         </div>
         <div class="founder-info">
-          <div class="founder-name">Your Name</div>
+          <div class="founder-name">Sohith Kodavali</div>
           <span class="founder-role">Founder &amp; Creative Director</span>
         </div>
         <div class="founder-stats">
-          <div class="founder-stat"><span class="stat-num">8+</span><span class="stat-label">Years Exp</span></div>
           <div class="founder-stat"><span class="stat-num">50+</span><span class="stat-label">Projects</span></div>
-          <div class="founder-stat"><span class="stat-num">25+</span><span class="stat-label">Clients</span></div>
+          <div class="founder-stat"><span class="stat-num">10+</span><span class="stat-label">Clients</span></div>
         </div>
         <div class="founder-details">
           <div class="founder-detail"><span class="detail-icon">🎓</span><div><span class="detail-label">Education</span><span class="detail-value" style="display:block">B.Tech, Computer Science</span></div></div>
@@ -347,64 +346,44 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
   <div class="wrap">
     <div class="section-head"><p class="eyebrow">Featured projects</p><p>Selected work built to make the right people stop scrolling.</p></div>
     <div class="project-grid-new">
-      <!-- Nexora -->
+      <!-- RRK Foods -->
       <article class="project-card-new">
         <div class="preview-area">
           <div class="preview-shine"></div>
           <div class="preview-placeholder">
-            <div class="preview-icon">◈</div>
-            <div class="preview-label">Nexora</div>
-            <div class="preview-sub">Business Platform</div>
+            <div class="preview-icon">🍗</div>
+            <div class="preview-label">RRK Foods</div>
+            <div class="preview-sub">Restaurant Platform</div>
           </div>
         </div>
         <div class="card-body">
-          <p class="eyebrow">Business / Corporate</p>
-          <h3>Nexora</h3>
-          <p class="project-desc">A bold corporate platform merging luxury aesthetics with uncompromising performance. Crafted for leaders who demand presence.</p>
-          <div class="card-tags"><span>Next.js</span><span>Tailwind CSS</span><span>GSAP</span></div>
+          <p class="eyebrow">Food / Restaurant</p>
+          <h3>RRK Chicken</h3>
+          <p class="project-desc">A premium restaurant experience built to make mouths water. Sleek ordering, rich visuals, and a brand that owns the room.</p>
+          <div class="card-tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
         </div>
         <div class="card-footer">
-          <a class="project-cta" href="#contact">View project <span>↗</span></a>
+          <a class="project-cta" href="https://rrkfoods.in" target="_blank" rel="noopener">View project <span>↗</span></a>
         </div>
       </article>
-      <!-- Velora -->
+      <!-- TechYuva -->
       <article class="project-card-new">
         <div class="preview-area">
           <div class="preview-shine"></div>
           <div class="preview-placeholder">
-            <div class="preview-icon">◆</div>
-            <div class="preview-label">Velora</div>
-            <div class="preview-sub">E-commerce Store</div>
+            <div class="preview-icon">⚡</div>
+            <div class="preview-label">TechYuva</div>
+            <div class="preview-sub">Tech Community</div>
           </div>
         </div>
         <div class="card-body">
-          <p class="eyebrow">E-commerce</p>
-          <h3>Velora</h3>
-          <p class="project-desc">Immersive shopping redefined. Every pixel engineered to convert browsers into believers through motion-rich storytelling.</p>
-          <div class="card-tags"><span>Next.js</span><span>Stripe</span><span>Framer Motion</span></div>
+          <p class="eyebrow">Community / Events</p>
+          <h3>TechYuva</h3>
+          <p class="project-desc">A dynamic tech community hub connecting innovators through events, workshops, and collaboration. Built for the next generation.</p>
+          <div class="card-tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
         </div>
         <div class="card-footer">
-          <a class="project-cta" href="#contact">View project <span>↗</span></a>
-        </div>
-      </article>
-      <!-- Ignite -->
-      <article class="project-card-new">
-        <div class="preview-area">
-          <div class="preview-shine"></div>
-          <div class="preview-placeholder">
-            <div class="preview-icon">◉</div>
-            <div class="preview-label">Ignite</div>
-            <div class="preview-sub">SaaS Dashboard</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="eyebrow">SaaS / Dashboard</p>
-          <h3>Ignite</h3>
-          <p class="project-desc">Analytics elevated to art. A dashboard experience where data breathes, insights flow, and complexity becomes clarity.</p>
-          <div class="card-tags"><span>React</span><span>Node.js</span><span>MongoDB</span></div>
-        </div>
-        <div class="card-footer">
-          <a class="project-cta" href="#contact">View project <span>↗</span></a>
+          <a class="project-cta" href="https://techyuvaeluru.in" target="_blank" rel="noopener">View project <span>↗</span></a>
         </div>
       </article>
     </div>
@@ -445,12 +424,12 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
   </div>
   <div class="testimonial-marquee" id="testimonialMarquee">
     <div class="testimonial-track" id="testimonialTrack">
-      <article class="quote-card"><mark>"</mark><p>Aeternum Works transformed our vision into a powerful digital experience. Highly professional, creative and reliable team!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">R</span></span><span class="by-text"><strong>Rohit Sharma</strong><span>Founder, Nexora</span></span></div></article>
-      <article class="quote-card"><mark>"</mark><p>Their attention to detail and design sense is exceptional. Our website not only looks stunning but also performs incredibly well.</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">A</span></span><span class="by-text"><strong>Anjali Verma</strong><span>Marketing Head, Velora</span></span></div></article>
-      <article class="quote-card"><mark>"</mark><p>From branding to development, everything was delivered beyond our expectations. Truly a premium experience!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">K</span></span><span class="by-text"><strong>Karan Mehta</strong><span>CEO, Ignite Labs</span></span></div></article>
-      <article class="quote-card"><mark>"</mark><p>Aeternum Works transformed our vision into a powerful digital experience. Highly professional, creative and reliable team!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">R</span></span><span class="by-text"><strong>Rohit Sharma</strong><span>Founder, Nexora</span></span></div></article>
-      <article class="quote-card"><mark>"</mark><p>Their attention to detail and design sense is exceptional. Our website not only looks stunning but also performs incredibly well.</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">A</span></span><span class="by-text"><strong>Anjali Verma</strong><span>Marketing Head, Velora</span></span></div></article>
-      <article class="quote-card"><mark>"</mark><p>From branding to development, everything was delivered beyond our expectations. Truly a premium experience!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">K</span></span><span class="by-text"><strong>Karan Mehta</strong><span>CEO, Ignite Labs</span></span></div></article>
+      <article class="quote-card"><mark>"</mark><p>Aeternum Works transformed our vision into a powerful digital experience. Highly professional, creative and reliable team!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">R</span></span><span class="by-text"><strong>Rakesh Reddy</strong><span>Owner, RRK Foods</span></span></div></article>
+      <article class="quote-card"><mark>"</mark><p>Their attention to detail and design sense is exceptional. Our website not only looks stunning but also performs incredibly well.</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">A</span></span><span class="by-text"><strong>Arun Kumar</strong><span>Event Lead, TechYuva</span></span></div></article>
+      <article class="quote-card"><mark>"</mark><p>From branding to development, everything was delivered beyond our expectations. Truly a premium experience!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">P</span></span><span class="by-text"><strong>Priya Sharma</strong><span>Partner, Aeternum</span></span></div></article>
+      <article class="quote-card"><mark>"</mark><p>Aeternum Works transformed our vision into a powerful digital experience. Highly professional, creative and reliable team!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">R</span></span><span class="by-text"><strong>Rakesh Reddy</strong><span>Owner, RRK Foods</span></span></div></article>
+      <article class="quote-card"><mark>"</mark><p>Their attention to detail and design sense is exceptional. Our website not only looks stunning but also performs incredibly well.</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">A</span></span><span class="by-text"><strong>Arun Kumar</strong><span>Event Lead, TechYuva</span></span></div></article>
+      <article class="quote-card"><mark>"</mark><p>From branding to development, everything was delivered beyond our expectations. Truly a premium experience!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">P</span></span><span class="by-text"><strong>Priya Sharma</strong><span>Partner, Aeternum</span></span></div></article>
     </div>
   </div>
 </section>
