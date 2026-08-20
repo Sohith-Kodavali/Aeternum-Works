@@ -160,41 +160,7 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
   <!-- Step 1: Job Selection -->
   <div class="step-label"><span class="num">1</span><span>Choose a position</span></div>
   <div class="job-grid" id="jobGrid">
-    <article class="job-card" data-job="Frontend Developer">
-      <span class="job-icon job-icon-1">&lt;/&gt;</span>
-      <h3>Frontend Developer</h3>
-      <p class="job-desc">Build stunning, performant interfaces for premium brands and businesses.</p>
-      <div class="job-tags"><span>React</span><span>Next.js</span><span>Tailwind</span></div>
-      <span class="job-check">✓</span>
-    </article>
-    <article class="job-card" data-job="Backend Developer">
-      <span class="job-icon job-icon-2">⬡</span>
-      <h3>Backend Developer</h3>
-      <p class="job-desc">Architect scalable, secure systems that power high-traffic digital products.</p>
-      <div class="job-tags"><span>Node.js</span><span>PostgreSQL</span><span>REST APIs</span></div>
-      <span class="job-check">✓</span>
-    </article>
-    <article class="job-card" data-job="UI/UX Designer">
-      <span class="job-icon job-icon-3">◆</span>
-      <h3>UI/UX Designer</h3>
-      <p class="job-desc">Create beautiful, intuitive interfaces that delight users and elevate brands.</p>
-      <div class="job-tags"><span>Figma</span><span>Design Systems</span><span>Prototyping</span></div>
-      <span class="job-check">✓</span>
-    </article>
-    <article class="job-card" data-job="DevOps Engineer">
-      <span class="job-icon job-icon-4">☁</span>
-      <h3>DevOps Engineer</h3>
-      <p class="job-desc">Keep infrastructure reliable, scalable, and lightning-fast for global audiences.</p>
-      <div class="job-tags"><span>AWS</span><span>Docker</span><span>CI/CD</span></div>
-      <span class="job-check">✓</span>
-    </article>
-    <article class="job-card" data-job="Project Manager">
-      <span class="job-icon job-icon-5">✦</span>
-      <h3>Project Manager</h3>
-      <p class="job-desc">Orchestrate complex projects, align teams, and deliver world-class results on time.</p>
-      <div class="job-tags"><span>Agile</span><span>Scrum</span><span>Client Mgmt</span></div>
-      <span class="job-check">✓</span>
-    </article>
+    <!-- Job posts are loaded dynamically from Supabase -->
   </div>
 
   <!-- Step 2: Form -->
@@ -317,11 +283,45 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
       submitBtn=document.getElementById('submitBtn'),
       jobGrid=document.getElementById('jobGrid');
 
-  // Supabase init — replace with your project credentials
-  var SUPABASE_URL='YOUR_SUPABASE_URL';
-  var SUPABASE_KEY='YOUR_SUPABASE_ANON_KEY';
+  // Supabase init
+  var SUPABASE_URL='https://hjdxbihbmbzfndexszqo.supabase.co';
+  var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhqZHhiaWhibWJ6Zm5kZXhzenFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxNzcyNzksImV4cCI6MjEwMjc1MzI3OX0.3Cs4-GkJU1ejNngvd1em9lNGrYGaCqaaTZEewx27nOg';
   var supabase=null;
   try{supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY)}catch(e){}
+
+  // Load active jobs dynamically
+  var jobs=[];
+  async function loadJobs(){
+    try{
+      var res=await supabase.from('jobs').select('*').eq('active',true).order('created_at',{ascending:false});
+      if(res.error) throw res.error;
+      jobs=res.data||[];
+      renderJobs();
+    }catch(e){
+      console.error('Failed to load jobs',e);
+      jobGrid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--muted);padding:20px">No open positions right now. Check back soon.</p>';
+    }
+  }
+
+  function renderJobs(){
+    if(!jobs.length){
+      jobGrid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--muted);padding:20px">No open positions right now. Check back soon.</p>';
+      return;
+    }
+    jobGrid.innerHTML=jobs.map(function(j,i){
+      var iconClass='job-icon-'+(i%5+1);
+      var tags=(j.skills||[]).map(function(s){return '<span>'+esc(s)+'</span>'}).join('');
+      return '<article class="job-card" data-job="'+esc(j.title)+'">'+
+        '<span class="job-icon '+iconClass+'">'+esc(j.icon||'💼')+'</span>'+
+        '<h3>'+esc(j.title)+'</h3>'+
+        '<p class="job-desc">'+esc(j.description||'')+'</p>'+
+        '<div class="job-tags">'+tags+'</div>'+
+        '<span class="job-check">✓</span>'+
+      '</article>';
+    }).join('');
+  }
+
+  function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=String(s);return d.innerHTML}
 
   // Job card selection
   jobGrid.addEventListener('click',function(e){
@@ -333,6 +333,8 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
     formSection.classList.add('visible');
     formSection.scrollIntoView({behavior:'smooth',block:'start'});
   });
+
+  loadJobs();
 
   // File upload visual
   var fileDrop=document.getElementById('fileDrop'),
@@ -410,58 +412,34 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
       var resumeFile=resumeInput.files[0];
       var resumeUrl='';
 
-      if(supabase && SUPABASE_URL!=='YOUR_SUPABASE_URL'){
-        // Upload resume
-        var filePath=Date.now()+'_'+resumeFile.name.replace(/[^a-zA-Z0-9._-]/g,'_');
-        var uploadRes=await supabase.storage.from('resumes').upload(filePath,resumeFile);
-        if(uploadRes.error) throw uploadRes.error;
-        var urlRes=supabase.storage.from('resumes').getPublicUrl(filePath);
-        resumeUrl=urlRes.data.publicUrl;
+      if(!supabase) throw new Error('Supabase not initialized');
 
-        // Insert candidate
-        var insertRes=await supabase.from('candidates').insert({
-          full_name:formData.get('full_name'),
-          email:formData.get('email'),
-          phone:formData.get('phone'),
-          education:formData.get('education'),
-          university:formData.get('university')||null,
-          grad_year:formData.get('grad_year')||null,
-          skills:skills.length?skills:null,
-          experience_level:formData.get('experience_level'),
-          linkedin:formData.get('linkedin')||null,
-          portfolio:formData.get('portfolio')||null,
-          resume_url:resumeUrl,
-          job_post:selectedJob,
-          cover_letter:formData.get('cover_letter')||null,
-          location:formData.get('location')||null,
-          willing_to_relocate:relocate
-        });
-        if(insertRes.error) throw insertRes.error;
-      } else {
-        // No Supabase configured — store in localStorage as fallback
-        var candidates=JSON.parse(localStorage.getItem('aeternum_candidates')||'[]');
-        candidates.push({
-          id:Date.now().toString(36)+Math.random().toString(36).slice(2),
-          full_name:formData.get('full_name'),
-          email:formData.get('email'),
-          phone:formData.get('phone'),
-          education:formData.get('education'),
-          university:formData.get('university')||null,
-          grad_year:formData.get('grad_year')||null,
-          skills:skills,
-          experience_level:formData.get('experience_level'),
-          linkedin:formData.get('linkedin')||null,
-          portfolio:formData.get('portfolio')||null,
-          resume_url:'local_file:'+resumeFile.name,
-          job_post:selectedJob,
-          cover_letter:formData.get('cover_letter')||null,
-          location:formData.get('location')||null,
-          willing_to_relocate:relocate,
-          status:'new',
-          created_at:new Date().toISOString()
-        });
-        localStorage.setItem('aeternum_candidates',JSON.stringify(candidates));
-      }
+      // Upload resume
+      var filePath=Date.now()+'_'+resumeFile.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+      var uploadRes=await supabase.storage.from('resumes').upload(filePath,resumeFile);
+      if(uploadRes.error) throw uploadRes.error;
+      var urlRes=supabase.storage.from('resumes').getPublicUrl(filePath);
+      resumeUrl=urlRes.data.publicUrl;
+
+      // Insert candidate
+      var insertRes=await supabase.from('candidates').insert({
+        full_name:formData.get('full_name'),
+        email:formData.get('email'),
+        phone:formData.get('phone'),
+        education:formData.get('education'),
+        university:formData.get('university')||null,
+        grad_year:formData.get('grad_year')||null,
+        skills:skills.length?skills:null,
+        experience_level:formData.get('experience_level'),
+        linkedin:formData.get('linkedin')||null,
+        portfolio:formData.get('portfolio')||null,
+        resume_url:resumeUrl,
+        job_post:selectedJob,
+        cover_letter:formData.get('cover_letter')||null,
+        location:formData.get('location')||null,
+        willing_to_relocate:relocate
+      });
+      if(insertRes.error) throw insertRes.error;
 
       formSection.style.display='none';
       successScreen.classList.add('visible');

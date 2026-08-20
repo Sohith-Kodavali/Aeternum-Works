@@ -118,6 +118,42 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
 .loading-spinner{margin:40px auto;width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* ===== JOBS MANAGEMENT ===== */
+.add-job-btn{padding:10px 22px;background:linear-gradient(135deg,var(--coral),var(--purple),var(--blue));background-size:200% 100%;color:#fff;border:0;border-radius:999px;font:.78rem var(--sans);font-weight:600;cursor:pointer;transition:all .3s var(--spring)}
+.add-job-btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(132,94,194,.3)}
+.job-manage-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:20px}
+.job-manage-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:12px;transition:all .25s var(--spring)}
+.job-manage-card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(0,0,0,.08)}
+.job-manage-card .jm-top{display:flex;align-items:center;justify-content:space-between}
+.job-manage-card .jm-icon{font-size:1.5rem}
+.job-manage-card .jm-status{font-size:.62rem;font-weight:700;padding:4px 10px;border-radius:20px}
+.job-manage-card .jm-status.active{background:rgba(6,214,160,.12);color:var(--emerald)}
+.job-manage-card .jm-status.inactive{background:rgba(255,107,107,.1);color:var(--coral)}
+.job-manage-card h3{font:600 1.1rem var(--serif)}
+.job-manage-card .jm-desc{font-size:.78rem;color:var(--muted);line-height:1.5}
+.job-manage-card .jm-tags{display:flex;flex-wrap:wrap;gap:6px}
+.job-manage-card .jm-tags span{font-size:.64rem;padding:4px 10px;background:rgba(132,94,194,.08);color:var(--purple);border-radius:20px}
+.job-manage-card .jm-actions{display:flex;gap:8px;margin-top:auto}
+.job-manage-card .jm-actions button{flex:1;padding:8px;font-size:.72rem;font-weight:600;border:1.5px solid var(--border);border-radius:8px;background:#fff;color:var(--navy);cursor:pointer;transition:all .2s}
+.job-manage-card .jm-actions button:hover{border-color:var(--purple);color:var(--purple)}
+.job-manage-card .jm-actions button.danger:hover{border-color:var(--coral);color:var(--coral)}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.2)}
+.modal h2{font:600 1.4rem var(--serif);margin-bottom:20px}
+.modal .form-field{margin-bottom:16px}
+.modal .form-field label{display:block;font-size:.75rem;font-weight:600;margin-bottom:6px;color:var(--navy)}
+.modal .form-field input,.modal .form-field textarea,.modal .form-field select{width:100%;padding:11px 14px;font:.85rem var(--sans);border:1.5px solid var(--border);border-radius:10px;outline:0;transition:all .25s}
+.modal .form-field input:focus,.modal .form-field textarea:focus,.modal .form-field select:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(132,94,194,.1)}
+.modal .form-field textarea{min-height:90px;resize:vertical}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px}
+.modal-actions button{padding:11px 24px;font:.8rem var(--sans);font-weight:600;border-radius:999px;cursor:pointer;transition:all .2s}
+.modal-actions .cancel-btn{background:#fff;border:1.5px solid var(--border);color:var(--navy)}
+.modal-actions .save-btn{background:linear-gradient(135deg,var(--coral),var(--purple),var(--blue));background-size:200% 100%;color:#fff;border:0}
+.modal-actions .save-btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(132,94,194,.3)}
+
 /* Overlay for mobile sidebar */
 .sidebar-overlay{display:none;position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.4)}
 
@@ -167,11 +203,9 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
         <span>📋</span> All Candidates <span class="badge" id="badgeAll">0</span>
       </a>
       <span class="nav-section">By Position</span>
-      <a href="#" data-filter="Frontend Developer"><span>💻</span> Frontend Developer <span class="badge" id="badgeFrontend Developer">0</span></a>
-      <a href="#" data-filter="Backend Developer"><span>⬡</span> Backend Developer <span class="badge" id="badgeBackend Developer">0</span></a>
-      <a href="#" data-filter="UI/UX Designer"><span>🎨</span> UI/UX Designer <span class="badge" id="badgeUI/UX Designer">0</span></a>
-      <a href="#" data-filter="DevOps Engineer"><span>☁️</span> DevOps Engineer <span class="badge" id="badgeDevOps Engineer">0</span></a>
-      <a href="#" data-filter="Project Manager"><span>📊</span> Project Manager <span class="badge" id="badgeProject Manager">0</span></a>
+      <div id="positionFilters"></div>
+      <span class="nav-section">Management</span>
+      <a href="#" data-view="jobs"><span>💼</span> Job Posts <span class="badge" id="badgeJobs">0</span></a>
       <span class="nav-section">By Status</span>
       <a href="#" data-filter="status:new"><span>🆕</span> New <span class="badge" id="badgeNew">0</span></a>
       <a href="#" data-filter="status:reviewed"><span>👁</span> Reviewed <span class="badge" id="badgeReviewed">0</span></a>
@@ -204,8 +238,8 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
       <div class="stat-card"><div class="stat-icon purple">📌</div><div class="stat-number" id="statPosts">5</div><div class="stat-label">Active Job Posts</div><div class="stat-glow" style="background:var(--purple)"></div></div>
     </div>
 
-    <!-- Table -->
-    <div class="table-wrap">
+    <!-- Candidates Table -->
+    <div class="table-wrap" id="candidatesWrap">
       <div class="table-header">
         <h3>Candidates</h3>
         <div class="filter-chips">
@@ -239,6 +273,49 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
         <p>Applications will appear here once students submit the registration form.</p>
       </div>
     </div>
+
+    <!-- Jobs Management -->
+    <div class="table-wrap" id="jobsWrap" style="display:none">
+      <div class="table-header">
+        <h3>Job Posts</h3>
+        <button class="add-job-btn" id="addJobBtn">+ New Job Post</button>
+      </div>
+      <div class="job-manage-grid" id="jobManageGrid" style="padding:20px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Job Modal -->
+<div class="modal-overlay" id="jobModalOverlay">
+  <div class="modal">
+    <h2 id="jobModalTitle">New Job Post</h2>
+    <div class="form-field">
+      <label>Job Title *</label>
+      <input type="text" id="jobTitle" placeholder="e.g. Frontend Developer">
+    </div>
+    <div class="form-field">
+      <label>Description</label>
+      <textarea id="jobDescription" placeholder="Brief description of the role..."></textarea>
+    </div>
+    <div class="form-field">
+      <label>Skills (comma separated)</label>
+      <input type="text" id="jobSkills" placeholder="React, Next.js, Tailwind">
+    </div>
+    <div class="form-field">
+      <label>Icon (emoji)</label>
+      <input type="text" id="jobIcon" placeholder="💼" maxlength="4">
+    </div>
+    <div class="form-field">
+      <label>Status</label>
+      <select id="jobActive">
+        <option value="true">Active</option>
+        <option value="false">Inactive</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="cancel-btn" id="jobCancelBtn">Cancel</button>
+      <button class="save-btn" id="jobSaveBtn">Save Job</button>
+    </div>
   </div>
 </div>
 
@@ -246,12 +323,12 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
 <script>
 (function(){
   // Supabase init
-  var SUPABASE_URL='YOUR_SUPABASE_URL';
-  var SUPABASE_KEY='YOUR_SUPABASE_ANON_KEY';
+  var SUPABASE_URL='https://hjdxbihbmbzfndexszqo.supabase.co';
+  var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhqZHhiaWhibWJ6Zm5kZXhzenFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxNzcyNzksImV4cCI6MjEwMjc1MzI3OX0.3Cs4-GkJU1ejNngvd1em9lNGrYGaCqaaTZEewx27nOg';
   var supabase=null;
   try{supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY)}catch(e){}
 
-  var candidates=[],activeFilter='all',activeStatusChip='all',sortKey=null,sortDir='asc',expandedRow=null;
+  var candidates=[],jobs=[],activeFilter='all',activeStatusChip='all',sortKey=null,sortDir='asc',expandedRow=null,currentView='candidates',editingJobId=null;
 
   var gate=document.getElementById('gate'),layout=document.getElementById('layout'),
       gatePassword=document.getElementById('gatePassword'),gateError=document.getElementById('gateError'),
@@ -279,7 +356,7 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
     var storedHash=ADMIN_PASSWORD_HASH;
 
     // Try Supabase first
-    if(supabase && SUPABASE_URL!=='YOUR_SUPABASE_URL'){
+    if(supabase){
       try{
         var res=await supabase.from('settings').select('value').eq('key','admin_password').single();
         if(res.data) storedHash=res.data.value;
@@ -302,6 +379,7 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
     gate.classList.add('hidden');
     layout.classList.add('visible');
     loadCandidates();
+    loadJobs();
   }
 
   // ===== LOGOUT =====
@@ -325,17 +403,12 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
     emptyState.style.display='none';
 
     try{
-      if(supabase && SUPABASE_URL!=='YOUR_SUPABASE_URL'){
-        var res=await supabase.from('candidates').select('*').order('created_at',{ascending:false});
-        if(res.error) throw res.error;
-        candidates=res.data||[];
-      } else {
-        candidates=JSON.parse(localStorage.getItem('aeternum_candidates')||'[]');
-        candidates.sort(function(a,b){return new Date(b.created_at)-new Date(a.created_at)});
-      }
+      var res=await supabase.from('candidates').select('*').order('created_at',{ascending:false});
+      if(res.error) throw res.error;
+      candidates=res.data||[];
     }catch(e){
       console.error(e);
-      candidates=JSON.parse(localStorage.getItem('aeternum_candidates')||'[]');
+      candidates=[];
     }
 
     tableLoader.style.display='none';
@@ -349,16 +422,17 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
     document.getElementById('statTotal').textContent=candidates.length;
     document.getElementById('statNew').textContent=candidates.filter(function(c){return c.status==='new'}).length;
     document.getElementById('statShortlisted').textContent=candidates.filter(function(c){return c.status==='shortlisted'}).length;
+    document.getElementById('statPosts').textContent=jobs.filter(function(j){return j.active}).length;
   }
 
   // ===== SIDEBAR BADGES =====
   function updateSidebarBadges(){
-    var roles=['Frontend Developer','Backend Developer','UI/UX Designer','DevOps Engineer','Project Manager'];
     var allBadge=document.getElementById('badgeAll');
     if(allBadge) allBadge.textContent=candidates.length;
 
-    roles.forEach(function(role){
-      var badge=document.getElementById('badge'+role);
+    document.querySelectorAll('#positionFilters a').forEach(function(a){
+      var role=a.dataset.filter;
+      var badge=a.querySelector('.badge');
       if(badge) badge.textContent=candidates.filter(function(c){return c.job_post===role}).length;
     });
 
@@ -366,6 +440,7 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
     document.getElementById('badgeReviewed').textContent=candidates.filter(function(c){return c.status==='reviewed'}).length;
     document.getElementById('badgeShortlisted').textContent=candidates.filter(function(c){return c.status==='shortlisted'}).length;
     document.getElementById('badgeRejected').textContent=candidates.filter(function(c){return c.status==='rejected'}).length;
+    document.getElementById('badgeJobs').textContent=jobs.length;
   }
 
   // ===== FILTERING =====
@@ -483,10 +558,7 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
     candidate.status=newStatus;
 
     try{
-      if(supabase && SUPABASE_URL!=='YOUR_SUPABASE_URL'){
-        await supabase.from('candidates').update({status:newStatus}).eq('id',id);
-      }
-      localStorage.setItem('aeternum_candidates',JSON.stringify(candidates));
+      await supabase.from('candidates').update({status:newStatus}).eq('id',id);
     }catch(e){console.error(e)}
 
     updateStats();
@@ -494,17 +566,39 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
     renderTable();
   }
 
-  // ===== SIDEBAR FILTERS =====
+  // ===== SIDEBAR FILTERS & VIEWS =====
   document.getElementById('sideNav').addEventListener('click',function(e){
     var a=e.target.closest('a');
-    if(!a||!a.dataset.filter) return;
+    if(!a) return;
     e.preventDefault();
+
+    if(a.dataset.view==='jobs'){
+      document.querySelectorAll('#sideNav a').forEach(function(l){l.classList.remove('active')});
+      a.classList.add('active');
+      currentView='jobs';
+      showJobsView();
+      sidebar.classList.remove('open');sidebarOverlay.classList.remove('open');
+      return;
+    }
+
+    if(!a.dataset.filter) return;
     document.querySelectorAll('#sideNav a').forEach(function(l){l.classList.remove('active')});
     a.classList.add('active');
     activeFilter=a.dataset.filter;
+    currentView='candidates';
+    showCandidatesView();
     renderTable();
     sidebar.classList.remove('open');sidebarOverlay.classList.remove('open');
   });
+
+  function showJobsView(){
+    document.getElementById('candidatesWrap').style.display='none';
+    document.getElementById('jobsWrap').style.display='block';
+  }
+  function showCandidatesView(){
+    document.getElementById('jobsWrap').style.display='none';
+    document.getElementById('candidatesWrap').style.display='block';
+  }
 
   // ===== CHIP FILTERS =====
   document.querySelector('.filter-chips').addEventListener('click',function(e){
@@ -553,6 +647,124 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
     a.href=URL.createObjectURL(blob);
     a.download='aeternum_candidates_'+new Date().toISOString().slice(0,10)+'.csv';
     a.click();
+  });
+
+  // ===== JOBS MANAGEMENT =====
+  async function loadJobs(){
+    try{
+      var res=await supabase.from('jobs').select('*').order('created_at',{ascending:false});
+      if(res.error) throw res.error;
+      jobs=res.data||[];
+    }catch(e){
+      console.error(e);
+      jobs=[];
+    }
+    renderPositionFilters();
+    renderJobs();
+    updateStats();
+    updateSidebarBadges();
+  }
+
+  function renderPositionFilters(){
+    var container=document.getElementById('positionFilters');
+    container.innerHTML=jobs.map(function(j){
+      return '<a href="#" data-filter="'+esc(j.title)+'"><span>💼</span> '+esc(j.title)+' <span class="badge">0</span></a>';
+    }).join('');
+  }
+
+  function renderJobs(){
+    var grid=document.getElementById('jobManageGrid');
+    if(!jobs.length){
+      grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px">No job posts yet. Click "+ New Job Post" to create one.</div>';
+      return;
+    }
+    grid.innerHTML=jobs.map(function(j){
+      var tags=(j.skills||[]).map(function(s){return '<span>'+esc(s)+'</span>'}).join('');
+      return '<div class="job-manage-card" data-id="'+j.id+'">'+
+        '<div class="jm-top"><span class="jm-icon">'+esc(j.icon||'💼')+'</span>'+
+        '<span class="jm-status '+(j.active?'active':'inactive')+'">'+(j.active?'Active':'Inactive')+'</span></div>'+
+        '<h3>'+esc(j.title)+'</h3>'+
+        '<p class="jm-desc">'+esc(j.description||'')+'</p>'+
+        '<div class="jm-tags">'+tags+'</div>'+
+        '<div class="jm-actions">'+
+          '<button class="edit-job" data-id="'+j.id+'">Edit</button>'+
+          '<button class="toggle-job" data-id="'+j.id+'">'+(j.active?'Deactivate':'Activate')+'</button>'+
+          '<button class="danger delete-job" data-id="'+j.id+'">Delete</button>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+  }
+
+  // Modal controls
+  var jobModalOverlay=document.getElementById('jobModalOverlay');
+  document.getElementById('addJobBtn').addEventListener('click',function(){
+    editingJobId=null;
+    document.getElementById('jobModalTitle').textContent='New Job Post';
+    document.getElementById('jobTitle').value='';
+    document.getElementById('jobDescription').value='';
+    document.getElementById('jobSkills').value='';
+    document.getElementById('jobIcon').value='💼';
+    document.getElementById('jobActive').value='true';
+    jobModalOverlay.classList.add('open');
+  });
+  document.getElementById('jobCancelBtn').addEventListener('click',function(){jobModalOverlay.classList.remove('open')});
+  jobModalOverlay.addEventListener('click',function(e){if(e.target===jobModalOverlay)jobModalOverlay.classList.remove('open')});
+
+  document.getElementById('jobSaveBtn').addEventListener('click',async function(){
+    var title=document.getElementById('jobTitle').value.trim();
+    if(!title){alert('Job title is required');return}
+    var description=document.getElementById('jobDescription').value.trim();
+    var skillsRaw=document.getElementById('jobSkills').value.trim();
+    var skills=skillsRaw?skillsRaw.split(',').map(function(s){return s.trim()}).filter(Boolean):[];
+    var icon=document.getElementById('jobIcon').value.trim()||'💼';
+    var active=document.getElementById('jobActive').value==='true';
+
+    var payload={title:title,description:description,skills:skills,icon:icon,active:active};
+    try{
+      if(editingJobId){
+        var upRes=await supabase.from('jobs').update(payload).eq('id',editingJobId);
+        if(upRes.error) throw upRes.error;
+      }else{
+        var insRes=await supabase.from('jobs').insert(payload);
+        if(insRes.error) throw insRes.error;
+      }
+      jobModalOverlay.classList.remove('open');
+      loadJobs();
+    }catch(e){
+      console.error(e);
+      alert('Failed to save job post');
+    }
+  });
+
+  // Job actions (edit/toggle/delete)
+  document.getElementById('jobManageGrid').addEventListener('click',async function(e){
+    var btn=e.target.closest('button');
+    if(!btn) return;
+    var id=btn.dataset.id;
+    var job=jobs.find(function(j){return j.id===id});
+    if(!job) return;
+
+    if(btn.classList.contains('edit-job')){
+      editingJobId=id;
+      document.getElementById('jobModalTitle').textContent='Edit Job Post';
+      document.getElementById('jobTitle').value=job.title||'';
+      document.getElementById('jobDescription').value=job.description||'';
+      document.getElementById('jobSkills').value=(job.skills||[]).join(', ');
+      document.getElementById('jobIcon').value=job.icon||'💼';
+      document.getElementById('jobActive').value=job.active?'true':'false';
+      jobModalOverlay.classList.add('open');
+    }else if(btn.classList.contains('toggle-job')){
+      try{
+        await supabase.from('jobs').update({active:!job.active}).eq('id',id);
+        loadJobs();
+      }catch(err){console.error(err)}
+    }else if(btn.classList.contains('delete-job')){
+      if(!confirm('Delete this job post?')) return;
+      try{
+        await supabase.from('jobs').delete().eq('id',id);
+        loadJobs();
+      }catch(err){console.error(err)}
+    }
   });
 
 })();
