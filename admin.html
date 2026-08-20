@@ -118,6 +118,17 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
 .loading-spinner{margin:40px auto;width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* Premium skeleton loaders */
+.skeleton{position:relative;overflow:hidden;background:rgba(132,94,194,.07);border-radius:10px}
+.skeleton::after{content:'';position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);animation:shimmer 1.4s infinite}
+@keyframes shimmer{100%{transform:translateX(100%)}}
+.table-skeleton{padding:16px}
+.table-skeleton .sk-row{display:grid;grid-template-columns:1fr 1.2fr .8fr .8fr .6fr .8fr;gap:12px;padding:14px 18px;border-bottom:1px solid #f3f4f6}
+.table-skeleton .sk-row div{height:14px}
+.card-skeleton{padding:22px;border-radius:16px;background:#fff;border:1px solid var(--border);display:flex;flex-direction:column;gap:12px}
+.card-skeleton .sk-line{height:14px;width:70%}
+.card-skeleton .sk-line.short{width:45%}
+
 /* ===== JOBS MANAGEMENT ===== */
 .add-job-btn{padding:10px 22px;background:linear-gradient(135deg,var(--coral),var(--purple),var(--blue));background-size:200% 100%;color:#fff;border:0;border-radius:999px;font:.78rem var(--sans);font-weight:600;cursor:pointer;transition:all .3s var(--spring)}
 .add-job-btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(132,94,194,.3)}
@@ -280,6 +291,11 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
             </tr>
           </thead>
           <tbody id="tableBody">
+            <tr><td colspan="6" style="padding:0"><div class="table-skeleton">
+              <div class="sk-row"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+              <div class="sk-row"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+              <div class="sk-row"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+            </div></td></tr>
           </tbody>
         </table>
       </div>
@@ -297,7 +313,11 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
         <h3>Job Posts</h3>
         <button class="add-job-btn" id="addJobBtn">+ New Job Post</button>
       </div>
-      <div class="job-manage-grid" id="jobManageGrid" style="padding:20px"></div>
+      <div class="job-manage-grid" id="jobManageGrid" style="padding:20px">
+        <div class="card-skeleton"><div class="sk-line skeleton"></div><div class="sk-line skeleton short"></div><div class="sk-line skeleton"></div></div>
+        <div class="card-skeleton"><div class="sk-line skeleton"></div><div class="sk-line skeleton short"></div><div class="sk-line skeleton"></div></div>
+        <div class="card-skeleton"><div class="sk-line skeleton"></div><div class="sk-line skeleton short"></div><div class="sk-line skeleton"></div></div>
+      </div>
     </div>
 
     <!-- Queries Management -->
@@ -305,7 +325,10 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
       <div class="table-header">
         <h3>Candidate Queries</h3>
       </div>
-      <div class="job-manage-grid" id="queryAdminGrid" style="padding:20px"></div>
+      <div class="job-manage-grid" id="queryAdminGrid" style="padding:20px">
+        <div class="card-skeleton"><div class="sk-line skeleton"></div><div class="sk-line skeleton short"></div><div class="sk-line skeleton"></div></div>
+        <div class="card-skeleton"><div class="sk-line skeleton"></div><div class="sk-line skeleton short"></div><div class="sk-line skeleton"></div></div>
+      </div>
     </div>
   </div>
 </div>
