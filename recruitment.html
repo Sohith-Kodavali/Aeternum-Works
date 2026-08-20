@@ -40,6 +40,12 @@ nav{position:relative;z-index:10;display:flex;align-items:center;justify-content
 .step-label .num{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--coral),var(--purple));color:#fff;font-size:.85rem;font-weight:700}
 .step-label span{font:500 1.2rem/1 var(--serif);letter-spacing:-.02em}
 
+.rules-card{background:linear-gradient(160deg,rgba(255,255,255,.92),rgba(255,255,255,.8));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:28px;margin-bottom:40px;box-shadow:0 8px 32px rgba(0,0,0,.04)}
+.rules-card h2{font:600 1.3rem/1.2 var(--serif);letter-spacing:-.02em;margin-bottom:16px}
+.rules-list{list-style:none;display:grid;gap:10px}
+.rules-list li{display:flex;gap:10px;align-items:flex-start;font-size:.85rem;color:var(--muted);line-height:1.55}
+.rules-list li::before{content:'✦';color:var(--purple);flex-shrink:0;margin-top:1px}
+
 /* Job Cards Grid */
 .job-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:60px}
 .job-card{position:relative;padding:32px 24px;background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(255,255,255,.78));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.6);border-radius:20px;cursor:pointer;transition:all .45s var(--spring);overflow:hidden;transform-style:preserve-3d;perspective:800px}
@@ -163,6 +169,20 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
     <!-- Job posts are loaded dynamically from Supabase -->
   </div>
 
+  <!-- Rules -->
+  <div class="rules-card">
+    <h2>Terms &amp; Rules</h2>
+    <ul class="rules-list">
+      <li>All information and files you submit must be true and current. Fake or misleading details will result in automatic rejection.</li>
+      <li>Any portfolio, resume, or content you share must be your own work. Plagiarized or stolen content disqualifies you immediately.</li>
+      <li>This role requires consistent daily output for YouTube, Instagram, and Facebook. You're expected to meet deadlines without constant follow-up.</li>
+      <li>Work produced for Aeternum Works (edits, reels, designs, scripts) becomes Aeternum Works property and cannot be reposted for other clients without approval.</li>
+      <li>You must not share internal drafts, unpublished content, analytics, or client details with anyone outside the team.</li>
+      <li>Communication with the team and clients must stay professional and respectful at all times.</li>
+      <li>Never share account passwords or login details with anyone. Use only the access Aeternum Works gives you.</li>
+    </ul>
+  </div>
+
   <!-- Step 2: Form -->
   <div id="formSection" class="form-section">
     <div class="step-label"><span class="num">2</span><span>Tell us about yourself</span></div>
@@ -226,6 +246,41 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
         <div class="form-field">
           <label>Portfolio / GitHub</label>
           <input type="url" name="portfolio" placeholder="https://github.com/...">
+        </div>
+        <div class="form-field full">
+          <label>Editing Reel / Portfolio Links</label>
+          <input type="text" name="editing_links" placeholder="YouTube, Instagram, Behance, or drive link to your reel">
+        </div>
+        <div class="form-field">
+          <label>Editing Software</label>
+          <input type="text" name="editing_software" placeholder="Premiere Pro, After Effects, CapCut...">
+        </div>
+        <div class="form-field">
+          <label>Daily Output Capacity</label>
+          <input type="text" name="daily_output" placeholder="e.g. 2-3 reels per day">
+        </div>
+        <div class="form-field full">
+          <label>Platforms you're comfortable with</label>
+          <div class="checkbox-wrap">
+            <input type="checkbox" name="platforms" value="YouTube" id="platform_yt">
+            <label for="platform_yt">YouTube</label>
+          </div>
+          <div class="checkbox-wrap">
+            <input type="checkbox" name="platforms" value="Instagram" id="platform_ig">
+            <label for="platform_ig">Instagram</label>
+          </div>
+          <div class="checkbox-wrap">
+            <input type="checkbox" name="platforms" value="Facebook" id="platform_fb">
+            <label for="platform_fb">Facebook</label>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Expected Monthly Compensation</label>
+          <input type="text" name="expected_compensation" placeholder="e.g. ₹15,000 / $200">
+        </div>
+        <div class="form-field">
+          <label>Availability / Time Zone</label>
+          <input type="text" name="availability" placeholder="e.g. IST, full-time, 6 hrs/day">
         </div>
         <div class="form-field">
           <label>Current Location</label>
@@ -408,6 +463,7 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
       var skillsRaw=formData.get('skills')||'';
       var skills=skillsRaw?skillsRaw.split(',').map(function(s){return s.trim()}).filter(Boolean):[];
       var relocate=formData.get('willing_to_relocate')==='on';
+      var platforms=formData.getAll('platforms');
 
       var resumeFile=resumeInput.files[0];
       var resumeUrl='';
@@ -433,6 +489,12 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
         experience_level:formData.get('experience_level'),
         linkedin:formData.get('linkedin')||null,
         portfolio:formData.get('portfolio')||null,
+        editing_links:formData.get('editing_links')||null,
+        editing_software:formData.get('editing_software')||null,
+        daily_output:formData.get('daily_output')||null,
+        platforms:platforms.length?platforms:null,
+        expected_compensation:formData.get('expected_compensation')||null,
+        availability:formData.get('availability')||null,
         resume_url:resumeUrl,
         job_post:selectedJob,
         cover_letter:formData.get('cover_letter')||null,

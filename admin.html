@@ -514,6 +514,12 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
         '<div class="detail-item"><span class="detail-label">Skills</span><span class="detail-value">'+esc(skills)+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">LinkedIn</span><span class="detail-value">'+(c.linkedin?'<a href="'+esc(c.linkedin)+'" target="_blank">Profile ↗</a>':'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Portfolio</span><span class="detail-value">'+(c.portfolio?'<a href="'+esc(c.portfolio)+'" target="_blank">Link ↗</a>':'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Editing Links</span><span class="detail-value">'+esc(c.editing_links||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Editing Software</span><span class="detail-value">'+esc(c.editing_software||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Daily Output</span><span class="detail-value">'+esc(c.daily_output||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Platforms</span><span class="detail-value">'+esc(Array.isArray(c.platforms)?c.platforms.join(', '):(c.platforms||'—'))+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Expected Pay</span><span class="detail-value">'+esc(c.expected_compensation||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Availability</span><span class="detail-value">'+esc(c.availability||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Resume</span><span class="detail-value">'+resumeLink+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Location</span><span class="detail-value">'+esc(c.location||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Relocate</span><span class="detail-value">'+(c.willing_to_relocate?'Yes':'No')+'</span></div>'+
