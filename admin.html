@@ -154,6 +154,22 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
 .modal-actions .save-btn{background:linear-gradient(135deg,var(--coral),var(--purple),var(--blue));background-size:200% 100%;color:#fff;border:0}
 .modal-actions .save-btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(132,94,194,.3)}
 
+/* Query management */
+.query-admin-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:all .25s var(--spring)}
+.query-admin-card:hover{box-shadow:0 16px 36px rgba(0,0,0,.08)}
+.query-admin-card .qa-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.query-admin-card .qa-name{font-weight:700;color:var(--navy)}
+.query-admin-card .qa-email{font-size:.72rem;color:var(--muted)}
+.query-admin-card .qa-vis{font-size:.62rem;font-weight:700;padding:4px 10px;border-radius:20px}
+.query-admin-card .qa-vis.public{background:rgba(6,214,160,.12);color:var(--emerald)}
+.query-admin-card .qa-vis.hidden{background:rgba(255,107,107,.1);color:var(--coral)}
+.query-admin-card .qa-msg{font-size:.85rem;color:var(--navy);line-height:1.5}
+.query-admin-card .qa-reply-input{width:100%;min-height:64px;padding:10px 12px;font:.82rem var(--sans);border:1.5px solid var(--border);border-radius:10px;outline:0;resize:vertical}
+.query-admin-card .qa-actions{display:flex;gap:8px;flex-wrap:wrap}
+.query-admin-card .qa-actions button{padding:8px 14px;font-size:.72rem;font-weight:600;border:1.5px solid var(--border);border-radius:8px;background:#fff;color:var(--navy);cursor:pointer;transition:all .2s}
+.query-admin-card .qa-actions button:hover{border-color:var(--purple);color:var(--purple)}
+.query-admin-card .qa-actions button.danger:hover{border-color:var(--coral);color:var(--coral)}
+
 /* Overlay for mobile sidebar */
 .sidebar-overlay{display:none;position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.4)}
 
@@ -206,6 +222,7 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
       <div id="positionFilters"></div>
       <span class="nav-section">Management</span>
       <a href="#" data-view="jobs"><span>💼</span> Job Posts <span class="badge" id="badgeJobs">0</span></a>
+      <a href="#" data-view="queries"><span>💬</span> Queries <span class="badge" id="badgeQueries">0</span></a>
       <span class="nav-section">By Status</span>
       <a href="#" data-filter="status:new"><span>🆕</span> New <span class="badge" id="badgeNew">0</span></a>
       <a href="#" data-filter="status:reviewed"><span>👁</span> Reviewed <span class="badge" id="badgeReviewed">0</span></a>
@@ -282,6 +299,14 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
       </div>
       <div class="job-manage-grid" id="jobManageGrid" style="padding:20px"></div>
     </div>
+
+    <!-- Queries Management -->
+    <div class="table-wrap" id="queriesWrap" style="display:none">
+      <div class="table-header">
+        <h3>Candidate Queries</h3>
+      </div>
+      <div class="job-manage-grid" id="queryAdminGrid" style="padding:20px"></div>
+    </div>
   </div>
 </div>
 
@@ -328,7 +353,7 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
   var supabase=null;
   try{supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY)}catch(e){}
 
-  var candidates=[],jobs=[],activeFilter='all',activeStatusChip='all',sortKey=null,sortDir='asc',expandedRow=null,currentView='candidates',editingJobId=null;
+  var candidates=[],jobs=[],queries=[],activeFilter='all',activeStatusChip='all',sortKey=null,sortDir='asc',expandedRow=null,currentView='candidates',editingJobId=null;
 
   var gate=document.getElementById('gate'),layout=document.getElementById('layout'),
       gatePassword=document.getElementById('gatePassword'),gateError=document.getElementById('gateError'),
@@ -380,6 +405,7 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
     layout.classList.add('visible');
     loadCandidates();
     loadJobs();
+    loadQueries();
   }
 
   // ===== LOGOUT =====
@@ -583,6 +609,15 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
       return;
     }
 
+    if(a.dataset.view==='queries'){
+      document.querySelectorAll('#sideNav a').forEach(function(l){l.classList.remove('active')});
+      a.classList.add('active');
+      currentView='queries';
+      showQueriesView();
+      sidebar.classList.remove('open');sidebarOverlay.classList.remove('open');
+      return;
+    }
+
     if(!a.dataset.filter) return;
     document.querySelectorAll('#sideNav a').forEach(function(l){l.classList.remove('active')});
     a.classList.add('active');
@@ -596,10 +631,17 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
   function showJobsView(){
     document.getElementById('candidatesWrap').style.display='none';
     document.getElementById('jobsWrap').style.display='block';
+    document.getElementById('queriesWrap').style.display='none';
   }
   function showCandidatesView(){
     document.getElementById('jobsWrap').style.display='none';
     document.getElementById('candidatesWrap').style.display='block';
+    document.getElementById('queriesWrap').style.display='none';
+  }
+  function showQueriesView(){
+    document.getElementById('candidatesWrap').style.display='none';
+    document.getElementById('jobsWrap').style.display='none';
+    document.getElementById('queriesWrap').style.display='block';
   }
 
   // ===== CHIP FILTERS =====
@@ -765,6 +807,70 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
       try{
         await supabase.from('jobs').delete().eq('id',id);
         loadJobs();
+      }catch(err){console.error(err)}
+    }
+  });
+
+  // ===== QUERIES MANAGEMENT =====
+  async function loadQueries(){
+    try{
+      var res=await supabase.from('queries').select('*').order('created_at',{ascending:false});
+      if(res.error) throw res.error;
+      queries=res.data||[];
+    }catch(e){
+      console.error(e);
+      queries=[];
+    }
+    document.getElementById('badgeQueries').textContent=queries.length;
+    renderQueries();
+  }
+
+  function renderQueries(){
+    var grid=document.getElementById('queryAdminGrid');
+    if(!queries.length){
+      grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px">No queries yet.</div>';
+      return;
+    }
+    grid.innerHTML=queries.map(function(q){
+      var dateStr=q.created_at?new Date(q.created_at).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}):'';
+      return '<div class="query-admin-card" data-id="'+q.id+'">'+
+        '<div class="qa-top"><div><div class="qa-name">'+esc(q.name)+'</div><div class="qa-email">'+esc(q.email)+' · '+esc(dateStr)+'</div></div>'+
+        '<span class="qa-vis '+(q.is_public?'public':'hidden')+'">'+(q.is_public?'Public':'Hidden')+'</span></div>'+
+        '<div class="qa-msg">'+esc(q.message)+'</div>'+
+        '<textarea class="qa-reply-input" placeholder="Write a reply...">'+esc(q.admin_reply||'')+'</textarea>'+
+        '<div class="qa-actions">'+
+          '<button class="reply-query" data-id="'+q.id+'">Save Reply</button>'+
+          '<button class="toggle-query" data-id="'+q.id+'">'+(q.is_public?'Hide':'Show')+'</button>'+
+          '<button class="danger delete-query" data-id="'+q.id+'">Delete</button>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+  }
+
+  document.getElementById('queryAdminGrid').addEventListener('click',async function(e){
+    var btn=e.target.closest('button');
+    if(!btn) return;
+    var id=btn.dataset.id;
+    var query=queries.find(function(q){return q.id===id});
+    if(!query) return;
+
+    if(btn.classList.contains('reply-query')){
+      var card=btn.closest('.query-admin-card');
+      var replyText=card.querySelector('.qa-reply-input').value.trim();
+      try{
+        await supabase.from('queries').update({admin_reply:replyText}).eq('id',id);
+        loadQueries();
+      }catch(err){console.error(err)}
+    }else if(btn.classList.contains('toggle-query')){
+      try{
+        await supabase.from('queries').update({is_public:!query.is_public}).eq('id',id);
+        loadQueries();
+      }catch(err){console.error(err)}
+    }else if(btn.classList.contains('delete-query')){
+      if(!confirm('Delete this query?')) return;
+      try{
+        await supabase.from('queries').delete().eq('id',id);
+        loadQueries();
       }catch(err){console.error(err)}
     }
   });
