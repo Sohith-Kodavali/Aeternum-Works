@@ -77,6 +77,17 @@ nav{position:relative;z-index:10;display:flex;align-items:center;justify-content
 .query-form input:focus,.query-form textarea:focus{border-color:var(--purple);box-shadow:0 0 0 4px rgba(132,94,194,.1)}
 .query-form textarea{min-height:90px;resize:vertical}
 
+/* Floating action buttons + slide-up panels */
+.fab-stack{position:fixed;right:20px;bottom:24px;z-index:150;display:flex;flex-direction:column;gap:10px}
+.fab{padding:12px 18px;border:0;border-radius:999px;background:linear-gradient(135deg,var(--coral),var(--purple));color:#fff;font:.78rem var(--sans);font-weight:600;cursor:pointer;box-shadow:0 12px 30px rgba(132,94,194,.35);transition:all .25s var(--spring)}
+.fab:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(132,94,194,.45)}
+.panel-backdrop{position:fixed;inset:0;z-index:180;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .3s}
+.panel-backdrop.open{opacity:1;pointer-events:auto}
+#trackPanel,#queryPanel{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(640px,100%);max-height:86vh;overflow-y:auto;z-index:190;border-radius:20px 20px 0 0;margin:0}
+#trackPanel.open,#queryPanel.open{display:block;animation:slideUp .35s var(--ease)}
+.panel-close{position:absolute;top:14px;right:16px;width:34px;height:34px;border:1.5px solid var(--border);border-radius:50%;background:#fff;color:var(--navy);font-size:1.2rem;cursor:pointer;z-index:2}
+@keyframes slideUp{from{transform:translate(-50%,100%);opacity:.6}to{transform:translate(-50%,0);opacity:1}}
+
 /* Premium skeleton loaders */
 .skeleton{position:relative;overflow:hidden;background:rgba(132,94,194,.06);border-radius:12px}
 .skeleton::after{content:'';position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);animation:shimmer 1.4s infinite}
@@ -200,6 +211,14 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
   <a class="nav-cta" href="index.html">Back to Home</a>
 </nav>
 
+<!-- Floating action buttons -->
+<div class="fab-stack">
+  <button class="fab" id="trackFab" aria-label="Track application">📍 Track</button>
+  <button class="fab" id="queryFab" aria-label="Questions">💬 Queries</button>
+</div>
+
+<div class="panel-backdrop" id="panelBackdrop"></div>
+
 <div class="page-wrap">
 
   <!-- Hero -->
@@ -210,7 +229,8 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
   </div>
 
   <!-- Track Application -->
-  <div class="track-card">
+  <div class="track-card" id="trackPanel" style="display:none">
+    <button class="panel-close" data-close-panel aria-label="Close">×</button>
     <h2>Track your application</h2>
     <p>Enter the email you used to apply and we'll show your current status.</p>
     <div class="track-row">
@@ -221,7 +241,8 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
   </div>
 
   <!-- Queries -->
-  <div class="query-section" id="querySection">
+  <div class="query-section" id="queryPanel" style="display:none">
+    <button class="panel-close" data-close-panel aria-label="Close">×</button>
     <div class="step-label"><span class="num">?</span><span>Questions &amp; Answers</span></div>
     <div class="query-list" id="queryList">
       <div class="query-skeleton"><div class="sk-line skeleton"></div><div class="sk-line skeleton short"></div></div>
@@ -473,6 +494,29 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
 
   loadJobs();
 
+  // ===== FLOATING PANELS =====
+  var trackPanel=document.getElementById('trackPanel');
+  var queryPanel=document.getElementById('queryPanel');
+  var panelBackdrop=document.getElementById('panelBackdrop');
+
+  function openPanel(panel){
+    closePanel();
+    panel.style.display='block';
+    requestAnimationFrame(function(){panel.classList.add('open');panelBackdrop.classList.add('open')});
+  }
+  function closePanel(){
+    trackPanel.classList.remove('open');
+    queryPanel.classList.remove('open');
+    trackPanel.style.display='none';
+    queryPanel.style.display='none';
+    panelBackdrop.classList.remove('open');
+  }
+
+  document.getElementById('trackFab').addEventListener('click',function(){openPanel(trackPanel)});
+  document.getElementById('queryFab').addEventListener('click',function(){openPanel(queryPanel);loadQueries()});
+  panelBackdrop.addEventListener('click',closePanel);
+  document.querySelectorAll('[data-close-panel]').forEach(function(b){b.addEventListener('click',closePanel)});
+
   // Toast
   var toastTimer;
   function showToast(msg,type){
@@ -635,8 +679,6 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
       showToast('Something went wrong. Please try again.','error');
     }
   });
-
-  loadQueries();
 
 })();
 </script>
