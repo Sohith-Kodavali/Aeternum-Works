@@ -496,7 +496,6 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
       var initials=(c.full_name||'?')[0].toUpperCase();
       var edu=c.education||'—';
       var skills=Array.isArray(c.skills)?c.skills.join(', '):(c.skills||'—');
-      var resumeLink=c.resume_url?(c.resume_url.startsWith('local_file:')?c.resume_url.replace('local_file:',''):'<a href="'+c.resume_url+'" target="_blank">View Resume ↗</a>'):'—';
 
       return '<tr data-idx="'+i+'" data-id="'+(c.id||'')+'">'+
         '<td><strong>'+esc(c.full_name)+'</strong></td>'+
@@ -510,20 +509,17 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
         '<div class="detail-item"><span class="detail-label">Phone</span><span class="detail-value">'+esc(c.phone||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Education</span><span class="detail-value">'+esc(edu)+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">University</span><span class="detail-value">'+esc(c.university||'—')+'</span></div>'+
-        '<div class="detail-item"><span class="detail-label">Grad Year</span><span class="detail-value">'+esc(c.grad_year||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Age</span><span class="detail-value">'+esc(c.age||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Gender</span><span class="detail-value">'+esc(c.gender||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Skills</span><span class="detail-value">'+esc(skills)+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">LinkedIn</span><span class="detail-value">'+(c.linkedin?'<a href="'+esc(c.linkedin)+'" target="_blank">Profile ↗</a>':'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Portfolio</span><span class="detail-value">'+(c.portfolio?'<a href="'+esc(c.portfolio)+'" target="_blank">Link ↗</a>':'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Portfolio Website</span><span class="detail-value">'+(c.portfolio_website?'<a href="'+esc(c.portfolio_website)+'" target="_blank">Link ↗</a>':'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Editing Links</span><span class="detail-value">'+esc(c.editing_links||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Editing Software</span><span class="detail-value">'+esc(c.editing_software||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Daily Output</span><span class="detail-value">'+esc(c.daily_output||'—')+'</span></div>'+
-        '<div class="detail-item"><span class="detail-label">Platforms</span><span class="detail-value">'+esc(Array.isArray(c.platforms)?c.platforms.join(', '):(c.platforms||'—'))+'</span></div>'+
-        '<div class="detail-item"><span class="detail-label">Expected Pay</span><span class="detail-value">'+esc(c.expected_compensation||'—')+'</span></div>'+
-        '<div class="detail-item"><span class="detail-label">Availability</span><span class="detail-value">'+esc(c.availability||'—')+'</span></div>'+
-        '<div class="detail-item"><span class="detail-label">Resume</span><span class="detail-value">'+resumeLink+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Location</span><span class="detail-value">'+esc(c.location||'—')+'</span></div>'+
-        '<div class="detail-item"><span class="detail-label">Relocate</span><span class="detail-value">'+(c.willing_to_relocate?'Yes':'No')+'</span></div>'+
-        '<div class="detail-item"><span class="detail-label">Cover Letter</span><span class="detail-value">'+esc(c.cover_letter||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Extra Info</span><span class="detail-value">'+esc(c.extra_info||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Update Status</span><span class="detail-value"><select class="status-select" data-id="'+(c.id||'')+'" data-idx="'+i+'">'+
           '<option value="new"'+('new'===status?' selected':'')+'>New</option>'+
           '<option value="reviewed"'+('reviewed'===status?' selected':'')+'>Reviewed</option>'+
@@ -637,13 +633,13 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
   document.getElementById('exportBtn').addEventListener('click',function(){
     var filtered=getFiltered();
     if(!filtered.length) return;
-    var headers=['Full Name','Email','Phone','Education','University','Grad Year','Skills','Experience','LinkedIn','Portfolio','Resume URL','Job Post','Location','Relocate','Status','Cover Letter','Date Applied'];
+    var headers=['Full Name','Email','Phone','Education','University','Age','Gender','Skills','Experience','LinkedIn','Portfolio','Portfolio Website','Editing Links','Editing Software','Daily Output','Location','Extra Info','Job Post','Status','Date Applied'];
     var rows=filtered.map(function(c){
       return [
-        c.full_name||'',c.email||'',c.phone||'',c.education||'',c.university||'',c.grad_year||'',
+        c.full_name||'',c.email||'',c.phone||'',c.education||'',c.university||'',c.age||'',c.gender||'',
         Array.isArray(c.skills)?c.skills.join('; '):(c.skills||''),c.experience_level||'',
-        c.linkedin||'',c.portfolio||'',c.resume_url||'',c.job_post||'',c.location||'',
-        c.willing_to_relocate?'Yes':'No',c.status||'new',c.cover_letter||'',
+        c.linkedin||'',c.portfolio||'',c.portfolio_website||'',c.editing_links||'',c.editing_software||'',
+        c.daily_output||'',c.location||'',c.extra_info||'',c.job_post||'',c.status||'new',
         c.created_at?new Date(c.created_at).toLocaleDateString():''
       ].map(function(v){return'"'+String(v).replace(/"/g,'""')+'"'}).join(',');
     });

@@ -67,6 +67,7 @@ nav{position:relative;z-index:10;display:flex;align-items:center;justify-content
 .job-card .job-desc{font-size:.82rem;color:var(--muted);line-height:1.5;margin-bottom:14px;position:relative;z-index:1}
 .job-card .job-tags{display:flex;flex-wrap:wrap;gap:6px;position:relative;z-index:1}
 .job-card .job-tags span{padding:5px 12px;font-size:.66rem;font-weight:500;border-radius:20px;background:rgba(132,94,194,.08);color:var(--purple)}
+.job-applications{display:inline-block;margin-top:12px;font-size:.68rem;font-weight:600;color:var(--emerald);position:relative;z-index:1}
 .job-check{position:absolute;top:16px;right:16px;width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:grid;place-items:center;font-size:.75rem;color:transparent;transition:all .3s;z-index:1}
 .job-card.selected .job-check{background:linear-gradient(135deg,var(--coral),var(--purple));border-color:transparent;color:#fff}
 @keyframes iconPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
@@ -173,13 +174,17 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
   <div class="rules-card">
     <h2>Terms &amp; Rules</h2>
     <ul class="rules-list">
-      <li>All information and files you submit must be true and current. Fake or misleading details will result in automatic rejection.</li>
-      <li>Any portfolio, resume, or content you share must be your own work. Plagiarized or stolen content disqualifies you immediately.</li>
+      <li>All information you submit must be true and current. Fake or misleading details will result in automatic rejection.</li>
+      <li>Any portfolio, reel, or content you share must be your own work. Plagiarized or stolen content disqualifies you immediately.</li>
       <li>This role requires consistent daily output for YouTube, Instagram, and Facebook. You're expected to meet deadlines without constant follow-up.</li>
       <li>Work produced for Aeternum Works (edits, reels, designs, scripts) becomes Aeternum Works property and cannot be reposted for other clients without approval.</li>
       <li>You must not share internal drafts, unpublished content, analytics, or client details with anyone outside the team.</li>
       <li>Communication with the team and clients must stay professional and respectful at all times.</li>
       <li>Never share account passwords or login details with anyone. Use only the access Aeternum Works gives you.</li>
+      <li>No work in exam times. Your studies and exams come first.</li>
+      <li>Work should mostly happen outside of college hours.</li>
+      <li>No work, no pay — payment is released only after the work is completed and approved.</li>
+      <li>This is a trial role. If we like your work, we will continue with you for a longer term and pay more.</li>
     </ul>
   </div>
 
@@ -220,12 +225,13 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
           <input type="text" name="university" placeholder="MIT, Stanford, etc.">
         </div>
         <div class="form-field">
-          <label>Graduation Year</label>
-          <input type="text" name="grad_year" placeholder="2024">
+          <label>Age *</label>
+          <input type="text" name="age" placeholder="e.g. 20" required>
+          <span class="error-text">Please enter your age</span>
         </div>
         <div class="form-field full">
           <label>Skills (comma separated)</label>
-          <input type="text" name="skills" placeholder="React, TypeScript, Node.js, Figma, Docker...">
+          <input type="text" name="skills" placeholder="Premiere Pro, After Effects, Motion Graphics...">
           <span class="helper">Separate each skill with a comma</span>
         </div>
         <div class="form-field">
@@ -240,6 +246,16 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
           <span class="error-text">Please select your experience level</span>
         </div>
         <div class="form-field">
+          <label>Gender *</label>
+          <select name="gender" required>
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <span class="error-text">Please select your gender</span>
+        </div>
+        <div class="form-field">
           <label>LinkedIn Profile</label>
           <input type="url" name="linkedin" placeholder="https://linkedin.com/in/...">
         </div>
@@ -247,7 +263,11 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
           <label>Portfolio / GitHub</label>
           <input type="url" name="portfolio" placeholder="https://github.com/...">
         </div>
-        <div class="form-field full">
+        <div class="form-field">
+          <label>Portfolio Website</label>
+          <input type="url" name="portfolio_website" placeholder="https://yourwebsite.com">
+        </div>
+        <div class="form-field">
           <label>Editing Reel / Portfolio Links</label>
           <input type="text" name="editing_links" placeholder="YouTube, Instagram, Behance, or drive link to your reel">
         </div>
@@ -259,53 +279,20 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
           <label>Daily Output Capacity</label>
           <input type="text" name="daily_output" placeholder="e.g. 2-3 reels per day">
         </div>
-        <div class="form-field full">
-          <label>Platforms you're comfortable with</label>
-          <div class="checkbox-wrap">
-            <input type="checkbox" name="platforms" value="YouTube" id="platform_yt">
-            <label for="platform_yt">YouTube</label>
-          </div>
-          <div class="checkbox-wrap">
-            <input type="checkbox" name="platforms" value="Instagram" id="platform_ig">
-            <label for="platform_ig">Instagram</label>
-          </div>
-          <div class="checkbox-wrap">
-            <input type="checkbox" name="platforms" value="Facebook" id="platform_fb">
-            <label for="platform_fb">Facebook</label>
-          </div>
-        </div>
-        <div class="form-field">
-          <label>Expected Monthly Compensation</label>
-          <input type="text" name="expected_compensation" placeholder="e.g. ₹15,000 / $200">
-        </div>
-        <div class="form-field">
-          <label>Availability / Time Zone</label>
-          <input type="text" name="availability" placeholder="e.g. IST, full-time, 6 hrs/day">
-        </div>
         <div class="form-field">
           <label>Current Location</label>
           <input type="text" name="location" placeholder="City, Country">
         </div>
-        <div class="form-field">
-          <label style="visibility:hidden">_</label>
-          <div class="checkbox-wrap">
-            <input type="checkbox" name="willing_to_relocate" id="relocate">
-            <label for="relocate">Willing to relocate</label>
-          </div>
+        <div class="form-field full">
+          <label>Extra Info</label>
+          <textarea name="extra_info" placeholder="Anything else you want to tell us..."></textarea>
         </div>
         <div class="form-field full">
-          <label>Resume (PDF, DOCX) *</label>
-          <div class="file-upload" id="fileDrop">
-            <div class="file-icon">📄</div>
-            <div class="file-text"><b>Click to upload</b> or drag and drop</div>
-            <div class="file-name" id="fileName" style="display:none"></div>
-            <input type="file" name="resume_file" id="resumeInput" accept=".pdf,.doc,.docx" required>
+          <div class="checkbox-wrap" style="margin-top:4px">
+            <input type="checkbox" name="accept_terms" id="acceptTerms" required>
+            <label for="acceptTerms">I have read and agree to the Terms &amp; Rules above *</label>
           </div>
-          <span class="error-text" style="display:block;text-align:center">Please upload your resume</span>
-        </div>
-        <div class="form-field full">
-          <label>Cover Letter / Why you'd be a great fit</label>
-          <textarea name="cover_letter" placeholder="Tell us what makes you excited about this role and what you'd bring to the team..."></textarea>
+          <span class="error-text" id="acceptTermsError">You must accept the terms to apply</span>
         </div>
       </div>
       <button type="submit" class="submit-btn" id="submitBtn">
@@ -345,12 +332,20 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
   try{supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY)}catch(e){}
 
   // Load active jobs dynamically
-  var jobs=[];
+  var jobs=[],applicationCounts={};
   async function loadJobs(){
     try{
       var res=await supabase.from('jobs').select('*').eq('active',true).order('created_at',{ascending:false});
       if(res.error) throw res.error;
       jobs=res.data||[];
+
+      var cRes=await supabase.from('candidates').select('job_post');
+      if(cRes.error) throw cRes.error;
+      applicationCounts={};
+      (cRes.data||[]).forEach(function(c){
+        applicationCounts[c.job_post]=(applicationCounts[c.job_post]||0)+1;
+      });
+
       renderJobs();
     }catch(e){
       console.error('Failed to load jobs',e);
@@ -366,11 +361,13 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
     jobGrid.innerHTML=jobs.map(function(j,i){
       var iconClass='job-icon-'+(i%5+1);
       var tags=(j.skills||[]).map(function(s){return '<span>'+esc(s)+'</span>'}).join('');
+      var count=applicationCounts[j.title]||0;
       return '<article class="job-card" data-job="'+esc(j.title)+'">'+
         '<span class="job-icon '+iconClass+'">'+esc(j.icon||'💼')+'</span>'+
         '<h3>'+esc(j.title)+'</h3>'+
         '<p class="job-desc">'+esc(j.description||'')+'</p>'+
         '<div class="job-tags">'+tags+'</div>'+
+        '<span class="job-applications">'+count+' application'+(count===1?'':'s')+'</span>'+
         '<span class="job-check">✓</span>'+
       '</article>';
     }).join('');
@@ -390,22 +387,6 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
   });
 
   loadJobs();
-
-  // File upload visual
-  var fileDrop=document.getElementById('fileDrop'),
-      resumeInput=document.getElementById('resumeInput'),
-      fileName=document.getElementById('fileName');
-  fileDrop.addEventListener('dragover',function(e){e.preventDefault();fileDrop.classList.add('active')});
-  fileDrop.addEventListener('dragleave',function(){fileDrop.classList.remove('active')});
-  fileDrop.addEventListener('drop',function(e){
-    e.preventDefault();fileDrop.classList.remove('active');
-    if(e.dataTransfer.files.length){resumeInput.files=e.dataTransfer.files;updateFileName()}
-  });
-  resumeInput.addEventListener('change',updateFileName);
-  function updateFileName(){
-    if(resumeInput.files.length){fileName.textContent='📎 '+resumeInput.files[0].name;fileName.style.display='block'}
-    else{fileName.style.display='none'}
-  }
 
   // Toast
   var toastTimer;
@@ -442,15 +423,13 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
     // Validate job selection
     if(!selectedJob){showToast('Please select a position first','error');return}
 
-    // Validate file
-    var fileField=form.querySelector('.form-field.full .error-text');
-    if(!resumeInput.files.length){
-      form.querySelector('.file-upload').style.borderColor='var(--coral)';
-      fileField.style.display='block';
+    // Validate terms acceptance
+    var acceptTerms=document.getElementById('acceptTerms');
+    if(!acceptTerms.checked){
+      document.getElementById('acceptTermsError').style.display='block';
       valid=false;
     }else{
-      form.querySelector('.file-upload').style.borderColor='var(--border)';
-      fileField.style.display='none';
+      document.getElementById('acceptTermsError').style.display='none';
     }
 
     if(!valid) return;
@@ -462,20 +441,8 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
       var formData=new FormData(form);
       var skillsRaw=formData.get('skills')||'';
       var skills=skillsRaw?skillsRaw.split(',').map(function(s){return s.trim()}).filter(Boolean):[];
-      var relocate=formData.get('willing_to_relocate')==='on';
-      var platforms=formData.getAll('platforms');
-
-      var resumeFile=resumeInput.files[0];
-      var resumeUrl='';
 
       if(!supabase) throw new Error('Supabase not initialized');
-
-      // Upload resume
-      var filePath=Date.now()+'_'+resumeFile.name.replace(/[^a-zA-Z0-9._-]/g,'_');
-      var uploadRes=await supabase.storage.from('resumes').upload(filePath,resumeFile);
-      if(uploadRes.error) throw uploadRes.error;
-      var urlRes=supabase.storage.from('resumes').getPublicUrl(filePath);
-      resumeUrl=urlRes.data.publicUrl;
 
       // Insert candidate
       var insertRes=await supabase.from('candidates').insert({
@@ -484,22 +451,20 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
         phone:formData.get('phone'),
         education:formData.get('education'),
         university:formData.get('university')||null,
-        grad_year:formData.get('grad_year')||null,
+        age:formData.get('age')||null,
+        gender:formData.get('gender')||null,
         skills:skills.length?skills:null,
         experience_level:formData.get('experience_level'),
         linkedin:formData.get('linkedin')||null,
         portfolio:formData.get('portfolio')||null,
+        portfolio_website:formData.get('portfolio_website')||null,
         editing_links:formData.get('editing_links')||null,
         editing_software:formData.get('editing_software')||null,
         daily_output:formData.get('daily_output')||null,
-        platforms:platforms.length?platforms:null,
-        expected_compensation:formData.get('expected_compensation')||null,
-        availability:formData.get('availability')||null,
-        resume_url:resumeUrl,
-        job_post:selectedJob,
-        cover_letter:formData.get('cover_letter')||null,
         location:formData.get('location')||null,
-        willing_to_relocate:relocate
+        extra_info:formData.get('extra_info')||null,
+        job_post:selectedJob,
+        status:'new'
       });
       if(insertRes.error) throw insertRes.error;
 
