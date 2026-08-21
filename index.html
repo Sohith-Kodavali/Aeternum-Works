@@ -154,6 +154,53 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 /* ===== RESPONSIVE ===== */
 @media(max-width:980px){.wrap{width:min(100% - 48px,760px)}.links{gap:22px}.hero{min-height:100vh}.hero-grid{max-width:100%}.about-grid{gap:38px}.service-grid{grid-template-columns:repeat(3,1fr)}.project-showcase{height:400px}.project-slide{grid-template-columns:1fr;gap:20px}.project-mockup{height:200px}.project-details{text-align:center;padding:0}.project-cta{margin:0 auto}.proof-grid{grid-template-columns:1fr}.process{padding-right:0;border-right:0;border-bottom:1px solid var(--line)}.metrics{padding:32px 0}.timeline{gap:2px}.step-node small{font-size:.57rem}.testimonial-marquee::before,.testimonial-marquee::after{width:80px}.quote-card{flex:0 0 320px}.footergrid{grid-template-columns:1.4fr 1fr 1fr}.footergrid .footercol:last-child{grid-column:2/-1}.cta-orb{width:450px;height:450px}}
 @media(max-width:680px){.wrap{width:min(100% - 32px,520px)}.nav{padding-top:14px}.nav .pill{display:none}.menu{display:grid;place-items:center}.links{position:fixed;inset:0;z-index:5;display:none;flex-direction:column;align-items:flex-start;justify-content:center;gap:24px;padding:32px;background:var(--black)}body.menu-open .links{display:flex}body.menu-open .menu{position:fixed;z-index:6;top:14px;right:16px}.links a{font:500 2.3rem var(--serif);letter-spacing:-.03em;text-transform:none}.hero{min-height:100vh}.hero-content{padding-top:130px;margin:0 auto;width:calc(100% - 32px);text-align:center}.hero-grid{max-width:100%;align-items:center;justify-items:center}.hero-copy{display:flex;flex-direction:column;align-items:center}.hero-lead{font-size:.91rem;text-align:center}.actions{justify-content:center}.hero-art{justify-content:center}.hero-video{object-fit:contain;object-position:center top!important}.hero-title{font-size:clamp(3.5rem,17vw,5.3rem)}.since{max-width:165px;font-size:.62rem}.scroll{display:none}.about{padding-top:80px}.about-grid{grid-template-columns:1fr;gap:20px}.about-illustration{order:-1;padding:0}.founder-card{padding:32px 24px;max-width:100%}.principles{gap:10px}.principle-card{padding:14px 16px}.section-head{display:block;margin-bottom:24px}.section-head>p:last-child{margin-top:12px}.service-grid{grid-template-columns:1fr 1fr;gap:10px}.service-card{min-height:220px;padding:22px 12px 18px}.service-card h3{font-size:1rem}.project-showcase{height:340px}.project-slide{grid-template-columns:1fr;gap:12px}.project-mockup{height:170px}.project-nav{gap:8px;margin-top:20px}.project-progress{width:120px}.steps,.timeline{gap:0}.step-node small{font-size:.55rem}.step-node strong{font-size:.85rem}.metric-grid{grid-template-columns:repeat(2,1fr);row-gap:22px}.metric:nth-child(2){border-right:0}.metric:nth-child(3),.metric:nth-child(4){padding-top:20px;border-top:1px solid var(--line)}.metric:nth-child(3){padding-left:0}.metric:nth-child(4){padding-right:0}.testimonial-marquee::before,.testimonial-marquee::after{width:50px}.quote-card{flex:0 0 300px;padding:18px}.cta{padding:70px 0 80px}.cta-orb{width:350px;height:350px}.cta-ray{height:200px}.footergrid{grid-template-columns:1fr 1fr;gap:28px 18px}.footerbrand{grid-column:1/-1}.footergrid .footercol:last-child{grid-column:auto}.footbottom{align-items:flex-start;flex-wrap:wrap}}
+/* ===== PLANS — Cyan/Teal ===== */
+.plans{--ac1:oklch(74% .15 210);--ac2:oklch(62% .12 210);--ac3:oklch(42% .09 210);padding:100px 0 100px;position:relative;overflow:hidden}
+.plans-bg{position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse at 50% 35%,oklch(74% .15 210/.2),transparent 45%),radial-gradient(ellipse at 22% 72%,oklch(42% .09 210/.14),transparent 40%),var(--black)}
+.plans .eyebrow{color:var(--ac1)}.plans .section-head>p:last-child{color:oklch(68% .025 75)}
+.plans-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:stretch}
+.plan-card{position:relative;display:flex;flex-direction:column;padding:30px 24px 26px;border-radius:18px;background:linear-gradient(170deg,oklch(14% .03 210/.95),oklch(8% .015 210/.95));border:1px solid oklch(28% .06 210/.5);overflow:hidden;transition:transform .45s var(--spring),box-shadow .4s,border-color .4s}
+.plan-card::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:conic-gradient(from var(--border-angle),var(--ac3),transparent 25%,var(--ac1) 50%,transparent 75%,var(--ac3));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:borderSpin 5s linear infinite;opacity:.5;transition:opacity .4s}
+.plan-card:hover::before{opacity:1}
+.plan-card:hover{transform:translateY(-8px);border-color:var(--ac2);box-shadow:0 28px 60px oklch(0% 0 0/.5),0 0 45px oklch(74% .15 210/.14)}
+.plan-card>*{position:relative;z-index:1}
+.plan-card.featured{background:linear-gradient(170deg,oklch(17% .035 210/.97),oklch(9% .02 210/.97));border-color:oklch(42% .09 210/.7);box-shadow:0 28px 60px oklch(0% 0 0/.5),0 0 45px oklch(74% .15 210/.16)}
+.plan-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.plan-card h3{font:500 1.7rem/1 var(--serif);letter-spacing:-.02em;color:var(--ac1)}
+.plan-badge{font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:oklch(74% .15 210/.14);border:1px solid oklch(74% .15 210/.3);color:var(--ac1);box-shadow:0 0 16px oklch(74% .15 210/.25)}
+.plan-tagline{color:var(--muted);font-size:.78rem;margin-bottom:18px;min-height:1.9em}
+.plan-price{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
+.plan-amount{font:500 2.2rem/1 var(--serif);letter-spacing:-.02em;background:linear-gradient(90deg,var(--white),var(--gold),var(--white));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:planShimmer 5s ease-in-out infinite}
+.plan-period{color:var(--dim);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em}
+.plan-delivery{color:var(--ac2);font-size:.68rem;font-weight:600;margin-bottom:18px}
+.plan-features{list-style:none;display:grid;gap:10px;margin:0 0 24px;padding:0;flex:1}
+.plan-features li{position:relative;padding-left:24px;color:var(--muted);font-size:.78rem;line-height:1.45}
+.plan-features li::before{content:'✓';position:absolute;left:0;top:0;color:var(--ac1);font-weight:700}
+.plan-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border:1px solid var(--ac3);border-radius:999px;color:var(--ac1);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;transition:background .3s,color .3s,box-shadow .3s,transform .3s}
+.plan-cta:hover{background:var(--ac1);border-color:var(--ac1);color:var(--black);box-shadow:0 0 30px oklch(74% .15 210/.3);transform:translateY(-2px)}
+.plan-card.featured .plan-cta{background:var(--ac1);border-color:var(--ac1);color:var(--black)}
+.plan-card.featured .plan-cta:hover{background:var(--ac2);border-color:var(--ac2)}
+.plans-care{margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 28px;border:1px solid oklch(28% .06 210/.5);border-radius:16px;background:linear-gradient(160deg,oklch(14% .03 210/.9),oklch(8% .015 210/.95));flex-wrap:wrap}
+.plans-care h3{font:500 1.3rem/1.1 var(--serif);color:var(--ac1);margin-bottom:4px}
+.plans-care p{color:var(--muted);font-size:.78rem;max-width:46ch}
+.plans-care .plan-cta{flex-shrink:0}
+.plans-faq{margin-top:26px;display:grid;gap:10px}
+.plans-faq details{border:1px solid oklch(28% .06 210/.4);border-radius:12px;background:oklch(12% .02 210/.5);overflow:hidden}
+.plans-faq summary{cursor:pointer;list-style:none;padding:16px 20px;font:600 .92rem var(--serif);color:var(--white);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.plans-faq summary::-webkit-details-marker{display:none}
+.plans-faq summary::after{content:'+';color:var(--ac1);font-weight:700;font-size:1.2rem;transition:transform .3s var(--ease)}
+.plans-faq details[open] summary::after{transform:rotate(45deg)}
+.plans-faq .faq-a{padding:0 20px 18px;color:var(--muted);font-size:.82rem;line-height:1.6}
+@keyframes planShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.plans-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 28px;margin-top:26px;color:var(--dim);font-size:.68rem;letter-spacing:.05em}
+.plans-trust span{display:inline-flex;align-items:center;gap:7px}
+.plans-trust i{font-style:normal;color:var(--ac1)}
+.plan-card{opacity:0;transform:translateY(34px);transition:opacity .7s var(--spring),transform .7s var(--spring),box-shadow .4s,border-color .4s}
+.plan-card:nth-child(1){transition-delay:.05s}.plan-card:nth-child(2){transition-delay:.15s}.plan-card:nth-child(3){transition-delay:.25s}.plan-card:nth-child(4){transition-delay:.35s}
+.plans.show .plan-card{opacity:1;transform:none}
+.plans.show .plan-card:hover{transform:translateY(-8px)}
+@media(max-width:980px){.plans{padding:80px 0}.plans-grid{grid-template-columns:repeat(2,1fr);gap:16px}.plan-card{padding:26px 20px 24px}}
+@media(max-width:680px){.plans-grid{grid-template-columns:1fr}.plans-care{flex-direction:column;align-items:flex-start}.plans-care .plan-cta{width:100%}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:1ms!important;transition-duration:1ms!important;scroll-behavior:auto!important}.split-word span{transform:none!important;transition:none!important}}
 </style>
 </head>
@@ -240,6 +287,7 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
       <a href="#work">Work</a>
       <a href="#services">Services</a>
       <a href="#about">About</a>
+      <a href="#plans">Plans</a>
       <a href="#contact">Contact</a>
       <a href="recruitment.html">Careers</a>
       <a href="admin.html">Admin</a>
@@ -452,6 +500,87 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 
 <div class="section-divider" aria-hidden="true"></div>
 
+<!-- ===== PLANS ===== -->
+<section class="plans reveal" data-reveal="fade-up" id="plans">
+  <div class="plans-bg"></div>
+  <canvas class="section-particles" id="plansParticles"></canvas>
+  <div class="wrap">
+    <div class="section-head"><p class="eyebrow">Plans &amp; Pricing</p><p>Clear packages for building and growing your digital presence — no guesswork, no surprises.</p></div>
+    <div class="plans-grid">
+      <article class="plan-card">
+        <div class="plan-top"><h3>Launch</h3></div>
+        <p class="plan-tagline">Single-page landing site for early-stage founders and freelancers.</p>
+        <div class="plan-price"><span class="plan-amount">₹15,000</span><span class="plan-period">starting</span></div>
+        <div class="plan-delivery">5–7 day delivery</div>
+        <ul class="plan-features">
+          <li>1 page, mobile-first responsive</li>
+          <li>On-page SEO essentials</li>
+          <li>WhatsApp &amp; contact integration</li>
+          <li>1 revision round</li>
+        </ul>
+        <a class="plan-cta" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20the%20Launch%20plan." target="_blank" rel="noopener">Start your project <span>↗</span></a>
+      </article>
+      <article class="plan-card featured">
+        <div class="plan-top"><h3>Growth</h3><span class="plan-badge">Most Popular</span></div>
+        <p class="plan-tagline">Business website built to establish your brand and generate leads.</p>
+        <div class="plan-price"><span class="plan-amount">₹35,000</span><span class="plan-period">starting</span></div>
+        <div class="plan-delivery">10–14 day delivery</div>
+        <ul class="plan-features">
+          <li>Up to 8 pages, CMS-ready</li>
+          <li>On-page SEO + analytics setup</li>
+          <li>Copy support included</li>
+          <li>2 revision rounds</li>
+        </ul>
+        <a class="plan-cta" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20the%20Growth%20plan." target="_blank" rel="noopener">Start your project <span>↗</span></a>
+      </article>
+      <article class="plan-card">
+        <div class="plan-top"><h3>Commerce</h3></div>
+        <p class="plan-tagline">Full online store with payments, inventory, and order management.</p>
+        <div class="plan-price"><span class="plan-amount">₹75,000</span><span class="plan-period">starting</span></div>
+        <div class="plan-delivery">3–4 week delivery</div>
+        <ul class="plan-features">
+          <li>Product catalog &amp; cart</li>
+          <li>UPI / Razorpay payments</li>
+          <li>Inventory &amp; order management</li>
+          <li>Store training + 2 revisions</li>
+        </ul>
+        <a class="plan-cta" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20the%20Commerce%20plan." target="_blank" rel="noopener">Start your project <span>↗</span></a>
+      </article>
+      <article class="plan-card">
+        <div class="plan-top"><h3>Bespoke</h3></div>
+        <p class="plan-tagline">Custom web apps, AI integrations, and ongoing product work.</p>
+        <div class="plan-price"><span class="plan-amount">Custom</span></div>
+        <div class="plan-delivery">Scoped to your project</div>
+        <ul class="plan-features">
+          <li>Web applications &amp; dashboards</li>
+          <li>AI &amp; automation integrations</li>
+          <li>Custom product development</li>
+          <li>Dedicated support</li>
+        </ul>
+        <a class="plan-cta" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20a%20custom%2FAI%20project." target="_blank" rel="noopener">Start your project <span>↗</span></a>
+      </article>
+    </div>
+    <div class="plans-care">
+      <div><h3>Ongoing Care</h3><p>Keep your site fast, secure and fresh after launch — updates, backups, security monitoring and priority support.</p></div>
+      <a class="plan-cta" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20the%20Ongoing%20Care%20plan." target="_blank" rel="noopener">₹4,999 / month <span>↗</span></a>
+    </div>
+    <div class="plans-faq">
+      <details><summary>How long does a project take?</summary><div class="faq-a">Launch sites land in 5–7 days, business sites in 10–14 days, and e-commerce in 3–4 weeks. Bespoke work is scoped individually.</div></details>
+      <details><summary>What does the revision policy look like?</summary><div class="faq-a">Each plan includes a set number of revision rounds. Extra rounds can be added on request, and every project gets a final QA pass before launch.</div></details>
+      <details><summary>Do you handle hosting and domains?</summary><div class="faq-a">Yes. We can set up hosting, connect your domain, and get your site live so you don't have to touch any of the technical setup.</div></details>
+      <details><summary>How do payments work?</summary><div class="faq-a">We typically split the project into milestone payments so you only release the next stage once you're happy with the previous one.</div></details>
+    </div>
+    <div class="plans-trust">
+      <span><i>✦</i> No hidden fees</span>
+      <span><i>✦</i> Milestone-based payments</span>
+      <span><i>✦</i> Dedicated project support</span>
+      <span><i>✦</i> Free consultation</span>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
 <!-- ===== CTA ===== -->
 <section class="cta reveal" data-reveal="scale-in" id="contact">
   <canvas class="ambient-canvas" id="ctaCanvas"></canvas>
@@ -484,7 +613,7 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
         </a>
         <p>We craft luxury digital experiences, brands and solutions that drive impact and leave a legacy.</p>
       </div>
-      <div class="footercol"><h3>Quick links</h3><a href="#top">Home</a><a href="#work">Work</a><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+      <div class="footercol"><h3>Quick links</h3><a href="#top">Home</a><a href="#work">Work</a><a href="#services">Services</a><a href="#about">About</a><a href="#plans">Plans</a><a href="#contact">Contact</a></div>
       <div class="footercol"><h3>Services</h3><a href="#services">Website Design</a><a href="#services">Web Development</a><a href="#services">Brand Identity</a><a href="#services">UI / UX Design</a><a href="#services">AI Solutions</a></div>
       <div class="footercol"><h3>Contact</h3><a href="mailto:sohith132@gmail.com">sohith132@gmail.com</a><a href="tel:+919640248157">+91 96402 48157</a><address>India</address></div>
     </div>
@@ -744,6 +873,7 @@ window.addEventListener('pointermove',function(e){
   initSectionParticles('projectsParticles','.projects','oklch(68% .15 248',70);
   initSectionParticles('proofParticles','.proof','oklch(72% .16 72',60);
   initSectionParticles('testimonialsParticles','.testimonials','oklch(64% .18 312',60);
+  initSectionParticles('plansParticles','.plans','oklch(74% .15 210',60);
 })();
 
 // ===== ABOUT PRINCIPLE CARD TILT =====

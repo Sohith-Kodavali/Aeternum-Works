@@ -581,14 +581,18 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
 
   function esc(s){if(!s) return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
-  // Row click to expand
-  tableBody.addEventListener('click',function(e){
+  // Status change (must use change event so the dropdown stays open while selecting)
+  tableBody.addEventListener('change',function(e){
     var select=e.target.closest('.status-select');
     if(select){
       e.stopPropagation();
       updateStatus(select);
-      return;
     }
+  });
+
+  // Row click to expand
+  tableBody.addEventListener('click',function(e){
+    if(e.target.closest('.status-select')) return;
     var row=e.target.closest('tr');
     if(!row||row.classList.contains('expand-row')) return;
     var idx=row.dataset.idx;
