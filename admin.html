@@ -230,6 +230,7 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
         <span>📋</span> All Candidates <span class="badge" id="badgeAll">0</span>
       </a>
       <span class="nav-section">By Position</span>
+      <a href="#" data-filter="Hackathon"><span>🚀</span> Hackathon <span class="badge" id="badgeHackathon">0</span></a>
       <div id="positionFilters"></div>
       <span class="nav-section">Management</span>
       <a href="#" data-view="jobs"><span>💼</span> Job Posts <span class="badge" id="badgeJobs">0</span></a>
@@ -485,6 +486,7 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
       if(badge) badge.textContent=candidates.filter(function(c){return c.job_post===role}).length;
     });
 
+    document.getElementById('badgeHackathon').textContent=candidates.filter(function(c){return c.job_post==='Hackathon'}).length;
     document.getElementById('badgeNew').textContent=candidates.filter(function(c){return c.status==='new'}).length;
     document.getElementById('badgeReviewed').textContent=candidates.filter(function(c){return c.status==='reviewed'}).length;
     document.getElementById('badgeShortlisted').textContent=candidates.filter(function(c){return c.status==='shortlisted'}).length;
@@ -556,6 +558,7 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
       '</tr>'+
       '<tr class="expand-row" id="expand-'+i+'"><td colspan="6"><div class="detail-grid">'+
         '<div class="detail-item"><span class="detail-label">Phone</span><span class="detail-value">'+esc(c.phone||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Roll Number</span><span class="detail-value">'+esc(c.cover_letter||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Education</span><span class="detail-value">'+esc(edu)+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">University</span><span class="detail-value">'+esc(c.university||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Age</span><span class="detail-value">'+esc(c.age||'—')+'</span></div>'+
@@ -702,10 +705,10 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
   document.getElementById('exportBtn').addEventListener('click',function(){
     var filtered=getFiltered();
     if(!filtered.length) return;
-    var headers=['Full Name','Email','Phone','Education','University','Age','Gender','Skills','Experience','LinkedIn','Portfolio','Portfolio Website','Editing Links','Editing Software','Daily Output','Location','Extra Info','Job Post','Status','Date Applied'];
+    var headers=['Full Name','Email','Phone','Roll Number','Education','University','Age','Gender','Skills','Experience','LinkedIn','Portfolio','Portfolio Website','Editing Links','Editing Software','Daily Output','Location','Extra Info','Job Post','Status','Date Applied'];
     var rows=filtered.map(function(c){
       return [
-        c.full_name||'',c.email||'',c.phone||'',c.education||'',c.university||'',c.age||'',c.gender||'',
+        c.full_name||'',c.email||'',c.phone||'',c.cover_letter||'',c.education||'',c.university||'',c.age||'',c.gender||'',
         Array.isArray(c.skills)?c.skills.join('; '):(c.skills||''),c.experience_level||'',
         c.linkedin||'',c.portfolio||'',c.portfolio_website||'',c.editing_links||'',c.editing_software||'',
         c.daily_output||'',c.location||'',c.extra_info||'',c.job_post||'',c.status||'new',
@@ -860,8 +863,11 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
     }
     grid.innerHTML=queries.map(function(q){
       var dateStr=q.created_at?new Date(q.created_at).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}):'';
+      var isHack=q.name&&q.name.indexOf('[Hackathon]')===0;
+      var displayName=isHack?q.name.slice(12):q.name;
+      var tag=isHack?' <span style="font-size:.58rem;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(255,107,107,.12);color:var(--coral);margin-left:4px">Hackathon</span>':'';
       return '<div class="query-admin-card" data-id="'+q.id+'">'+
-        '<div class="qa-top"><div><div class="qa-name">'+esc(q.name)+'</div><div class="qa-email">'+esc(q.email)+' · '+esc(dateStr)+'</div></div>'+
+        '<div class="qa-top"><div><div class="qa-name">'+esc(displayName)+tag+'</div><div class="qa-email">'+esc(q.email)+' · '+esc(dateStr)+'</div></div>'+
         '<span class="qa-vis '+(q.is_public?'public':'hidden')+'">'+(q.is_public?'Public':'Hidden')+'</span></div>'+
         '<div class="qa-msg">'+esc(q.message)+'</div>'+
         '<textarea class="qa-reply-input" placeholder="Write a reply...">'+esc(q.admin_reply||'')+'</textarea>'+

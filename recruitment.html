@@ -622,7 +622,7 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
   // ===== QUERIES =====
   async function loadQueries(){
     try{
-      var res=await supabase.from('queries').select('*').eq('is_public',true).order('created_at',{ascending:false});
+      var res=await supabase.from('queries').select('*').eq('is_public',true).not('name','like','[Hackathon]%').order('created_at',{ascending:false});
       if(res.error) throw res.error;
       var queries=res.data||[];
       var list=document.getElementById('queryList');
