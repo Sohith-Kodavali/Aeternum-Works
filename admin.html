@@ -544,9 +544,7 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
     tableBody.innerHTML=filtered.map(function(c,i){
       var dateStr=c.created_at?new Date(c.created_at).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}):'—';
       var status=c.status||'new';
-      var initials=(c.full_name||'?')[0].toUpperCase();
       var edu=c.education||'—';
-      var skills=Array.isArray(c.skills)?c.skills.join(', '):(c.skills||'—');
 
       return '<tr data-idx="'+i+'" data-id="'+(c.id||'')+'">'+
         '<td><strong>'+esc(c.full_name)+'</strong></td>'+
@@ -560,16 +558,13 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
         '<div class="detail-item"><span class="detail-label">Phone</span><span class="detail-value">'+esc(c.phone||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Roll Number</span><span class="detail-value">'+esc(c.cover_letter||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Education</span><span class="detail-value">'+esc(edu)+'</span></div>'+
-        '<div class="detail-item"><span class="detail-label">University</span><span class="detail-value">'+esc(c.university||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Age</span><span class="detail-value">'+esc(c.age||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Gender</span><span class="detail-value">'+esc(c.gender||'—')+'</span></div>'+
-        '<div class="detail-item"><span class="detail-label">Skills</span><span class="detail-value">'+esc(skills)+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">LinkedIn</span><span class="detail-value">'+(c.linkedin?'<a href="'+esc(c.linkedin)+'" target="_blank">Profile ↗</a>':'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Portfolio</span><span class="detail-value">'+(c.portfolio?'<a href="'+esc(c.portfolio)+'" target="_blank">Link ↗</a>':'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Portfolio Website</span><span class="detail-value">'+(c.portfolio_website?'<a href="'+esc(c.portfolio_website)+'" target="_blank">Link ↗</a>':'—')+'</span></div>'+
-        '<div class="detail-item"><span class="detail-label">Editing Links</span><span class="detail-value">'+esc(c.editing_links||'—')+'</span></div>'+
+        '<div class="detail-item"><span class="detail-label">Drive Link</span><span class="detail-value">'+(c.editing_links?'<a href="'+esc(c.editing_links)+'" target="_blank">Link ↗</a>':'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Editing Software</span><span class="detail-value">'+esc(c.editing_software||'—')+'</span></div>'+
-        '<div class="detail-item"><span class="detail-label">Daily Output</span><span class="detail-value">'+esc(c.daily_output||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Location</span><span class="detail-value">'+esc(c.location||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Extra Info</span><span class="detail-value">'+esc(c.extra_info||'—')+'</span></div>'+
         '<div class="detail-item"><span class="detail-label">Update Status</span><span class="detail-value"><select class="status-select" data-id="'+(c.id||'')+'" data-idx="'+i+'">'+
@@ -705,15 +700,15 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
   document.getElementById('exportBtn').addEventListener('click',function(){
     var filtered=getFiltered();
     if(!filtered.length) return;
-    var headers=['Full Name','Email','Phone','Roll Number','Education','University','Age','Gender','Skills','Experience','LinkedIn','Portfolio','Portfolio Website','Editing Links','Editing Software','Daily Output','Location','Extra Info','Job Post','Status','Date Applied'];
+    var headers=['Full Name','Email','Phone','Roll Number','Education','Age','Gender','Experience','LinkedIn','Portfolio','Portfolio Website','Drive Link','Editing Software','Location','Extra Info','Job Post','Status','Date Applied'];
     var rows=filtered.map(function(c){
       return [
-        c.full_name||'',c.email||'',c.phone||'',c.cover_letter||'',c.education||'',c.university||'',c.age||'',c.gender||'',
-        Array.isArray(c.skills)?c.skills.join('; '):(c.skills||''),c.experience_level||'',
+        c.full_name||'',c.email||'',c.phone||'',c.cover_letter||'',c.education||'',c.age||'',c.gender||'',
+        c.experience_level||'',
         c.linkedin||'',c.portfolio||'',c.portfolio_website||'',c.editing_links||'',c.editing_software||'',
-        c.daily_output||'',c.location||'',c.extra_info||'',c.job_post||'',c.status||'new',
+        c.location||'',c.extra_info||'',c.job_post||'',c.status||'new',
         c.created_at?new Date(c.created_at).toLocaleDateString():''
-      ].map(function(v){return'"'+String(v).replace(/"/g,'""')+'"'}).join(',');
+      ].map(function(v){return '"'+String(v).replace(/"/g,'""')+'"'}).join(',');
     });
     var csv=headers.join(',')+'\n'+rows.join('\n');
     var blob=new Blob([csv],{type:'text/csv'});

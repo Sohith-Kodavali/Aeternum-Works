@@ -145,6 +145,12 @@ nav{position:relative;z-index:10;display:flex;align-items:center;justify-content
 .form-field input::placeholder{color:#bfc7d9}
 .form-field .helper{font-size:.67rem;color:var(--muted)}
 
+.role-note{display:flex;flex-direction:column;gap:8px;padding:16px 18px;margin-bottom:22px;border:1px solid rgba(132,94,194,.28);border-radius:14px;background:linear-gradient(160deg,rgba(132,94,194,.09),rgba(255,107,107,.06))}
+.role-note h4{font:600 .98rem var(--serif);color:var(--navy);margin:0}
+.role-note ul{list-style:none;display:grid;gap:6px;margin:0}
+.role-note li{display:flex;gap:8px;align-items:flex-start;font-size:.82rem;color:var(--muted);line-height:1.5}
+.role-note li::before{content:'✦';color:var(--purple);flex-shrink:0;margin-top:1px}
+
 .file-upload{position:relative;border:2px dashed var(--border);border-radius:14px;padding:32px;text-align:center;transition:all .3s;cursor:pointer;background:#f8f9fc}
 .file-upload:hover{border-color:var(--purple);background:rgba(132,94,194,.03)}
 .file-upload.active{border-color:var(--purple);background:rgba(132,94,194,.06)}
@@ -256,6 +262,14 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
     <div class="step-label"><span class="num">2</span><span>Tell us about yourself</span></div>
     <div class="role-required" id="roleRequired">Please select a role above to continue.</div>
     <form id="applicationForm" class="form-card" style="display:none">
+      <div class="role-note">
+        <h4>About this role</h4>
+        <ul>
+          <li>Pay is around ₹2,000–3,000 for the first month. If we like your work, we can extend it to double digits.</li>
+          <li>You'll upload videos daily, and we'll push them to the Meta promotions team.</li>
+          <li>Sometimes you may need to come along with us to record the videos we use for promotion.</li>
+        </ul>
+      </div>
       <div class="form-grid">
         <div class="form-field">
           <label>Full Name *</label>
@@ -273,30 +287,9 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
           <span class="error-text">Please enter your phone number</span>
         </div>
         <div class="form-field">
-          <label>Education *</label>
-          <select name="education" required>
-            <option value="">Select qualification</option>
-            <option value="High School">High School</option>
-            <option value="Diploma">Diploma</option>
-            <option value="Bachelors">Bachelor's Degree</option>
-            <option value="Masters">Master's Degree</option>
-            <option value="PhD">PhD</option>
-          </select>
-          <span class="error-text">Please select your education level</span>
-        </div>
-        <div class="form-field">
-          <label>University / College</label>
-          <input type="text" name="university" placeholder="MIT, Stanford, etc.">
-        </div>
-        <div class="form-field">
           <label>Age *</label>
           <input type="text" name="age" placeholder="e.g. 20" required>
           <span class="error-text">Please enter your age</span>
-        </div>
-        <div class="form-field full">
-          <label>Skills (comma separated)</label>
-          <input type="text" name="skills" placeholder="Premiere Pro, After Effects, Motion Graphics...">
-          <span class="helper">Separate each skill with a comma</span>
         </div>
         <div class="form-field">
           <label>Experience Level *</label>
@@ -320,6 +313,10 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
           <span class="error-text">Please select your gender</span>
         </div>
         <div class="form-field">
+          <label>Education <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+          <input type="text" name="education" placeholder="e.g. B.Tech, Diploma, High School">
+        </div>
+        <div class="form-field">
           <label>LinkedIn Profile</label>
           <input type="url" name="linkedin" placeholder="https://linkedin.com/in/...">
         </div>
@@ -332,16 +329,12 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
           <input type="url" name="portfolio_website" placeholder="https://yourwebsite.com">
         </div>
         <div class="form-field">
-          <label>Editing Reel / Portfolio Links</label>
-          <input type="text" name="editing_links" placeholder="YouTube, Instagram, Behance, or drive link to your reel">
+          <label>Drive Link to Your Editing Work</label>
+          <input type="url" name="editing_links" placeholder="https://drive.google.com/...">
         </div>
         <div class="form-field">
           <label>Editing Software</label>
           <input type="text" name="editing_software" placeholder="Premiere Pro, After Effects, CapCut...">
-        </div>
-        <div class="form-field">
-          <label>Daily Output Capacity</label>
-          <input type="text" name="daily_output" placeholder="e.g. 2-3 reels per day">
         </div>
         <div class="form-field">
           <label>Current Location</label>
@@ -551,8 +544,6 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
 
     try{
       var formData=new FormData(form);
-      var skillsRaw=formData.get('skills')||'';
-      var skills=skillsRaw?skillsRaw.split(',').map(function(s){return s.trim()}).filter(Boolean):[];
 
       if(!supabase) throw new Error('Supabase not initialized');
 
@@ -561,18 +552,15 @@ footer{position:relative;z-index:1;text-align:center;padding:20px;color:var(--mu
         full_name:formData.get('full_name'),
         email:formData.get('email'),
         phone:formData.get('phone'),
-        education:formData.get('education'),
-        university:formData.get('university')||null,
+        education:formData.get('education')||null,
         age:formData.get('age')||null,
         gender:formData.get('gender')||null,
-        skills:skills.length?skills:null,
         experience_level:formData.get('experience_level'),
         linkedin:formData.get('linkedin')||null,
         portfolio:formData.get('portfolio')||null,
         portfolio_website:formData.get('portfolio_website')||null,
         editing_links:formData.get('editing_links')||null,
         editing_software:formData.get('editing_software')||null,
-        daily_output:formData.get('daily_output')||null,
         location:formData.get('location')||null,
         extra_info:formData.get('extra_info')||null,
         job_post:selectedJob,
