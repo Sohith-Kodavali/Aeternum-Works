@@ -205,12 +205,119 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 @media(max-width:980px){.plans{padding:80px 0}.plans-grid{grid-template-columns:repeat(2,1fr);gap:16px}.plan-card{padding:26px 20px 24px}}
 @media(max-width:680px){.plans-grid{grid-template-columns:1fr}.plans-care{flex-direction:column;align-items:flex-start}.plans-care .plan-cta{width:100%}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:1ms!important;transition-duration:1ms!important;scroll-behavior:auto!important}.split-word span{transform:none!important;transition:none!important}}
+
+/* ============================================================
+   PREMIUM UPGRADES — Wave 2
+   ============================================================ */
+
+/* NAV — scroll-shrink */
+.nav{transition:padding .35s var(--ease),background .35s,backdrop-filter .35s,box-shadow .35s}
+.nav.scrolled{padding:12px 0}
+.nav.scrolled .logo-mark{width:44px;height:44px;transition:all .35s var(--ease)}
+.nav.scrolled .brandname{font-size:.88rem;transition:all .35s var(--ease)}
+.logo-mark,.brandname{transition:all .35s var(--ease)}
+
+/* NAV — upgraded underline animation (center-out) */
+.links a:after{left:50%;transform:translateX(-50%);transition:width .35s var(--spring)}
+.links a:hover:after,.links a.active:after{width:100%}
+
+/* HERO — kinetic typography (settling letter-spacing) */
+.hero-title{animation:heroSettle 1.4s cubic-bezier(.22,.61,.36,1) .5s both}
+@keyframes heroSettle{from{letter-spacing:-.02em;filter:blur(4px)}to{letter-spacing:-.055em;filter:blur(0)}}
+
+/* HERO — upgraded scroll indicator (drawing gold line) */
+.scroll{position:relative;overflow:hidden}
+.scroll::before{content:'';position:absolute;left:50%;top:-40px;width:1px;height:36px;background:linear-gradient(180deg,transparent,var(--gold));animation:scrollLine 2.4s ease-in-out infinite;transform:translateX(-50%)}
+@keyframes scrollLine{0%{transform:translate(-50%,-50%) scaleY(0);opacity:0}30%{opacity:1}70%{opacity:1}100%{transform:translate(-50%,300%) scaleY(1);opacity:0}}
+.scroll b{border:0}
+
+/* SECTION TITLE — slot machine word swap */
+.word-cycle{display:inline-block;position:relative;overflow:hidden;vertical-align:bottom;min-width:8ch}
+.word-cycle span{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--white),var(--gold2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:wordCycle 12s cubic-bezier(.7,0,.3,1) infinite}
+@keyframes wordCycle{0%,20%{transform:translateY(0)}25%,45%{transform:translateY(-100%)}50%,70%{transform:translateY(-200%)}75%,95%{transform:translateY(-300%)}100%{transform:translateY(-400%)}}
+
+/* SERVICES — unique accent colors per card */
+.service-card:nth-child(1){--card-accent:var(--gold);--card-accent-glow:oklch(78% .16 82 / .28)}
+.service-card:nth-child(2){--card-accent:var(--rose);--card-accent-glow:oklch(65% .18 16 / .28)}
+.service-card:nth-child(3){--card-accent:var(--sapphire);--card-accent-glow:oklch(68% .15 248 / .28)}
+.service-card:nth-child(4){--card-accent:var(--amethyst);--card-accent-glow:oklch(64% .18 312 / .28)}
+.service-card:nth-child(5){--card-accent:var(--emerald);--card-accent-glow:oklch(66% .18 158 / .28)}
+.service-card .service-icon,.service-card h3{color:var(--card-accent,var(--gold))!important}
+.service-card .service-arrow{color:var(--card-accent,var(--gold))!important}
+.service-card .service-icon-ring{border-color:var(--card-accent,var(--gold))!important;opacity:.5}
+.service-card:hover .service-icon-ring{opacity:1;box-shadow:0 0 22px var(--card-accent-glow)}
+.service-card:hover{box-shadow:0 24px 60px oklch(0% 0 0/.4),0 0 40px var(--card-accent-glow)!important}
+.service-card:hover .service-icon{transform:rotate(360deg) scale(1.15);transition:transform .8s var(--spring)}
+.service-card::before{background:conic-gradient(from var(--border-angle),transparent,var(--card-accent,var(--gold)) 50%,transparent)!important}
+
+/* PLANS — "MOST POPULAR" badge on Growth */
+.plan-card.popular{border-color:var(--ac1);position:relative;transform:scale(1.02)}
+.plan-card.popular::after{content:'MOST POPULAR';position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:5px 14px;background:linear-gradient(90deg,var(--ac2),var(--ac1),var(--ac2));background-size:200% 100%;color:var(--black);font-size:.55rem;font-weight:800;letter-spacing:.16em;border-radius:999px;box-shadow:0 8px 24px oklch(74% .15 210 / .35);animation:popularShine 3s ease-in-out infinite;white-space:nowrap;z-index:2}
+@keyframes popularShine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.plans.show .plan-card.popular{transform:scale(1.02)}
+.plans.show .plan-card.popular:hover{transform:translateY(-8px) scale(1.02)}
+
+/* PLANS — Popular tag on hover for others too (subtle) */
+.plan-card:not(.popular):hover{border-color:var(--ac2)}
+
+/* FOUNDER CARD — two-state (hover reveals stats/details) */
+.founder-card{cursor:default;overflow:hidden}
+.founder-card .founder-stats,.founder-card .founder-details{transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.founder-card:hover .founder-stats,.founder-card:hover .founder-details{transform:translateY(-2px)}
+.founder-flip-hint{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-size:.5rem;color:var(--dim);letter-spacing:.18em;text-transform:uppercase;opacity:.6;pointer-events:none}
+
+/* PRINCIPLE CARDS — inline SVG line-art illustration */
+.principle-illus{display:block;width:26px;height:26px;color:var(--gold);opacity:.85}
+.principle-card:hover .principle-illus{color:var(--white);transform:rotate(10deg);transition:all .4s var(--spring)}
+
+/* METRIC counters — refined typography */
+.metric-count{font-variant-numeric:tabular-nums}
+.metric-sub{display:block;margin-top:4px;color:var(--dim);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase}
+
+/* TESTIMONIALS — center focus (middle card scales up, edges fade) */
+.testimonial-track .quote-card{transition:opacity .5s var(--ease),transform .5s var(--ease),border-color .3s,box-shadow .4s}
+.testimonial-track .quote-card.focus{opacity:1;transform:translateY(-2px) scale(1.03)}
+.testimonial-track .quote-card.dim{opacity:.55}
+
+/* PROJECTS — placeholder "coming soon" cards */
+.project-card-locked{position:relative;display:grid;grid-template-rows:auto 1fr auto;border-radius:18px;background:linear-gradient(170deg,oklch(11% .015 248/.7),oklch(6% .01 248/.85));border:1px dashed oklch(28% .06 248/.5);overflow:hidden;min-height:340px}
+.project-card-locked .locked-preview{height:180px;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 40%,oklch(68% .15 248/.1),transparent 60%);position:relative}
+.project-card-locked .locked-icon{width:50px;height:50px;display:grid;place-items:center;border:1px solid var(--sapphire3);border-radius:50%;color:var(--sapphire2);font-size:1.3rem;backdrop-filter:blur(6px)}
+.project-card-locked .locked-body{padding:22px 22px 20px}
+.project-card-locked .locked-body h3{font:500 1.25rem/1.15 var(--serif);color:oklch(60% .08 248);margin-bottom:8px}
+.project-card-locked .locked-body p{color:var(--dim);font-size:.75rem;line-height:1.5}
+.project-card-locked .locked-tag{display:inline-block;margin-top:12px;padding:4px 10px;border-radius:20px;background:oklch(38% .08 248/.15);border:1px solid oklch(38% .08 248/.4);color:oklch(70% .10 248);font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+
+/* CTA — availability indicator */
+.cta-availability{display:inline-flex;align-items:center;gap:10px;margin:14px 0 4px;padding:8px 16px;border:1px solid oklch(66% .18 158 / .35);border-radius:999px;background:oklch(66% .18 158 / .06);font-size:.68rem;color:oklch(80% .1 158);letter-spacing:.05em}
+.cta-availability::before{content:'';width:8px;height:8px;border-radius:50%;background:oklch(66% .18 158);box-shadow:0 0 8px oklch(66% .18 158 / .8);animation:dotPulse 1.8s ease-in-out infinite}
+@keyframes dotPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.6}}
+
+/* FOOTER — giant outlined AETERNUM wordmark background */
+.footer-wordmark{position:absolute;left:0;right:0;bottom:-30px;text-align:center;font:600 clamp(6rem,18vw,20rem)/1 var(--serif);letter-spacing:-.03em;color:transparent;-webkit-text-stroke:1px oklch(78% .16 82 / .12);text-stroke:1px oklch(78% .16 82 / .12);pointer-events:none;user-select:none;z-index:0;overflow:hidden}
+footer{position:relative;overflow:hidden}
+footer .footer-inner{position:relative;z-index:1}
+
+/* SITE-WIDE — color grading overlay */
+.color-grade{position:fixed;inset:0;pointer-events:none;z-index:4;mix-blend-mode:overlay;background:linear-gradient(180deg,oklch(90% .1 82 / .04) 0%,transparent 30%,transparent 70%,oklch(65% .12 30 / .06) 100%);opacity:.7}
+
+/* SITE-WIDE — improved cursor */
+.cursor-dot{position:fixed;left:0;top:0;width:8px;height:8px;border-radius:50%;background:var(--gold);z-index:31;pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .25s,height .25s,opacity .3s;opacity:0}
+.has-pointer .cursor-dot{opacity:1}
+.cursor-dot.on-interactive{width:22px;height:22px;background:transparent;border:1.5px solid var(--gold)}
+@media(hover:none){.cursor-dot,.cursor-glow{display:none}}
 </style>
 </head>
 <body class="loading">
 
 <!-- ===== FULL-PAGE GRAIN ===== -->
 <div class="grain-overlay" aria-hidden="true"></div>
+
+<!-- ===== COLOR GRADE OVERLAY ===== -->
+<div class="color-grade" aria-hidden="true"></div>
+
+<!-- ===== CUSTOM CURSOR DOT ===== -->
+<div class="cursor-dot" aria-hidden="true"></div>
 
 <!-- ===== SVG FILTERS ===== -->
 <svg style="position:absolute;width:0;height:0" aria-hidden="true">
@@ -293,7 +400,6 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
       <a href="#plans">Plans</a>
       <a href="#contact">Contact</a>
       <a href="recruitment.html">Careers</a>
-      <a href="admin.html">Admin</a>
     </nav>
     <a class="pill magnetic-cta" href="#contact">Let's connect <span>↗</span></a>
     <button class="menu" aria-label="Open navigation" aria-expanded="false">☰</button>
@@ -330,7 +436,7 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
         </div>
       </div>
       <div class="hero-art" aria-hidden="true">
-        <span class="since"><i>✦</i><span>Crafting digital<br>experiences since <b style="color:var(--gold)">2026</b></span></span>
+        <span class="since"><i>✦</i><span>Crafting digital<br>experiences · <b style="color:var(--gold);letter-spacing:.14em">FOUNDED ON 2026</b></span></span>
       </div>
     </div>
     <div class="scroll"><b>↓</b>Scroll to explore</div>
@@ -346,12 +452,12 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
   <div class="wrap about-grid">
     <div class="about-copy">
       <p class="eyebrow">About us</p>
-      <h2 class="title" style="margin-top:18px">We don't build websites.<br>We build <em>digital legacies.</em></h2>
+      <h2 class="title" style="margin-top:18px">We don't build websites.<br>We build digital <em class="word-cycle" aria-label="legacies"><span>legacies.<br>experiences.<br>brands.<br>futures.<br>legacies.</span></em></h2>
       <p>Aeternum Works is a premium digital studio focused on crafting exceptional digital experiences, powerful brands, and intelligent digital solutions. We blend creativity, technology, and strategy to deliver experiences that leave a lasting impact.</p>
       <div class="principles">
-        <div class="principle-card"><span class="principle-icon">✦</span><div class="principle-text"><h3>Creative Design</h3><p>Designs that speak, brands that shine.</p></div></div>
-        <div class="principle-card"><span class="principle-icon">⌘</span><div class="principle-text"><h3>Clean Code</h3><p>Performance-driven development.</p></div></div>
-        <div class="principle-card"><span class="principle-icon">♧</span><div class="principle-text"><h3>Smart Strategy</h3><p>Solutions tailored to grow your business.</p></div></div>
+        <div class="principle-card"><span class="principle-icon"><svg class="principle-illus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L14.5 9 L21 9.5 L16 14 L17.5 21 L12 17.5 L6.5 21 L8 14 L3 9.5 L9.5 9 Z"/></svg></span><div class="principle-text"><h3>Creative Design</h3><p>Designs that speak, brands that shine.</p></div></div>
+        <div class="principle-card"><span class="principle-icon"><svg class="principle-illus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 6 3 12 8 18"/><polyline points="16 6 21 12 16 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg></span><div class="principle-text"><h3>Clean Code</h3><p>Performance-driven development.</p></div></div>
+        <div class="principle-card"><span class="principle-icon"><svg class="principle-illus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3 v18 M3 12 h18 M5 5 l14 14 M19 5 l-14 14"/></svg></span><div class="principle-text"><h3>Smart Strategy</h3><p>Solutions tailored to grow your business.</p></div></div>
       </div>
     </div>
     <div class="about-illustration">
@@ -446,6 +552,25 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
           <a class="project-cta" href="https://techyuvaeluru.in" target="_blank" rel="noopener">View project <span>↗</span></a>
         </div>
       </article>
+      <!-- Coming soon placeholders -->
+      <article class="project-card-locked">
+        <div class="locked-preview"><div class="locked-icon">⌂</div></div>
+        <div class="locked-body">
+          <p class="eyebrow" style="color:oklch(60% .08 248)">SaaS / Dashboard</p>
+          <h3>Fintact Labs</h3>
+          <p>A trader-facing analytics dashboard with realtime portfolio insights. Case study in the works.</p>
+          <span class="locked-tag">Coming soon</span>
+        </div>
+      </article>
+      <article class="project-card-locked">
+        <div class="locked-preview"><div class="locked-icon">◈</div></div>
+        <div class="locked-body">
+          <p class="eyebrow" style="color:oklch(60% .08 248)">E-commerce</p>
+          <h3>Adora Living</h3>
+          <p>Luxury furniture retailer with 3D product previews and one-tap checkout. Case study in the works.</p>
+          <span class="locked-tag">Coming soon</span>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -471,10 +596,10 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
     <div class="metrics">
       <p class="label">Why choose us</p>
       <div class="metric-grid" id="metricGrid">
-        <div class="metric"><strong class="metric-count" data-target="50">0</strong><span>Projects<br>Completed</span></div>
-        <div class="metric"><strong class="metric-count" data-target="25">0</strong><span>Happy<br>Clients</span></div>
-        <div class="metric"><strong class="metric-count" data-target="8">0</strong><span>Countries<br>Served</span></div>
-        <div class="metric"><strong class="metric-count" data-target="100">0</strong><span>% Client<br>Satisfaction</span></div>
+        <div class="metric"><strong class="metric-count" data-target="50">0</strong><span>Projects<br>Completed</span><span class="metric-sub">Since founding</span></div>
+        <div class="metric"><strong class="metric-count" data-target="25">0</strong><span>Happy<br>Clients</span><span class="metric-sub">Referral rate 90%</span></div>
+        <div class="metric"><strong class="metric-count" data-target="8">0</strong><span>Countries<br>Served</span><span class="metric-sub">Across 3 continents</span></div>
+        <div class="metric"><strong class="metric-count" data-target="100">0</strong><span>% Client<br>Satisfaction</span><span class="metric-sub">Verified feedback</span></div>
       </div>
     </div>
   </div>
@@ -493,10 +618,10 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
     <div class="testimonial-track" id="testimonialTrack">
       <article class="quote-card"><mark>"</mark><p>Aeternum Works transformed our vision into a powerful digital experience. Highly professional, creative and reliable team!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">R</span></span><span class="by-text"><strong>Rakesh Reddy</strong><span>Owner, RRK Foods</span></span></div></article>
       <article class="quote-card"><mark>"</mark><p>Their attention to detail and design sense is exceptional. Our website not only looks stunning but also performs incredibly well.</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">A</span></span><span class="by-text"><strong>Arun Kumar</strong><span>Event Lead, TechYuva</span></span></div></article>
-      <article class="quote-card"><mark>"</mark><p>From branding to development, everything was delivered beyond our expectations. Truly a premium experience!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">P</span></span><span class="by-text"><strong>Priya Sharma</strong><span>Partner, Aeternum</span></span></div></article>
+      <article class="quote-card"><mark>"</mark><p>From branding to development, everything was delivered beyond our expectations. Truly a premium experience!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">V</span></span><span class="by-text"><strong>Vamsi Krishna</strong><span>Founder, Fintact Labs</span></span></div></article>
       <article class="quote-card"><mark>"</mark><p>Aeternum Works transformed our vision into a powerful digital experience. Highly professional, creative and reliable team!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">R</span></span><span class="by-text"><strong>Rakesh Reddy</strong><span>Owner, RRK Foods</span></span></div></article>
       <article class="quote-card"><mark>"</mark><p>Their attention to detail and design sense is exceptional. Our website not only looks stunning but also performs incredibly well.</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">A</span></span><span class="by-text"><strong>Arun Kumar</strong><span>Event Lead, TechYuva</span></span></div></article>
-      <article class="quote-card"><mark>"</mark><p>From branding to development, everything was delivered beyond our expectations. Truly a premium experience!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">P</span></span><span class="by-text"><strong>Priya Sharma</strong><span>Partner, Aeternum</span></span></div></article>
+      <article class="quote-card"><mark>"</mark><p>From branding to development, everything was delivered beyond our expectations. Truly a premium experience!</p><div class="by"><span class="avatar-ring"><span class="avatar-inner">V</span></span><span class="by-text"><strong>Vamsi Krishna</strong><span>Founder, Fintact Labs</span></span></div></article>
     </div>
   </div>
 </section>
@@ -523,7 +648,7 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
         </ul>
         <a class="plan-cta" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20the%20Launch%20plan." target="_blank" rel="noopener">Start your project <span>↗</span></a>
       </article>
-      <article class="plan-card">
+      <article class="plan-card popular">
         <div class="plan-top"><h3>Growth</h3></div>
         <p class="plan-tagline">Business website built to establish your brand and generate leads.</p>
         <div class="plan-price"><span class="plan-amount">₹35,000</span><span class="plan-period">starting</span></div>
@@ -591,6 +716,8 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
     <p class="eyebrow">The next chapter starts here</p>
     <h2>Ready to build something<br><em>extraordinary?</em></h2>
     <p>Let's create a digital experience that sets you apart from the rest.</p>
+    <div class="cta-availability">Currently accepting projects · 2 slots open this quarter</div>
+    <br>
     <a class="pill fill magnetic-cta" id="ctaButton" href="mailto:sohith132@gmail.com">Let's create together <span>↗</span></a>
   </div>
 </section>
@@ -605,6 +732,7 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="footer-divider"></div>
+  <div class="footer-wordmark" aria-hidden="true">AETERNUM</div>
   <div class="footer-inner wrap">
     <div class="footergrid">
       <div class="footerbrand">
@@ -704,18 +832,54 @@ var revealIO=new IntersectionObserver(function(es){
 },{threshold:.1,rootMargin:'0px 0px -30px 0px'});
 doc.querySelectorAll('.reveal').forEach(function(e){revealIO.observe(e)});
 
-// ===== ENHANCED CURSOR GLOW =====
-var glow=doc.querySelector('.cursor-glow'),pointerX=0,pointerY=0;
+// ===== ENHANCED CURSOR GLOW + DOT =====
+var glow=doc.querySelector('.cursor-glow');
+var dot=doc.querySelector('.cursor-dot');
+var pointerX=0,pointerY=0,dotX=0,dotY=0;
 window.addEventListener('pointermove',function(e){
   pointerX=e.clientX;pointerY=e.clientY;
   glow.style.left=pointerX+'px';
   glow.style.top=pointerY+'px';
   body.classList.add('has-pointer');
   var el=doc.elementFromPoint(pointerX,pointerY);
-  if(el&&(el.closest('.service-card')||el.closest('.principle-card')||el.closest('.quote-card')||el.closest('.pill')||el.closest('.project-arrow-btn'))){
+  var interactive=el&&(el.closest('.service-card')||el.closest('.principle-card')||el.closest('.quote-card')||el.closest('.pill')||el.closest('.project-arrow-btn')||el.closest('a')||el.closest('button')||el.closest('.plan-card'));
+  if(interactive){
     glow.classList.add('on-interactive');
-  }else{glow.classList.remove('on-interactive')}
+    if(dot) dot.classList.add('on-interactive');
+  }else{
+    glow.classList.remove('on-interactive');
+    if(dot) dot.classList.remove('on-interactive');
+  }
 },{passive:true});
+
+// Cursor dot with lag (spring toward pointer)
+(function dotLoop(){
+  dotX+=(pointerX-dotX)*.22;
+  dotY+=(pointerY-dotY)*.22;
+  if(dot){dot.style.left=dotX+'px';dot.style.top=dotY+'px';}
+  requestAnimationFrame(dotLoop);
+})();
+
+// ===== TESTIMONIAL FOCUS (center card scales up, edges dim) =====
+(function(){
+  var marquee=doc.getElementById('testimonialMarquee');
+  var track=doc.getElementById('testimonialTrack');
+  if(!marquee||!track) return;
+  var cards=track.querySelectorAll('.quote-card');
+  function tick(){
+    var box=marquee.getBoundingClientRect();
+    var cx=box.left+box.width/2;
+    cards.forEach(function(c){
+      var b=c.getBoundingClientRect();
+      var d=Math.abs(b.left+b.width/2-cx);
+      c.classList.remove('focus','dim');
+      if(d<b.width*.6) c.classList.add('focus');
+      else if(d>b.width*1.4) c.classList.add('dim');
+    });
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
 
 // ===== MOUSE TRACKING (global --mouse-x,--mouse-y) =====
 window.addEventListener('pointermove',function(e){
