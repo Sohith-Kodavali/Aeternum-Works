@@ -9,7 +9,7 @@
 <meta http-equiv="Expires" content="0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--black:oklch(5% .012 75);--deep:oklch(8% .015 75);--surface:oklch(12% .02 75);--surface2:oklch(16% .025 75);--line:oklch(27% .04 75);--softline:oklch(21% .03 75);--white:oklch(93% .018 75);--muted:oklch(68% .025 75);--dim:oklch(49% .025 75);--gold:oklch(79% .16 82);--gold2:oklch(68% .12 82);--gold3:oklch(43% .09 82);--rose:oklch(65% .18 16);--rose2:oklch(54% .14 16);--rose3:oklch(37% .10 16);--sapphire:oklch(68% .15 248);--sapphire2:oklch(57% .12 248);--sapphire3:oklch(38% .08 248);--amber:oklch(72% .16 72);--amber2:oklch(61% .13 72);--amber3:oklch(41% .09 72);--amethyst:oklch(64% .18 312);--amethyst2:oklch(53% .14 312);--amethyst3:oklch(36% .09 312);--emerald:oklch(66% .18 158);--emerald2:oklch(55% .14 158);--emerald3:oklch(37% .10 158);--serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.56,.64,1);--snap:cubic-bezier(.22,.61,.36,1);--audio-pulse:0;--scroll-offset:0;--mouse-x:0.5;--mouse-y:0.5;--border-angle:0deg}
 *{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--black)}body{margin:0;color:var(--white);background:var(--black);font:16px/1.5 var(--sans);letter-spacing:.01em;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:opacity .01s}body.loading{overflow:hidden}body.menu-open{overflow:hidden}a{color:inherit;text-decoration:none}button{font:inherit;color:inherit}h1,h2,h3,p{margin:0;text-wrap:balance}button,a{outline:0}button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:4px}.wrap{width:min(1240px,calc(100% - 72px));margin:auto}.eyebrow{color:var(--gold);font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase}.serif{font-family:var(--serif)}.rule{height:1px;background:var(--line)}
@@ -32,7 +32,39 @@
 
 .ls-brand{display:flex;flex-direction:column;align-items:center;gap:3px}.ls-brand-name{font:500 1.5rem/1 var(--serif);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);text-shadow:0 0 24px oklch(78% .16 82/.45)}.ls-brand-sub{font-size:.5rem;letter-spacing:.24em;color:var(--dim);text-transform:uppercase}
 
-.ls-bar{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px}.ls-bar-svg{width:300px;height:34px;overflow:visible}.ls-liquid-fill{fill:url(#lsLiquidGrad)}.ls-liquid-head{fill:var(--gold)}.ls-percent{font:500 1.6rem/1 var(--serif);color:var(--white);letter-spacing:.02em}.ls-percent sup{font-size:.7rem;color:var(--gold);margin-left:2px}
+/* ===== PREMIUM HAIRLINE METER + TECH CONSOLE ===== */
+.ls-bar{position:relative;display:flex;flex-direction:column;align-items:center;gap:0;width:340px}
+.ls-meter{position:relative;width:340px;height:16px;display:grid;align-items:center}
+.ls-meter-fill{position:relative;height:1.5px;width:0%;background:linear-gradient(90deg,var(--gold3),var(--gold),oklch(96% .05 82));box-shadow:0 0 10px oklch(78% .16 82 / .55);transition:width .35s cubic-bezier(.22,.61,.36,1);border-radius:2px}
+.ls-meter-fill::before{content:'';position:absolute;top:-1px;left:0;right:0;bottom:-1px;background:linear-gradient(90deg,transparent,oklch(100% 0 0 / .5),transparent);animation:lsShimmer 1.6s ease-in-out infinite;pointer-events:none;border-radius:inherit}
+@keyframes lsShimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.ls-meter-fill::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold),0 0 18px oklch(78% .16 82 / .8)}
+.ls-meter-track{position:absolute;top:50%;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,oklch(78% .16 82 / .18) 15%,oklch(78% .16 82 / .18) 85%,transparent 100%);transform:translateY(-50%);z-index:-1}
+.ls-meter-ticks{position:absolute;top:calc(50% + 10px);left:0;right:0;display:flex;justify-content:space-between;pointer-events:none}
+.ls-meter-ticks span{width:1px;height:4px;background:oklch(78% .16 82 / .3);transition:opacity .3s,background .3s,box-shadow .3s;opacity:.5}
+.ls-meter-ticks span.on{background:var(--gold);opacity:1;box-shadow:0 0 5px var(--gold)}
+
+/* Meta row: percentage + status label */
+.ls-meter-row{display:flex;align-items:baseline;justify-content:space-between;width:340px;margin-top:22px;font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace}
+.ls-percent{font-size:1.5rem;font-weight:600;color:var(--white);font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1}
+.ls-percent-sub{margin-left:3px;font-size:.7rem;color:var(--gold);letter-spacing:.12em;font-weight:500}
+.ls-status{color:var(--gold);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;font-weight:500;opacity:.85}
+.ls-status::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-right:8px;vertical-align:middle;box-shadow:0 0 6px var(--gold);animation:lsPulseDot 1.2s ease-in-out infinite}
+@keyframes lsPulseDot{50%{opacity:.35;transform:scale(.8)}}
+
+/* Techy console log below the bar */
+.ls-console{width:340px;margin-top:22px;min-height:66px;font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;font-size:.56rem;line-height:1.55;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;text-align:left}
+.ls-console-row{display:flex;align-items:center;gap:8px;opacity:0;transform:translateX(-6px);transition:opacity .35s var(--ease),transform .35s var(--ease),color .3s}
+.ls-console-row.show{opacity:.55;transform:translateX(0)}
+.ls-console-row.active{opacity:1;color:var(--gold2)}
+.ls-c-arrow{color:var(--gold);font-weight:600}
+.ls-c-caret{display:inline-block;width:6px;height:.85em;margin-left:3px;background:var(--gold);vertical-align:-1px;opacity:0}
+.ls-console-row.active .ls-c-caret{opacity:.75;animation:lsCaretBlink .9s steps(2) infinite}
+@keyframes lsCaretBlink{50%{opacity:0}}
+
+/* Meta footer — persistent tech metadata */
+.ls-meta{margin-top:20px;font:500 .52rem/1 'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;color:var(--gold3);letter-spacing:.24em;text-transform:uppercase;opacity:.65;text-align:center}
+.ls-meta b{color:var(--gold);font-weight:600}
 
 /* ===== NOISE OVERLAY ===== */
 .noise-overlay{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.035;mix-blend-mode:overlay}.noise-overlay svg{width:100%;height:100%}
@@ -395,18 +427,19 @@ footer .footer-inner{position:relative;z-index:1}
       <span class="ls-brand-sub">Design Beyond Ordinary</span>
     </div>
     <div class="ls-bar">
-      <svg class="ls-bar-svg" viewBox="0 0 300 34" aria-hidden="true">
-        <defs>
-          <linearGradient id="lsLiquidGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="oklch(43% .09 82)"/>
-            <stop offset="50%" stop-color="oklch(79% .16 82)"/>
-            <stop offset="100%" stop-color="oklch(93% .018 75)"/>
-          </linearGradient>
-        </defs>
-        <path id="lsLiquidPath" class="ls-liquid-fill" d="M8,26 Q12,18 20,20 T40,22 T60,20 T80,22 T100,20 T120,22 T140,20 T160,22 T180,20 T200,22 T220,20 T240,22 T260,20 T280,22 T292,24 L292,28 L8,28 Z"/>
-        <ellipse id="lsLiquidHead" class="ls-liquid-head" cx="16" cy="23" rx="9" ry="7"/>
-      </svg>
-      <div class="ls-percent" id="lsPercent">0<sup>%</sup></div>
+      <div class="ls-meter" aria-hidden="true">
+        <div class="ls-meter-track"></div>
+        <div class="ls-meter-fill" id="lsFill"></div>
+        <div class="ls-meter-ticks" id="lsTicks">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="ls-meter-row">
+        <span><b class="ls-percent" id="lsPercent">000</b><span class="ls-percent-sub">%</span></span>
+        <span class="ls-status" id="lsStatus">INITIALIZING</span>
+      </div>
+      <div class="ls-console" id="lsConsole" aria-hidden="true"></div>
+      <div class="ls-meta">SYS · <b>AETERNUM.OS</b> · v1.0.26 · SECURE LINK</div>
     </div>
   </div>
 </div>
@@ -804,31 +837,68 @@ footer .footer-inner{position:relative;z-index:1}
 (function(){
 var doc=document,body=doc.body,html=doc.documentElement;
 
-// ===== LOADING SCREEN =====
+// ===== LOADING SCREEN (premium meter + techy console) =====
   var loadingScreen=doc.getElementById('loadingScreen');
   var lsPercent=doc.getElementById('lsPercent');
-  var lsPath=doc.getElementById('lsLiquidPath');
-  var lsHead=doc.getElementById('lsLiquidHead');
+  var lsFill=doc.getElementById('lsFill');
+  var lsStatus=doc.getElementById('lsStatus');
+  var lsConsole=doc.getElementById('lsConsole');
+  var lsTicks=doc.getElementById('lsTicks')?doc.getElementById('lsTicks').children:[];
   var dismissed=false;
   var progress=0;
+  var pad=function(n){return n<10?'00'+n:n<100?'0'+n:'100'};
+
+  // status labels tied to progress ranges
+  var statusSteps=[
+    [0,'INITIALIZING'],[15,'AUTHENTICATING'],[35,'RENDERING'],
+    [55,'COMPILING'],[75,'CALIBRATING'],[92,'FINALIZING'],[100,'READY']
+  ];
+  // console log entries (progress threshold + text)
+  var consoleLogs=[
+    [4,  'BOOT SEQUENCE INITIATED'],
+    [18, 'DECRYPTING ASSET MANIFEST'],
+    [32, 'LOADING VISUAL PAYLOAD'],
+    [48, 'COMPILING GOLD SHADERS'],
+    [62, 'LINKING TYPOGRAPHY MATRIX'],
+    [76, 'ESTABLISHING SECURE CHANNEL'],
+    [88, 'CALIBRATING RENDER ENGINE'],
+    [96, 'HANDSHAKE COMPLETE']
+  ];
+  var loggedIdx=-1;
+
+  function pushLog(msg){
+    if(!lsConsole) return;
+    // deactivate previous rows
+    var rows=lsConsole.querySelectorAll('.ls-console-row');
+    rows.forEach(function(r){r.classList.remove('active')});
+    var row=doc.createElement('div');
+    row.className='ls-console-row active';
+    row.innerHTML='<span class="ls-c-arrow">›</span> <span class="ls-c-msg">'+msg+'</span><span class="ls-c-caret"></span>';
+    lsConsole.appendChild(row);
+    requestAnimationFrame(function(){row.classList.add('show')});
+    // keep max 3 visible
+    while(lsConsole.children.length>3){lsConsole.removeChild(lsConsole.firstChild)}
+  }
 
   function setProgress(p){
     progress=p;
-    if(lsPercent) lsPercent.innerHTML=p+'<sup>%</sup>';
-    if(lsPath && lsHead){
-      var x=8+p*(292-8)/100;
-      var y=24-Math.sin(p/100*Math.PI*2)*4;
-      var d='M8,26 Q12,18 20,20';
-      var i;
-      for(i=1;i<=Math.floor(p/100*14);i++){
-        var cx=i*20;
-        var cy=20+(i%2?2:-2);
-        d+=' T'+cx+','+cy;
+    if(lsPercent) lsPercent.textContent=pad(p);
+    if(lsFill) lsFill.style.width=p+'%';
+    // light up tick marks
+    var lit=Math.round(p/10);
+    for(var i=0;i<lsTicks.length;i++){
+      lsTicks[i].classList.toggle('on', i<=lit);
+    }
+    // update status text
+    if(lsStatus){
+      for(var s=statusSteps.length-1;s>=0;s--){
+        if(p>=statusSteps[s][0]){lsStatus.textContent=statusSteps[s][1];break}
       }
-      d+=' L'+x+','+y+' L'+x+',28 L8,28 Z';
-      lsPath.setAttribute('d',d);
-      lsHead.setAttribute('cx',x);
-      lsHead.setAttribute('cy',y);
+    }
+    // add console logs when thresholds crossed
+    for(var l=loggedIdx+1;l<consoleLogs.length;l++){
+      if(p>=consoleLogs[l][0]){pushLog(consoleLogs[l][1]);loggedIdx=l}
+      else break;
     }
   }
 
@@ -836,21 +906,26 @@ var doc=document,body=doc.body,html=doc.documentElement;
     if(dismissed) return; dismissed=true;
     setProgress(100);
     if(!loadingScreen) return;
-    loadingScreen.classList.add('hidden');
-    body.classList.remove('loading');
-    doc.querySelectorAll('.split-word').forEach(function(w){w.classList.add('revealed')});
+    setTimeout(function(){
+      loadingScreen.classList.add('hidden');
+      body.classList.remove('loading');
+      doc.querySelectorAll('.split-word').forEach(function(w){w.classList.add('revealed')});
+    },350);
   }
 
   (function simulateLoad(){
     var timer=setInterval(function(){
-      var next=Math.min(progress+Math.random()*9+3,100);
+      var next=Math.min(progress+Math.random()*7+3,100);
       setProgress(Math.round(next));
-      if(next>=100){clearInterval(timer);setTimeout(dismissLoader,450)}
-    },180);
+      if(next>=100){clearInterval(timer);setTimeout(dismissLoader,500)}
+    },140);
 
     window.addEventListener('load',function(){
-      clearInterval(timer);
-      if(!dismissed) setTimeout(dismissLoader,450);
+      // accelerate to 100 rather than snap
+      var fast=setInterval(function(){
+        if(progress>=100||dismissed){clearInterval(fast);return}
+        setProgress(Math.min(progress+8,100));
+      },40);
     });
 
     setTimeout(function(){if(!dismissed) dismissLoader()},5000);
