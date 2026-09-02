@@ -306,67 +306,12 @@ footer .footer-inner{position:relative;z-index:1}
 .has-pointer .cursor-dot{opacity:1}
 .cursor-dot.on-interactive{width:22px;height:22px;background:transparent;border:1.5px solid var(--gold)}
 @media(hover:none){.cursor-dot,.cursor-glow{display:none}}
-
-/* ============================================================
-   AURORA BACKGROUND SYSTEM — cinematic ambient depth
-   ============================================================ */
-
-/* Base aurora backdrop — fixed layer with slowly rotating conic gradient */
-.aurora-backdrop{position:fixed;inset:-10%;z-index:-10;pointer-events:none;opacity:.45;filter:blur(40px) saturate(1.15);background:conic-gradient(from 0deg at 30% 50%,oklch(48% .18 30 / .38),oklch(48% .18 82 / .30),oklch(48% .18 200 / .24),oklch(48% .18 312 / .30),oklch(48% .18 30 / .38));animation:auroraRotate 40s linear infinite;will-change:transform}
-@keyframes auroraRotate{to{transform:rotate(360deg)}}
-
-/* Aurora orbs — big drifting blurred color spheres */
-.aurora-orbs{position:fixed;inset:0;z-index:-9;pointer-events:none;overflow:hidden}
-.aurora-orb{position:absolute;border-radius:50%;filter:blur(55px);opacity:.4;mix-blend-mode:screen;will-change:transform}
-.aurora-orb.o1{width:480px;height:480px;background:oklch(60% .18 30);top:-8%;left:-6%;animation:orbDrift1 32s ease-in-out infinite alternate}
-.aurora-orb.o2{width:560px;height:560px;background:oklch(58% .17 82);top:22%;right:-14%;animation:orbDrift2 40s ease-in-out infinite alternate}
-.aurora-orb.o3{width:400px;height:400px;background:oklch(52% .16 248);top:55%;left:-10%;animation:orbDrift3 36s ease-in-out infinite alternate}
-.aurora-orb.o4{width:460px;height:460px;background:oklch(56% .18 312);bottom:-12%;right:4%;animation:orbDrift4 44s ease-in-out infinite alternate}
-.aurora-orb.o5{width:360px;height:360px;background:oklch(60% .18 158);top:42%;left:35%;animation:orbDrift5 50s ease-in-out infinite alternate;opacity:.25}
-@keyframes orbDrift1{to{transform:translate(180px,160px) scale(1.15)}}
-@keyframes orbDrift2{to{transform:translate(-220px,120px) scale(1.1)}}
-@keyframes orbDrift3{to{transform:translate(160px,-140px) scale(1.2)}}
-@keyframes orbDrift4{to{transform:translate(-130px,-180px) scale(.9)}}
-@keyframes orbDrift5{to{transform:translate(-200px,160px) scale(1.3)}}
-
-/* Vignette — subtle cinematic edge darkening (normal blend to prevent black-out) */
-.vignette{position:fixed;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse 120% 90% at center,transparent 55%,oklch(0% 0 0 / .55) 100%);opacity:.85}
-
-/* Section backgrounds: neutralize the solid black !important overrides so aurora shows */
-.about-bg,.services-bg,.projects-bg,.proof-bg,.testimonials-bg,.plans-bg{background-color:transparent!important}
-.about-bg,.services-bg,.projects-bg,.proof-bg,.testimonials-bg,.plans-bg{background-image:radial-gradient(ellipse at var(--bgx,50%) var(--bgy,50%),var(--bgcol,oklch(78% .16 82 / .12)),transparent 55%)!important}
-.about-bg{--bgx:60%;--bgy:40%;--bgcol:oklch(78% .16 82 / .16)}
-.services-bg{--bgx:50%;--bgy:50%;--bgcol:oklch(65% .18 16 / .16)}
-.projects-bg{--bgx:50%;--bgy:40%;--bgcol:oklch(68% .15 248 / .16)}
-.proof-bg{--bgx:50%;--bgy:50%;--bgcol:oklch(72% .16 72 / .14)}
-.testimonials-bg{--bgx:50%;--bgy:50%;--bgcol:oklch(64% .18 312 / .16)}
-.plans-bg{--bgx:50%;--bgy:35%;--bgcol:oklch(74% .15 210 / .14)}
-
-/* Aurora needs transparent body so z-index:-10 backdrop reads through */
-html{background:#050208}
-body{background:transparent!important}
-
-@media(prefers-reduced-motion:reduce){.aurora-backdrop,.aurora-orb{animation:none!important}}
-@media(max-width:680px){.aurora-orb{filter:blur(50px)}.aurora-backdrop{opacity:.35}}
 </style>
 </head>
 <body class="loading">
 
-<!-- ===== AURORA BACKGROUND SYSTEM ===== -->
-<div class="aurora-backdrop" aria-hidden="true"></div>
-<div class="aurora-orbs" aria-hidden="true">
-  <div class="aurora-orb o1"></div>
-  <div class="aurora-orb o2"></div>
-  <div class="aurora-orb o3"></div>
-  <div class="aurora-orb o4"></div>
-  <div class="aurora-orb o5"></div>
-</div>
-
 <!-- ===== FULL-PAGE GRAIN ===== -->
 <div class="grain-overlay" aria-hidden="true"></div>
-
-<!-- ===== VIGNETTE ===== -->
-<div class="vignette" aria-hidden="true"></div>
 
 <!-- ===== COLOR GRADE OVERLAY ===== -->
 <div class="color-grade" aria-hidden="true"></div>
@@ -607,20 +552,14 @@ body{background:transparent!important}
           <a class="project-cta" href="https://techyuvaeluru.in" target="_blank" rel="noopener">View project <span>↗</span></a>
         </div>
       </article>
-      <!-- AI Course (AD203) -->
-      <article class="project-card-new">
-        <div class="preview-area">
-          <div class="preview-shine"></div>
-          <img class="preview-img" src="ai-course.svg" alt="Artificial Intelligence (AD203) course portal">
-        </div>
-        <div class="card-body">
-          <p class="eyebrow">Education / Course Portal</p>
-          <h3>AI Course · AD203</h3>
-          <p class="project-desc">Official course website for Artificial Intelligence at IIITDM Kurnool. Syllabus, weekly plan, resources, and a loader with a personality.</p>
-          <div class="card-tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
-        </div>
-        <div class="card-footer">
-          <a class="project-cta" href="https://aicourse-ten-psi.vercel.app/" target="_blank" rel="noopener">View project <span>↗</span></a>
+      <!-- Coming soon placeholders -->
+      <article class="project-card-locked">
+        <div class="locked-preview"><div class="locked-icon">⌂</div></div>
+        <div class="locked-body">
+          <p class="eyebrow" style="color:oklch(60% .08 248)">SaaS / Dashboard</p>
+          <h3>Fintact Labs</h3>
+          <p>A trader-facing analytics dashboard with realtime portfolio insights. Case study in the works.</p>
+          <span class="locked-tag">Coming soon</span>
         </div>
       </article>
       <article class="project-card-locked">
