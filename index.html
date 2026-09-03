@@ -302,7 +302,7 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 .founder-card:hover{transform:perspective(1000px) rotateX(calc(var(--ty) * -5deg)) rotateY(calc(var(--tx) * 5deg)) translateY(-6px)}
 
 /* Content elevation on hover (each layer lifts a different amount for parallax) */
-.founder-card>*:not(.founder-particles):not(.founder-shine):not(.founder-spotlight):not(.founder-corner){position:relative;z-index:5;transition:transform .5s var(--spring)}
+.founder-card>*:not(.founder-particles):not(.founder-spotlight):not(.founder-corner){position:relative;z-index:5;transition:transform .5s var(--spring)}
 .founder-card:hover .founder-photo-wrap{transform:translateZ(30px)}
 .founder-card:hover .founder-info{transform:translateZ(22px)}
 .founder-card:hover .founder-divider{transform:translateZ(14px)}
@@ -326,14 +326,6 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
   50%  {transform:translateY(-140px) translateX(10px) scale(1.1);opacity:.9}
   85%  {opacity:.3}
   100% {transform:translateY(-260px) translateX(-6px) scale(.4);opacity:0}
-}
-
-/* 2. Diagonal shine sweep across the card */
-.founder-shine{position:absolute;inset:0;pointer-events:none;border-radius:inherit;overflow:hidden;z-index:2}
-.founder-shine::before{content:'';position:absolute;top:-50%;left:-40%;width:35%;height:200%;background:linear-gradient(105deg,transparent 30%,oklch(96% .05 82 / .10) 45%,oklch(100% .04 85 / .18) 50%,oklch(96% .05 82 / .10) 55%,transparent 70%);transform:translateX(-100%) rotate(4deg);animation:fsSweep 8s cubic-bezier(.6,0,.4,1) infinite}
-@keyframes fsSweep{
-  0%,15%  {transform:translateX(-100%) rotate(4deg)}
-  55%,100%{transform:translateX(450%) rotate(4deg)}
 }
 
 /* 3. Cursor-following radial spotlight */
@@ -393,11 +385,14 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 /* Founder role pill — refined */
 .founder-role{display:inline-block;padding:5px 14px;background:oklch(78% .16 82 / .12);border:1px solid oklch(78% .16 82 / .3);border-radius:999px;color:var(--gold);font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin:2px 0 14px}
 
-/* Signature quote */
-.founder-quote{max-width:32ch;margin:0 auto;color:var(--muted);font:italic 400 .82rem/1.55 var(--serif);letter-spacing:.005em;position:relative;padding:0 12px}
+/* Signature quote — typewriter cycle */
+.founder-quote{max-width:32ch;min-height:4.8em;margin:0 auto;color:var(--muted);font:italic 400 .82rem/1.55 var(--serif);letter-spacing:.005em;position:relative;padding:0 12px;text-align:center}
 .founder-quote::before,.founder-quote::after{color:var(--gold3);font-size:1.1rem;line-height:0;position:relative;top:.15em}
 .founder-quote::before{content:'“ ';margin-right:2px}
 .founder-quote::after{content:' ”';margin-left:2px}
+.founder-quote .q-text{display:inline}
+.founder-quote .q-caret{display:inline-block;width:1px;height:1em;background:var(--gold);vertical-align:-2px;margin-left:2px;box-shadow:0 0 4px oklch(78% .16 82 / .7);animation:qCaretBlink .8s steps(2) infinite}
+@keyframes qCaretBlink{50%{opacity:0}}
 
 /* Elegant divider */
 .founder-divider{display:flex;align-items:center;justify-content:center;gap:10px;margin:22px 0 18px;color:var(--gold);opacity:.7}
@@ -609,7 +604,6 @@ footer .footer-inner{position:relative;z-index:1}
         <div class="founder-particles" aria-hidden="true">
           <span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
-        <div class="founder-shine" aria-hidden="true"></div>
         <div class="founder-spotlight" aria-hidden="true"></div>
         <!-- Corner ornaments -->
         <span class="founder-corner c-tl" aria-hidden="true"></span>
@@ -629,7 +623,7 @@ footer .footer-inner{position:relative;z-index:1}
         <div class="founder-info">
           <div class="founder-name">Sohith Kodavali</div>
           <span class="founder-role">Founder &amp; CEO</span>
-          <p class="founder-quote">"Design is the silent ambassador of every brand — we craft it to speak forever."</p>
+          <p class="founder-quote"><span class="q-text" id="founderQuoteText">Design is the silent ambassador of every brand — we craft it to speak forever.</span><span class="q-caret" aria-hidden="true"></span></p>
         </div>
         <div class="founder-divider" aria-hidden="true"><span></span></div>
         <div class="founder-stats">
@@ -1093,6 +1087,93 @@ window.addEventListener('pointermove',function(e){
     card.style.setProperty('--tx','0');
     card.style.setProperty('--ty','0');
   });
+})();
+
+// ===== FOUNDER QUOTE — typewriter cycle through 50 quotes =====
+(function(){
+  var textEl=doc.getElementById('founderQuoteText');
+  if(!textEl) return;
+  var quotes=[
+    "Design is the silent ambassador of every brand — we craft it to speak forever.",
+    "Great design isn't decoration. It's the reason people stay.",
+    "We build brands that don't need translation.",
+    "In a world of copies, be the original.",
+    "Every pixel we place is a promise we keep.",
+    "Craft is what separates a website from an experience.",
+    "Details make the difference — we obsess so you don't have to.",
+    "Design that moves is design that matters.",
+    "We don't chase trends. We set standards.",
+    "Your brand deserves more than a template.",
+    "Simplicity is the ultimate sophistication.",
+    "Beauty without purpose is just noise.",
+    "The best interfaces disappear into intent.",
+    "Storytelling is the shortest distance between two hearts.",
+    "Elegance is refusal — we edit until only truth remains.",
+    "Speed is a feature. Delight is a promise.",
+    "Behind every clean layout is a thousand decisions.",
+    "We measure success in second impressions.",
+    "Design is empathy made visible.",
+    "A great brand is a memory, not a logo.",
+    "Type is voice. We tune it.",
+    "Color isn't decoration — it's emotion in disguise.",
+    "Motion is meaning at 60 frames per second.",
+    "We build the future you deserve.",
+    "Precision meets poetry. That's our craft.",
+    "Every line of code is a design decision.",
+    "The interface is the invitation.",
+    "Your customers can feel the care.",
+    "Design that lasts is design that listens.",
+    "First impressions happen in 50 milliseconds.",
+    "A brand is what people say when you leave the room.",
+    "We design for the moment they never forget.",
+    "The best websites feel inevitable.",
+    "Consistency is the quiet form of confidence.",
+    "White space isn't empty — it's expensive.",
+    "The best design is invisible until it's genius.",
+    "We turn ambition into aesthetic.",
+    "Every project is a monument.",
+    "Design is decision fatigue solved elegantly.",
+    "The details you notice are the ones we agonized over.",
+    "Your brand should be a benchmark.",
+    "Craft the container and the message carries itself.",
+    "Legacy is what you build when nobody's watching.",
+    "We measure twice, cut once, ship perfect.",
+    "Design is the difference between chosen and considered.",
+    "Beauty is a strategy.",
+    "Great work speaks in whispers, not shouts.",
+    "The internet is loud — be unforgettable.",
+    "We craft the calm inside the chaos.",
+    "Excellence is not an act — it's a rhythm."
+  ];
+  var idx=0, pos=0, phase='typing';
+  var typeSpeed=32, eraseSpeed=16, holdMs=3400, gapMs=420;
+  function tick(){
+    var cur=quotes[idx];
+    if(phase==='typing'){
+      pos++;
+      textEl.textContent=cur.slice(0,pos);
+      if(pos>=cur.length){phase='holding'; setTimeout(tick,holdMs); return}
+      // slight jitter on typing for organic feel
+      setTimeout(tick, typeSpeed + Math.random()*30);
+    } else if(phase==='holding'){
+      phase='erasing';
+      setTimeout(tick,eraseSpeed);
+    } else if(phase==='erasing'){
+      pos--;
+      textEl.textContent=cur.slice(0,pos);
+      if(pos<=0){
+        idx=(idx+1)%quotes.length;
+        phase='typing';
+        setTimeout(tick,gapMs);
+        return;
+      }
+      setTimeout(tick,eraseSpeed);
+    }
+  }
+  // start after 900ms so page finishes settling
+  textEl.textContent='';
+  pos=0;
+  setTimeout(tick,900);
 })();
 
 // ===== FOUNDER STATS — count up when in view =====
