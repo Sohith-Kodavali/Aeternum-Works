@@ -288,11 +288,11 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 .service-card::before{background:conic-gradient(from var(--border-angle),transparent,var(--card-accent,var(--gold)) 50%,transparent)!important}
 
 /* PLANS — "MOST POPULAR" badge on Growth */
-.plan-card.popular{border-color:var(--ac1);position:relative;transform:scale(1.02)}
-.plan-card.popular::after{content:'MOST POPULAR';position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:5px 14px;background:linear-gradient(90deg,var(--ac2),var(--ac1),var(--ac2));background-size:200% 100%;color:var(--black);font-size:.55rem;font-weight:800;letter-spacing:.16em;border-radius:999px;box-shadow:0 8px 24px oklch(74% .15 210 / .35);animation:popularShine 3s ease-in-out infinite;white-space:nowrap;z-index:2}
+.plan-card.popular{border-color:var(--ac1);position:relative;overflow:visible;padding-top:34px}
+.plan-card.popular .popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:5px 14px;background:linear-gradient(90deg,var(--ac2),var(--ac1),var(--ac2));background-size:200% 100%;color:var(--black);font-size:.55rem;font-weight:800;letter-spacing:.16em;border-radius:999px;box-shadow:0 6px 18px oklch(74% .15 210 / .5),0 0 0 1px oklch(74% .15 210 / .4);animation:popularShine 3s ease-in-out infinite;white-space:nowrap;z-index:5;text-transform:uppercase}
 @keyframes popularShine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.plans.show .plan-card.popular{transform:scale(1.02)}
-.plans.show .plan-card.popular:hover{transform:translateY(-8px) scale(1.02)}
+.plans.show .plan-card.popular{transform:none}
+.plans.show .plan-card.popular:hover{transform:translateY(-8px)}
 
 /* PLANS — Popular tag on hover for others too (subtle) */
 .plan-card:not(.popular):hover{border-color:var(--ac2)}
@@ -372,6 +372,19 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 .founder-social{position:relative;overflow:hidden}
 .founder-social::before{content:'';position:absolute;inset:-3px;border-radius:50%;background:radial-gradient(circle,oklch(78% .16 82 / .6),transparent 70%);opacity:0;transition:opacity .3s;z-index:-1}
 .founder-social:hover::before{opacity:1}
+
+/* Expertise value — auto-cycling services list */
+.expertise-cycle{display:inline-block;height:1.15em;line-height:1.15;overflow:hidden;vertical-align:baseline;position:relative;min-width:12ch}
+.expertise-cycle .ec-track{display:block;animation:ecCycle 10s cubic-bezier(.7,0,.3,1) infinite;will-change:transform}
+.expertise-cycle .ec-track b{display:block;height:1.15em;line-height:1.15;font-weight:inherit;font-style:normal;color:var(--white);white-space:nowrap}
+@keyframes ecCycle{
+  0%,15%   {transform:translateY(0)}
+  20%,35%  {transform:translateY(-1.15em)}
+  40%,55%  {transform:translateY(-2.3em)}
+  60%,75%  {transform:translateY(-3.45em)}
+  80%,95%  {transform:translateY(-4.6em)}
+  100%     {transform:translateY(-5.75em)}
+}
 
 /* Corner badge (top-right star) */
 .founder-badge{position:absolute;top:16px;right:16px;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;border:1px solid oklch(78% .16 82 / .35);background:oklch(78% .16 82 / .06);color:var(--gold);z-index:2}
@@ -634,7 +647,18 @@ footer .footer-inner{position:relative;z-index:1}
           </div>
           <div class="founder-detail">
             <span class="detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 L4 14 h7 l-1 8 9-12 h-7 z"/></svg></span>
-            <div><span class="detail-label">Expertise</span><span class="detail-value">UI/UX · Web · Brand Strategy</span></div>
+            <div><span class="detail-label">Expertise</span>
+              <span class="detail-value expertise-cycle" aria-label="UI/UX Design, Web Development, Brand Identity, AI Solutions, Website Design">
+                <span class="ec-track">
+                  <b>UI/UX Design</b>
+                  <b>Web Development</b>
+                  <b>Brand Identity</b>
+                  <b>AI Solutions</b>
+                  <b>Website Design</b>
+                  <b>UI/UX Design</b>
+                </span>
+              </span>
+            </div>
           </div>
         </div>
         <div class="founder-socials">
@@ -753,7 +777,7 @@ footer .footer-inner{position:relative;z-index:1}
       <div class="metric-grid" id="metricGrid">
         <div class="metric"><strong class="metric-count" data-target="50">0</strong><span>Projects<br>Completed</span><span class="metric-sub">Since founding</span></div>
         <div class="metric"><strong class="metric-count" data-target="25">0</strong><span>Happy<br>Clients</span><span class="metric-sub">Referral rate 90%</span></div>
-        <div class="metric"><strong class="metric-count" data-target="8">0</strong><span>Countries<br>Served</span><span class="metric-sub">Across 3 continents</span></div>
+        <div class="metric"><strong class="metric-count" data-target="2">0</strong><span>Countries<br>Served</span><span class="metric-sub">India · United States</span></div>
         <div class="metric"><strong class="metric-count" data-target="100">0</strong><span>% Client<br>Satisfaction</span><span class="metric-sub">Verified feedback</span></div>
       </div>
     </div>
@@ -804,6 +828,7 @@ footer .footer-inner{position:relative;z-index:1}
         <a class="plan-cta" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20the%20Launch%20plan." target="_blank" rel="noopener">Start your project <span>↗</span></a>
       </article>
       <article class="plan-card popular">
+        <span class="popular-badge">Most Popular</span>
         <div class="plan-top"><h3>Growth</h3></div>
         <p class="plan-tagline">Business website built to establish your brand and generate leads.</p>
         <div class="plan-price"><span class="plan-amount">₹35,000</span><span class="plan-period">starting</span></div>
