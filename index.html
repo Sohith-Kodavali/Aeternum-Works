@@ -297,10 +297,81 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 /* PLANS — Popular tag on hover for others too (subtle) */
 .plan-card:not(.popular):hover{border-color:var(--ac2)}
 
-/* FOUNDER CARD — refined premium redesign */
-.founder-card{cursor:default;overflow:hidden}
-.founder-card .founder-stats,.founder-card .founder-details{transition:opacity .4s var(--ease),transform .4s var(--ease)}
-.founder-card:hover .founder-stats,.founder-card:hover .founder-details{transform:translateY(-2px)}
+/* FOUNDER CARD — refined premium redesign with embedded effects */
+.founder-card{cursor:default;overflow:hidden;--sx:50%;--sy:50%;--tx:0;--ty:0;transform-style:preserve-3d;transition:transform .5s var(--ease),box-shadow .5s}
+.founder-card:hover{transform:perspective(1000px) rotateX(calc(var(--ty) * -5deg)) rotateY(calc(var(--tx) * 5deg)) translateY(-6px)}
+
+/* Content elevation on hover (each layer lifts a different amount for parallax) */
+.founder-card>*:not(.founder-particles):not(.founder-shine):not(.founder-spotlight):not(.founder-corner){position:relative;z-index:5;transition:transform .5s var(--spring)}
+.founder-card:hover .founder-photo-wrap{transform:translateZ(30px)}
+.founder-card:hover .founder-info{transform:translateZ(22px)}
+.founder-card:hover .founder-divider{transform:translateZ(14px)}
+.founder-card:hover .founder-stats{transform:translateZ(18px)}
+.founder-card:hover .founder-details{transform:translateZ(10px)}
+.founder-card:hover .founder-socials{transform:translateZ(16px)}
+.founder-card:hover .founder-badge{transform:translateZ(28px)}
+
+/* 1. Floating gold particles inside the card */
+.founder-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:inherit;z-index:1}
+.founder-particles span{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px oklch(78% .16 82 / .8);opacity:0;animation:fpFloat 7s ease-in-out infinite}
+.founder-particles span:nth-child(1){left:12%;top:95%;animation-delay:0s}
+.founder-particles span:nth-child(2){left:88%;top:85%;animation-delay:1.2s;width:2px;height:2px}
+.founder-particles span:nth-child(3){left:45%;top:100%;animation-delay:2.6s}
+.founder-particles span:nth-child(4){left:22%;top:80%;animation-delay:3.8s;width:2px;height:2px}
+.founder-particles span:nth-child(5){left:78%;top:70%;animation-delay:4.7s}
+.founder-particles span:nth-child(6){left:8%;top:60%;animation-delay:5.5s;width:2px;height:2px}
+@keyframes fpFloat{
+  0%   {transform:translateY(0) translateX(0) scale(.6);opacity:0}
+  12%  {opacity:.85}
+  50%  {transform:translateY(-140px) translateX(10px) scale(1.1);opacity:.9}
+  85%  {opacity:.3}
+  100% {transform:translateY(-260px) translateX(-6px) scale(.4);opacity:0}
+}
+
+/* 2. Diagonal shine sweep across the card */
+.founder-shine{position:absolute;inset:0;pointer-events:none;border-radius:inherit;overflow:hidden;z-index:2}
+.founder-shine::before{content:'';position:absolute;top:-50%;left:-40%;width:35%;height:200%;background:linear-gradient(105deg,transparent 30%,oklch(96% .05 82 / .10) 45%,oklch(100% .04 85 / .18) 50%,oklch(96% .05 82 / .10) 55%,transparent 70%);transform:translateX(-100%) rotate(4deg);animation:fsSweep 8s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes fsSweep{
+  0%,15%  {transform:translateX(-100%) rotate(4deg)}
+  55%,100%{transform:translateX(450%) rotate(4deg)}
+}
+
+/* 3. Cursor-following radial spotlight */
+.founder-spotlight{position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(circle 260px at var(--sx) var(--sy),oklch(78% .16 82 / .22) 0%,oklch(78% .16 82 / .06) 30%,transparent 65%);opacity:0;transition:opacity .35s var(--ease);z-index:3;mix-blend-mode:screen}
+.founder-card:hover .founder-spotlight{opacity:1}
+
+/* 4. Corner ornaments — small gold L-brackets in each corner */
+.founder-corner{position:absolute;width:14px;height:14px;pointer-events:none;z-index:4;opacity:.55;transition:opacity .4s,transform .4s var(--spring)}
+.founder-corner::before,.founder-corner::after{content:'';position:absolute;background:var(--gold);box-shadow:0 0 4px oklch(78% .16 82 / .6)}
+.founder-corner::before{width:10px;height:1px;top:0;left:0}
+.founder-corner::after{width:1px;height:10px;top:0;left:0}
+.founder-corner.c-tl{top:12px;left:12px}
+.founder-corner.c-tr{top:12px;right:12px;transform:scaleX(-1)}
+.founder-corner.c-bl{bottom:12px;left:12px;transform:scaleY(-1)}
+.founder-corner.c-br{bottom:12px;right:12px;transform:scale(-1)}
+.founder-card:hover .founder-corner{opacity:1}
+
+/* 5. Photo hover polish — zoom + brightness */
+.founder-photo-inner img{transition:transform .6s var(--ease),filter .5s}
+.founder-card:hover .founder-photo-inner img{transform:scale(1.06);filter:brightness(1.08) contrast(1.05)}
+
+/* 6. Divider gem pulse */
+.founder-divider span{animation:fdGemPulse 2.6s ease-in-out infinite}
+@keyframes fdGemPulse{
+  0%,100%{transform:rotate(45deg) scale(1);box-shadow:0 0 8px oklch(78% .16 82 / .55)}
+  50%   {transform:rotate(45deg) scale(1.3);box-shadow:0 0 18px oklch(78% .16 82 / .95),0 0 32px oklch(78% .16 82 / .45)}
+}
+
+/* 7. Stats hover polish (individual pop) */
+.founder-stat{transition:transform .3s var(--spring),background .3s,border-color .3s}
+.founder-stat:hover{transform:translateY(-2px)}
+.founder-stat .stat-num{font-variant-numeric:tabular-nums;transition:text-shadow .4s}
+.founder-stat:hover .stat-num{text-shadow:0 0 12px oklch(78% .16 82 / .6)}
+
+/* Social icon ambient glow on hover */
+.founder-social{position:relative;overflow:hidden}
+.founder-social::before{content:'';position:absolute;inset:-3px;border-radius:50%;background:radial-gradient(circle,oklch(78% .16 82 / .6),transparent 70%);opacity:0;transition:opacity .3s;z-index:-1}
+.founder-social:hover::before{opacity:1}
 
 /* Corner badge (top-right star) */
 .founder-badge{position:absolute;top:16px;right:16px;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;border:1px solid oklch(78% .16 82 / .35);background:oklch(78% .16 82 / .06);color:var(--gold);z-index:2}
@@ -520,7 +591,18 @@ footer .footer-inner{position:relative;z-index:1}
       </div>
     </div>
     <div class="about-illustration">
-      <div class="founder-card">
+      <div class="founder-card" id="founderCard">
+        <!-- Embedded effect layers (below content) -->
+        <div class="founder-particles" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="founder-shine" aria-hidden="true"></div>
+        <div class="founder-spotlight" aria-hidden="true"></div>
+        <!-- Corner ornaments -->
+        <span class="founder-corner c-tl" aria-hidden="true"></span>
+        <span class="founder-corner c-tr" aria-hidden="true"></span>
+        <span class="founder-corner c-bl" aria-hidden="true"></span>
+        <span class="founder-corner c-br" aria-hidden="true"></span>
         <div class="founder-badge" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L15 9 L22 10 L17 15 L18 22 L12 18.5 L6 22 L7 15 L2 10 L9 9 Z"/></svg>
         </div>
@@ -967,6 +1049,52 @@ window.addEventListener('pointermove',function(e){
   dotY+=(pointerY-dotY)*.22;
   if(dot){dot.style.left=dotX+'px';dot.style.top=dotY+'px';}
   requestAnimationFrame(dotLoop);
+})();
+
+// ===== FOUNDER CARD — cursor spotlight + 3D tilt =====
+(function(){
+  var card=doc.getElementById('founderCard');
+  if(!card) return;
+  card.addEventListener('mousemove',function(e){
+    var r=card.getBoundingClientRect();
+    var x=(e.clientX-r.left)/r.width;
+    var y=(e.clientY-r.top)/r.height;
+    card.style.setProperty('--sx',(x*100).toFixed(1)+'%');
+    card.style.setProperty('--sy',(y*100).toFixed(1)+'%');
+    card.style.setProperty('--tx',(x-.5).toFixed(3));
+    card.style.setProperty('--ty',(y-.5).toFixed(3));
+  });
+  card.addEventListener('mouseleave',function(){
+    card.style.setProperty('--tx','0');
+    card.style.setProperty('--ty','0');
+  });
+})();
+
+// ===== FOUNDER STATS — count up when in view =====
+(function(){
+  var stats=doc.querySelectorAll('.founder-stat .stat-num');
+  if(!stats.length) return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      var el=entry.target;
+      var raw=el.textContent||'';
+      var target=parseInt(raw.replace(/\D/g,''),10)||0;
+      var suffix=raw.indexOf('+')>-1?'+':'';
+      el.textContent='0'+suffix;
+      var start=performance.now();
+      var dur=1400;
+      function step(now){
+        var t=Math.min(1,(now-start)/dur);
+        var eased=1-Math.pow(1-t,3);
+        el.textContent=Math.round(target*eased)+suffix;
+        if(t<1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      io.unobserve(el);
+    });
+  },{threshold:.4});
+  stats.forEach(function(el){io.observe(el)});
 })();
 
 // ===== TESTIMONIAL FOCUS (center card scales up, edges dim) =====
