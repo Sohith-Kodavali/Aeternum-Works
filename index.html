@@ -32,21 +32,18 @@
 
 .ls-brand{display:flex;flex-direction:column;align-items:center;gap:3px}.ls-brand-name{font:500 1.5rem/1 var(--serif);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);text-shadow:0 0 24px oklch(78% .16 82/.45)}.ls-brand-sub{font-size:.5rem;letter-spacing:.24em;color:var(--dim);text-transform:uppercase}
 
-/* ===== PREMIUM SEGMENTED METER + TECH CONSOLE ===== */
-.ls-bar{position:relative;display:flex;flex-direction:column;align-items:center;gap:0;width:340px}
-.ls-meter{position:relative;width:340px;height:26px;display:flex;align-items:center;padding:5px 6px;border-radius:5px;background:linear-gradient(180deg,oklch(4% .003 75) 0%,oklch(7% .008 75) 50%,oklch(4% .003 75) 100%);border:1px solid oklch(78% .16 82 / .18);box-shadow:inset 0 1px 4px oklch(0% 0 0 / .95),inset 0 0 0 1px oklch(0% 0 0 / .3),0 1px 0 oklch(78% .16 82 / .06),0 -1px 0 oklch(0% 0 0 / .4)}
-.ls-meter-cells{display:flex;gap:2px;width:100%;height:100%;position:relative;z-index:1}
-.ls-meter-cells span{flex:1;height:100%;background:oklch(78% .16 82 / .06);border-radius:1.5px;transform-origin:center;transform:scaleY(.55);transition:background .25s var(--ease),transform .32s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;position:relative}
-.ls-meter-cells span.on{background:linear-gradient(180deg,oklch(94% .06 82) 0%,oklch(80% .16 82) 45%,oklch(55% .11 82) 100%);transform:scaleY(1);box-shadow:0 0 6px oklch(78% .16 82 / .55),inset 0 1px 0 oklch(100% 0 0 / .35),inset 0 -1px 0 oklch(0% 0 0 / .2)}
-.ls-meter-cells span.recent{transform:scaleY(1.12);box-shadow:0 0 9px oklch(78% .16 82 / .7),inset 0 1px 0 oklch(100% 0 0 / .45)}
-.ls-meter-cells span.leading{transform:scaleY(1.35);background:linear-gradient(180deg,oklch(100% .04 82) 0%,oklch(92% .16 82) 40%,oklch(68% .13 82) 100%);box-shadow:0 0 16px oklch(96% .10 82 / .95),0 0 28px oklch(78% .16 82 / .65),inset 0 1px 0 oklch(100% 0 0 / .6);z-index:2}
-.ls-meter-cells span.leading::after{content:'';position:absolute;top:50%;left:50%;width:24px;height:24px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,oklch(100% .05 82 / .5) 0%,transparent 60%);pointer-events:none;animation:lsLeadPulse 1.1s ease-in-out infinite}
-@keyframes lsLeadPulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.4)}}
-/* Etched horizontal center line for premium instrument feel */
-.ls-meter::before{content:'';position:absolute;left:8px;right:8px;top:50%;height:1px;background:linear-gradient(90deg,transparent,oklch(78% .16 82 / .1) 20%,oklch(78% .16 82 / .1) 80%,transparent);transform:translateY(-50%);z-index:0}
+/* ===== MINIMAL HAIRLINE METER + TECH CONSOLE ===== */
+.ls-bar{position:relative;display:flex;flex-direction:column;align-items:center;gap:0;width:220px}
+.ls-meter{position:relative;width:220px;height:6px;background:none;border:none;box-shadow:none;padding:0;display:flex;align-items:center;justify-content:flex-start}
+.ls-meter::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:oklch(78% .16 82 / .12);transform:translateY(-50%)}
+.ls-meter-fill{position:absolute;left:0;top:50%;height:1px;width:0;background:linear-gradient(90deg,var(--gold3) 0%,var(--gold) 60%,oklch(96% .05 82) 100%);box-shadow:0 0 4px oklch(78% .16 82 / .55);transform:translateY(-50%);transition:width .3s cubic-bezier(.22,.61,.36,1);border-radius:1px}
+.ls-meter-fill::after{content:'';position:absolute;right:-1.5px;top:50%;width:4px;height:4px;transform:translateY(-50%);border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold),0 0 16px oklch(78% .16 82 / .75);animation:lsHeadPulse 1.4s ease-in-out infinite}
+@keyframes lsHeadPulse{0%,100%{opacity:1;transform:translateY(-50%) scale(1)}50%{opacity:.65;transform:translateY(-50%) scale(1.5)}}
+/* Hide old segmented cells (safe if any renderer still has them cached) */
+.ls-meter-cells{display:none}
 
 /* Meta row: percentage + status label */
-.ls-meter-row{display:flex;align-items:baseline;justify-content:space-between;width:340px;margin-top:22px;font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace}
+.ls-meter-row{display:flex;align-items:baseline;justify-content:space-between;width:220px;margin-top:22px;font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace}
 .ls-percent{font-size:1.5rem;font-weight:600;color:var(--white);font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1}
 .ls-percent-sub{margin-left:3px;font-size:.7rem;color:var(--gold);letter-spacing:.12em;font-weight:500}
 .ls-status{color:var(--gold);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;font-weight:500;opacity:.85}
@@ -54,7 +51,7 @@
 @keyframes lsPulseDot{50%{opacity:.35;transform:scale(.8)}}
 
 /* Techy console log below the bar */
-.ls-console{width:340px;margin-top:22px;min-height:66px;font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;font-size:.56rem;line-height:1.55;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;text-align:left}
+.ls-console{width:220px;margin-top:22px;min-height:66px;font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;font-size:.56rem;line-height:1.55;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;text-align:left}
 .ls-console-row{display:flex;align-items:center;gap:8px;opacity:0;transform:translateX(-6px);transition:opacity .35s var(--ease),transform .35s var(--ease),color .3s}
 .ls-console-row.show{opacity:.55;transform:translateX(0)}
 .ls-console-row.active{opacity:1;color:var(--gold2)}
@@ -429,7 +426,7 @@ footer .footer-inner{position:relative;z-index:1}
     </div>
     <div class="ls-bar">
       <div class="ls-meter" aria-hidden="true">
-        <div class="ls-meter-cells" id="lsCells"></div>
+        <div class="ls-meter-fill" id="lsFill"></div>
       </div>
       <div class="ls-meter-row">
         <span><b class="ls-percent" id="lsPercent">000</b><span class="ls-percent-sub">%</span></span>
@@ -834,19 +831,12 @@ footer .footer-inner{position:relative;z-index:1}
 (function(){
 var doc=document,body=doc.body,html=doc.documentElement;
 
-// ===== LOADING SCREEN (segmented meter + techy console) =====
+// ===== LOADING SCREEN (minimal hairline + techy console) =====
   var loadingScreen=doc.getElementById('loadingScreen');
   var lsPercent=doc.getElementById('lsPercent');
   var lsStatus=doc.getElementById('lsStatus');
   var lsConsole=doc.getElementById('lsConsole');
-  var lsCells=doc.getElementById('lsCells');
-  var TOTAL_CELLS=42;
-  var cellEls=[];
-  if(lsCells){
-    var frag=doc.createDocumentFragment();
-    for(var c=0;c<TOTAL_CELLS;c++){var sp=doc.createElement('span');frag.appendChild(sp);cellEls.push(sp)}
-    lsCells.appendChild(frag);
-  }
+  var lsFill=doc.getElementById('lsFill');
   var dismissed=false;
   var progress=0;
   var pad=function(n){return n<10?'00'+n:n<100?'0'+n:'100'};
@@ -886,17 +876,7 @@ var doc=document,body=doc.body,html=doc.documentElement;
   function setProgress(p){
     progress=p;
     if(lsPercent) lsPercent.textContent=pad(p);
-    // light up cells sequentially with leading + recent glow
-    var litCount=Math.round(p/100*TOTAL_CELLS);
-    for(var i=0;i<TOTAL_CELLS;i++){
-      var el=cellEls[i]; if(!el) continue;
-      var isOn=i<litCount;
-      var isLeading=isOn && i===litCount-1 && p<100;
-      var isRecent=isOn && !isLeading && i>=litCount-3;
-      el.classList.toggle('on', isOn);
-      el.classList.toggle('leading', isLeading);
-      el.classList.toggle('recent', isRecent);
-    }
+    if(lsFill) lsFill.style.width=p+'%';
     // update status text
     if(lsStatus){
       for(var s=statusSteps.length-1;s>=0;s--){
