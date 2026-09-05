@@ -85,13 +85,7 @@
   .hero .hero-bg{display:none!important}
   .hero{background:#040108}
 
-  .hero-mobile-scene{display:block;position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;--tx:0px;--ty:0px;--pscroll:0px}
-  /* Parallax offsets — deeper layers move slower for depth (individual translate composes with existing transforms) */
-  .hms-aurora{translate:0 calc(var(--pscroll) * .12)}
-  .hms-stars{translate:0 calc(var(--pscroll) * .18)}
-  .hms-particles{translate:0 calc(var(--pscroll) * .22)}
-  .hms-corner{translate:0 calc(var(--pscroll) * .3)}
-  .hms-logo-stage{--parallax-y:calc(var(--pscroll) * .35)}
+  .hero-mobile-scene{display:block;position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;--tx:0px;--ty:0px}
   /* Static warm gradient bg — no animation, cheap */
   .hms-bg{position:absolute;inset:0;background:radial-gradient(ellipse 90% 60% at 50% 25%,oklch(14% .04 60) 0%,oklch(7% .02 50) 45%,#020006 100%),radial-gradient(ellipse 70% 40% at 50% 60%,oklch(12% .04 70 / .5),transparent 70%)}
   /* Kill second aurora + reduce blur on primary for GPU perf */
@@ -114,7 +108,7 @@
   @keyframes hmsCornerIn{to{opacity:.75}}
 
   /* ===== AE LOGO STAGE — the centerpiece ===== */
-  .hms-logo-stage{position:absolute;top:calc(140px + env(safe-area-inset-top,0px));left:50%;transform:translate(calc(-50% + var(--tx,0px)),calc(var(--ty,0px) + var(--parallax-y,0px)));width:min(50vw,200px);aspect-ratio:1;display:flex;align-items:center;justify-content:center;pointer-events:none;transition:transform .18s ease-out}
+  .hms-logo-stage{position:absolute;top:calc(140px + env(safe-area-inset-top,0px));left:50%;transform:translate(calc(-50% + var(--tx,0px)),var(--ty,0px));width:min(50vw,200px);aspect-ratio:1;display:flex;align-items:center;justify-content:center;pointer-events:none;transition:transform .3s ease-out}
 
   /* ROTATING BEZEL — uses individual `rotate` property so entrance scale doesn't fight spin */
   .hms-bezel{position:absolute;inset:-6%;width:112%;height:112%;opacity:0;scale:.7;rotate:0deg;transform-origin:center;animation:hmsBezelIn .9s cubic-bezier(.2,1.1,.3,1) 1.4s forwards,hmsBezelSpin 45s linear 1.4s infinite}
@@ -145,8 +139,8 @@
     0%  {clip-path:inset(0 100% 0 0)}
     100%{clip-path:inset(0 0 0 0)}
   }
-  /* Bright reveal edge — follows the wipe */
-  .hms-logo-wrap::after{content:'';position:absolute;top:0;bottom:0;left:0;width:3px;background:linear-gradient(180deg,transparent,oklch(96% .05 82) 30%,oklch(96% .05 82) 70%,transparent);box-shadow:0 0 20px oklch(96% .05 82 / .9),0 0 40px oklch(78% .16 82);opacity:0;pointer-events:none}
+  /* Bright reveal edge — follows the wipe (short, centered) */
+  .hms-logo-wrap::after{content:'';position:absolute;top:50%;left:0;width:2px;height:38%;transform:translateY(-50%);background:linear-gradient(180deg,transparent,oklch(96% .05 82) 30%,oklch(96% .05 82) 70%,transparent);box-shadow:0 0 12px oklch(96% .05 82 / .8),0 0 22px oklch(78% .16 82 / .7);opacity:0;pointer-events:none}
   body.loaded .hms-logo-wrap::after{animation:hmsAeRevealEdge 1.6s cubic-bezier(.4,.05,.2,1) 1.35s forwards}
   @keyframes hmsAeRevealEdge{
     0%  {left:0;opacity:0}
@@ -1315,26 +1309,6 @@ window.addEventListener('pointermove',function(e){
   dotY+=(pointerY-dotY)*.22;
   if(dot){dot.style.left=dotX+'px';dot.style.top=dotY+'px';}
   requestAnimationFrame(dotLoop);
-})();
-
-// ===== MOBILE HERO — scroll parallax on scene layers =====
-(function(){
-  if(innerWidth>680) return;
-  var scene=doc.getElementById('hmsScene');
-  if(!scene) return;
-  var raf,lastY=-1;
-  function apply(){
-    raf=0;
-    var y=window.scrollY;
-    if(y===lastY) return;
-    lastY=y;
-    // clamp — no need to move once past hero
-    var t=Math.min(y,800);
-    scene.style.setProperty('--pscroll',t+'px');
-  }
-  window.addEventListener('scroll',function(){
-    if(!raf) raf=requestAnimationFrame(apply);
-  },{passive:true});
 })();
 
 // ===== MOBILE HERO SCENE — bezel ticks + gyro tilt =====
