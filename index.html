@@ -131,8 +131,9 @@
   @keyframes hmsRingIn{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
   @keyframes hmsRingPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.05);opacity:1}}
 
-  .hms-logo-wrap{position:relative;width:100%;height:100%;opacity:0;scale:.7;translate:0 4%;animation:hmsLogoIn 1s cubic-bezier(.2,1.1,.4,1) 1.2s forwards}
+  .hms-logo-wrap{position:relative;width:100%;height:100%;opacity:0;scale:.7;translate:0 4%;animation:hmsLogoIn 1s cubic-bezier(.2,1.1,.4,1) 1.2s forwards,hmsLogoFloat 6s ease-in-out 3s infinite}
   @keyframes hmsLogoIn{to{opacity:1;scale:1}}
+  @keyframes hmsLogoFloat{0%,100%{translate:0 4%}50%{translate:0 2%}}
   .hms-logo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:lighten;filter:drop-shadow(0 0 20px oklch(78% .16 82 / .55)) drop-shadow(0 0 42px oklch(78% .16 82 / .28));clip-path:inset(0 100% 0 0)}
   body.loaded .hms-logo{animation:hmsAeWipe 1.6s cubic-bezier(.4,.05,.2,1) 1.35s forwards}
   @keyframes hmsAeWipe{
@@ -179,37 +180,35 @@
   .hero-content{padding:calc(120px + min(52vw,220px) + 44px) 16px 32px!important;text-align:center;position:relative;z-index:2;margin:0 auto!important;width:100%!important;max-width:none!important;display:flex;flex-direction:column;align-items:center;gap:0}
   .hero-copy{width:100%;display:flex;flex-direction:column;align-items:center;padding:0!important}
 
-  /* Eyebrow — bracketed by gold dashes, cycles through capabilities */
+  /* Eyebrow — bracketed by gold dashes on mobile */
   .hero .eyebrow{margin:0 0 18px!important;font-size:.55rem;letter-spacing:.28em;color:var(--gold);opacity:.9;display:inline-flex;align-items:center;gap:10px;animation:fadeUp .7s var(--ease) 2.4s both!important}
   .hero .eyebrow::before,.hero .eyebrow::after{content:'';width:22px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-  .eb-cycle{display:inline-block;height:1.2em;line-height:1.2;overflow:hidden;vertical-align:baseline;min-width:14ch;text-align:center}
-  .eb-cycle .eb-track{display:block;animation:ebCycle 15s cubic-bezier(.7,0,.3,1) infinite;will-change:transform}
-  .eb-cycle .eb-track b{display:block;height:1.2em;line-height:1.2;font-weight:700;font-style:normal;color:var(--gold);white-space:nowrap;text-transform:uppercase}
-  @keyframes ebCycle{
-    0%,15%   {transform:translateY(0)}
-    20%,35%  {transform:translateY(-1.2em)}
-    40%,55%  {transform:translateY(-2.4em)}
-    60%,75%  {transform:translateY(-3.6em)}
-    80%,95%  {transform:translateY(-4.8em)}
-    100%     {transform:translateY(-6em)}
-  }
 
-  /* ===== HERO TITLE — editorial redesign ===== */
+  /* ===== HERO TITLE — 2-line editorial layout, refined sizing ===== */
   .hero-title{
     font-family:var(--serif);
-    font-size:clamp(4.2rem,17.5vw,5.8rem)!important;
+    font-size:clamp(2.9rem,13vw,4rem)!important;
     font-weight:400!important;
-    letter-spacing:-.03em!important;
-    line-height:.94!important;
+    letter-spacing:-.025em!important;
+    line-height:1!important;
     margin:0!important;
     max-width:none!important;
-    text-wrap:balance;
     color:oklch(96% .01 75);
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:baseline;
+    row-gap:.05em;
+    column-gap:.22em;
+    text-wrap:balance;
   }
-  .hero-title .split-word{overflow:visible;display:inline-block}
+  .hero-title br{display:none}
+  .hero-title .split-word{overflow:visible;display:inline-block;line-height:1}
   .hero-title .split-word span{transform:translateY(0)!important;display:inline-block}
-  /* Ordinary — italic, gradient gold, quiet shimmer */
-  .hero-title .gold-word{font-style:italic;font-weight:500;color:transparent;text-shadow:none!important;position:relative;display:inline-block;padding-right:.05em}
+  /* Force line break before Ordinary so we get: "Design Beyond" / "Ordinary." */
+  .hero-title .gold-word{flex-basis:100%;text-align:center;margin-top:.02em}
+  /* Ordinary — italic gold, gradient shimmer */
+  .hero-title .gold-word{font-style:italic;font-weight:500;color:transparent;text-shadow:none!important;position:relative;padding-right:.05em}
   .hero-title .gold-word span{
     background:linear-gradient(100deg,oklch(72% .14 82) 0%,oklch(94% .06 82) 45%,oklch(78% .16 82) 55%,oklch(60% .12 82) 100%);
     background-size:220% 100%;
@@ -218,33 +217,27 @@
     -webkit-text-fill-color:transparent;
     color:transparent;
     animation:heroGoldShimmer 5s ease-in-out infinite;
-    filter:drop-shadow(0 0 24px oklch(78% .16 82 / .25));
+    filter:drop-shadow(0 0 22px oklch(78% .16 82 / .28));
   }
   @keyframes heroGoldShimmer{
     0%,100%{background-position:0% 50%}
     50%{background-position:100% 50%}
   }
-  /* Thin gold divider above title — editorial accent */
-  .hero-copy .eyebrow+.hero-title,
-  body.loaded .hero-title{position:relative}
-  .hero-copy .eyebrow{position:relative}
-  /* Remove any bogus underline artifacts on split-word */
-  .hero-title br{margin-bottom:0}
 
-  /* Lead — tighter */
-  .hero-lead{font-size:.82rem;line-height:1.55;max-width:30ch;margin:18px auto 0!important;color:oklch(70% .02 75);animation:fadeUp .7s var(--ease) 2.7s both!important}
+  /* Lead — clean readable, better rhythm */
+  .hero-lead{font-size:.88rem;line-height:1.6;max-width:32ch;margin:22px auto 0!important;color:oklch(72% .02 75);animation:fadeUp .7s var(--ease) 2.7s both!important;letter-spacing:.005em}
 
-  /* Availability strip — pulsing gold dot with real-time feel */
-  .availability-strip{display:inline-flex;align-items:center;gap:8px;margin:16px auto 0;padding:6px 14px;background:oklch(66% .18 158 / .08);border:1px solid oklch(66% .18 158 / .35);border-radius:999px;color:oklch(80% .12 158);font-family:'JetBrains Mono','SF Mono',Menlo,monospace;font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;animation:hmsUp .8s cubic-bezier(.2,.9,.3,1) .65s both}
+  /* Availability strip — pulsing green dot */
+  .availability-strip{display:inline-flex;align-items:center;gap:8px;margin:20px auto 0;padding:7px 14px;background:oklch(66% .18 158 / .08);border:1px solid oklch(66% .18 158 / .32);border-radius:999px;color:oklch(82% .11 158);font-family:'JetBrains Mono','SF Mono',Menlo,monospace;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;font-weight:500}
   body:not(.loaded) .availability-strip{opacity:0}
   body.loaded .availability-strip{animation:hmsUp .8s cubic-bezier(.2,.9,.3,1) .65s forwards}
   .av-dot{width:6px;height:6px;border-radius:50%;background:oklch(66% .18 158);box-shadow:0 0 6px oklch(66% .18 158);animation:avPulse 1.6s ease-in-out infinite;flex-shrink:0}
   @keyframes avPulse{50%{opacity:.4;transform:scale(.75)}}
 
   /* Actions — compact side-by-side pills */
-  .actions{gap:8px;margin-top:22px!important;flex-direction:row;justify-content:center;flex-wrap:nowrap;width:auto;max-width:none;animation:fadeUp .7s var(--ease) 2.9s both!important}
-  .actions .pill{width:auto;min-height:38px;padding:0 14px;font-size:.55rem;letter-spacing:.14em;gap:6px;flex:0 0 auto}
-  .actions .pill span{font-size:.7rem;margin-left:2px}
+  .actions{gap:10px;margin-top:22px!important;flex-direction:row;justify-content:center;flex-wrap:nowrap;width:auto;max-width:none;animation:fadeUp .7s var(--ease) 2.9s both!important}
+  .actions .pill{width:auto;min-height:40px;padding:0 16px;font-size:.58rem;letter-spacing:.14em;gap:6px;flex:0 0 auto;font-weight:700}
+  .actions .pill span{font-size:.75rem;margin-left:2px}
 
   /* ===== ENTRANCE — everything gated on body.loaded, dramatic staggered reveal ===== */
   .hms-bezel,.hms-orbit,.hms-corner,.hms-logo-wrap{animation-play-state:paused}
@@ -452,6 +445,19 @@ footer{position:relative;padding:0}.footer-divider{height:2px;background:linear-
 .scroll::before{content:'';position:absolute;left:50%;top:-40px;width:1px;height:36px;background:linear-gradient(180deg,transparent,var(--gold));animation:scrollLine 2.4s ease-in-out infinite;transform:translateX(-50%)}
 @keyframes scrollLine{0%{transform:translate(-50%,-50%) scaleY(0);opacity:0}30%{opacity:1}70%{opacity:1}100%{transform:translate(-50%,300%) scaleY(1);opacity:0}}
 .scroll b{border:0}
+
+/* EYEBROW — cycling capability slot machine (works on all viewports) */
+.eb-cycle{display:inline-block;height:1.2em;line-height:1.2;overflow:hidden;vertical-align:baseline;min-width:14ch;text-align:center}
+.eb-cycle .eb-track{display:block;animation:ebCycle 15s cubic-bezier(.7,0,.3,1) infinite;will-change:transform}
+.eb-cycle .eb-track b{display:block;height:1.2em;line-height:1.2;font-weight:700;font-style:normal;color:inherit;white-space:nowrap;text-transform:uppercase;letter-spacing:inherit}
+@keyframes ebCycle{
+  0%,15%   {transform:translateY(0)}
+  20%,35%  {transform:translateY(-1.2em)}
+  40%,55%  {transform:translateY(-2.4em)}
+  60%,75%  {transform:translateY(-3.6em)}
+  80%,95%  {transform:translateY(-4.8em)}
+  100%     {transform:translateY(-6em)}
+}
 
 /* SECTION TITLE — slot machine word swap (fixed: single-line clip, em-based track) */
 .word-cycle{display:inline-block;position:relative;overflow:hidden;vertical-align:baseline;height:.9em;line-height:.9;font-style:normal}
