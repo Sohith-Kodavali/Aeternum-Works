@@ -85,7 +85,13 @@
   .hero .hero-bg{display:none!important}
   .hero{background:#040108}
 
-  .hero-mobile-scene{display:block;position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;--tx:0px;--ty:0px}
+  .hero-mobile-scene{display:block;position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;--tx:0px;--ty:0px;--pscroll:0px}
+  /* Parallax offsets — deeper layers move slower for depth (individual translate composes with existing transforms) */
+  .hms-aurora{translate:0 calc(var(--pscroll) * .12)}
+  .hms-stars{translate:0 calc(var(--pscroll) * .18)}
+  .hms-particles{translate:0 calc(var(--pscroll) * .22)}
+  .hms-corner{translate:0 calc(var(--pscroll) * .3)}
+  .hms-logo-stage{--parallax-y:calc(var(--pscroll) * .35)}
   /* Static warm gradient bg — no animation, cheap */
   .hms-bg{position:absolute;inset:0;background:radial-gradient(ellipse 90% 60% at 50% 25%,oklch(14% .04 60) 0%,oklch(7% .02 50) 45%,#020006 100%),radial-gradient(ellipse 70% 40% at 50% 60%,oklch(12% .04 70 / .5),transparent 70%)}
   /* Kill second aurora + reduce blur on primary for GPU perf */
@@ -108,7 +114,7 @@
   @keyframes hmsCornerIn{to{opacity:.75}}
 
   /* ===== AE LOGO STAGE — the centerpiece ===== */
-  .hms-logo-stage{position:absolute;top:calc(140px + env(safe-area-inset-top,0px));left:50%;transform:translate(calc(-50% + var(--tx,0px)),var(--ty,0px));width:min(50vw,200px);aspect-ratio:1;display:flex;align-items:center;justify-content:center;pointer-events:none;transition:transform .3s ease-out}
+  .hms-logo-stage{position:absolute;top:calc(140px + env(safe-area-inset-top,0px));left:50%;transform:translate(calc(-50% + var(--tx,0px)),calc(var(--ty,0px) + var(--parallax-y,0px)));width:min(50vw,200px);aspect-ratio:1;display:flex;align-items:center;justify-content:center;pointer-events:none;transition:transform .18s ease-out}
 
   /* ROTATING BEZEL — uses individual `rotate` property so entrance scale doesn't fight spin */
   .hms-bezel{position:absolute;inset:-6%;width:112%;height:112%;opacity:0;scale:.7;rotate:0deg;transform-origin:center;animation:hmsBezelIn .9s cubic-bezier(.2,1.1,.3,1) 1.4s forwards,hmsBezelSpin 45s linear 1.4s infinite}
@@ -133,7 +139,21 @@
 
   .hms-logo-wrap{position:relative;width:100%;height:100%;opacity:0;scale:.7;translate:0 4%;animation:hmsLogoIn 1s cubic-bezier(.2,1.1,.4,1) 1.2s forwards}
   @keyframes hmsLogoIn{to{opacity:1;scale:1}}
-  .hms-logo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:lighten;filter:drop-shadow(0 0 20px oklch(78% .16 82 / .55)) drop-shadow(0 0 42px oklch(78% .16 82 / .28))}
+  .hms-logo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:lighten;filter:drop-shadow(0 0 20px oklch(78% .16 82 / .55)) drop-shadow(0 0 42px oklch(78% .16 82 / .28));clip-path:inset(0 100% 0 0)}
+  body.loaded .hms-logo{animation:hmsAeWipe 1.6s cubic-bezier(.4,.05,.2,1) 1.35s forwards}
+  @keyframes hmsAeWipe{
+    0%  {clip-path:inset(0 100% 0 0)}
+    100%{clip-path:inset(0 0 0 0)}
+  }
+  /* Bright reveal edge — follows the wipe */
+  .hms-logo-wrap::after{content:'';position:absolute;top:0;bottom:0;left:0;width:3px;background:linear-gradient(180deg,transparent,oklch(96% .05 82) 30%,oklch(96% .05 82) 70%,transparent);box-shadow:0 0 20px oklch(96% .05 82 / .9),0 0 40px oklch(78% .16 82);opacity:0;pointer-events:none}
+  body.loaded .hms-logo-wrap::after{animation:hmsAeRevealEdge 1.6s cubic-bezier(.4,.05,.2,1) 1.35s forwards}
+  @keyframes hmsAeRevealEdge{
+    0%  {left:0;opacity:0}
+    10% {opacity:1}
+    90% {opacity:1}
+    100%{left:100%;opacity:0}
+  }
   .hms-shine{position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,oklch(100% .04 85 / .85) 50%,transparent 60%);background-size:220% 100%;background-position:-110% 0;-webkit-mask-image:url(ae.png);mask-image:url(ae.png);-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;mask-mode:luminance;mix-blend-mode:screen;animation:hmsShine 6s cubic-bezier(.4,0,.2,1) 2.4s infinite;opacity:.95}
   @keyframes hmsShine{0%{background-position:-110% 0}55%,100%{background-position:110% 0}}
 
@@ -165,9 +185,20 @@
   .hero-content{padding:calc(120px + min(52vw,220px) + 44px) 16px 32px!important;text-align:center;position:relative;z-index:2;margin:0 auto!important;width:100%!important;max-width:none!important;display:flex;flex-direction:column;align-items:center;gap:0}
   .hero-copy{width:100%;display:flex;flex-direction:column;align-items:center;padding:0!important}
 
-  /* Eyebrow — bracketed by gold dashes */
+  /* Eyebrow — bracketed by gold dashes, cycles through capabilities */
   .hero .eyebrow{margin:0 0 18px!important;font-size:.55rem;letter-spacing:.28em;color:var(--gold);opacity:.9;display:inline-flex;align-items:center;gap:10px;animation:fadeUp .7s var(--ease) 2.4s both!important}
   .hero .eyebrow::before,.hero .eyebrow::after{content:'';width:22px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .eb-cycle{display:inline-block;height:1.2em;line-height:1.2;overflow:hidden;vertical-align:baseline;min-width:14ch;text-align:center}
+  .eb-cycle .eb-track{display:block;animation:ebCycle 15s cubic-bezier(.7,0,.3,1) infinite;will-change:transform}
+  .eb-cycle .eb-track b{display:block;height:1.2em;line-height:1.2;font-weight:700;font-style:normal;color:var(--gold);white-space:nowrap;text-transform:uppercase}
+  @keyframes ebCycle{
+    0%,15%   {transform:translateY(0)}
+    20%,35%  {transform:translateY(-1.2em)}
+    40%,55%  {transform:translateY(-2.4em)}
+    60%,75%  {transform:translateY(-3.6em)}
+    80%,95%  {transform:translateY(-4.8em)}
+    100%     {transform:translateY(-6em)}
+  }
 
   /* ===== HERO TITLE — editorial redesign ===== */
   .hero-title{
@@ -208,6 +239,13 @@
 
   /* Lead — tighter */
   .hero-lead{font-size:.82rem;line-height:1.55;max-width:30ch;margin:18px auto 0!important;color:oklch(70% .02 75);animation:fadeUp .7s var(--ease) 2.7s both!important}
+
+  /* Availability strip — pulsing gold dot with real-time feel */
+  .availability-strip{display:inline-flex;align-items:center;gap:8px;margin:16px auto 0;padding:6px 14px;background:oklch(66% .18 158 / .08);border:1px solid oklch(66% .18 158 / .35);border-radius:999px;color:oklch(80% .12 158);font-family:'JetBrains Mono','SF Mono',Menlo,monospace;font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;animation:hmsUp .8s cubic-bezier(.2,.9,.3,1) .65s both}
+  body:not(.loaded) .availability-strip{opacity:0}
+  body.loaded .availability-strip{animation:hmsUp .8s cubic-bezier(.2,.9,.3,1) .65s forwards}
+  .av-dot{width:6px;height:6px;border-radius:50%;background:oklch(66% .18 158);box-shadow:0 0 6px oklch(66% .18 158);animation:avPulse 1.6s ease-in-out infinite;flex-shrink:0}
+  @keyframes avPulse{50%{opacity:.4;transform:scale(.75)}}
 
   /* Actions — compact side-by-side pills */
   .actions{gap:8px;margin-top:22px!important;flex-direction:row;justify-content:center;flex-wrap:nowrap;width:auto;max-width:none;animation:fadeUp .7s var(--ease) 2.9s both!important}
@@ -768,13 +806,14 @@ footer .footer-inner{position:relative;z-index:1}
   <div class="wrap hero-content">
     <div class="hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">Premium digital studio</p>
+        <p class="eyebrow"><span class="eb-cycle" aria-label="Premium digital studio"><span class="eb-track"><b>Premium Digital Studio</b><b>UI / UX Design</b><b>Web Development</b><b>Brand Identity</b><b>AI Solutions</b><b>Premium Digital Studio</b></span></span></p>
         <h1 class="hero-title">
           <span class="split-word"><span>Design</span></span><br>
           <span class="split-word"><span>Beyond</span></span><br>
           <span class="split-word gold-word liquid-text"><span>Ordinary.</span></span>
         </h1>
         <p class="hero-lead">We craft luxury digital experiences, high-performance websites, and unforgettable brands for businesses that refuse to blend in.</p>
+        <div class="availability-strip" aria-live="polite"><span class="av-dot"></span>Accepting 2 projects for Q4 2026</div>
         <div class="actions">
           <a class="pill fill magnetic-cta gold-pulse" href="#work">View our work <span>↗</span></a>
           <a class="pill magnetic-cta gold-pulse" href="#contact">Start your project <span>↗</span></a>
@@ -1276,6 +1315,26 @@ window.addEventListener('pointermove',function(e){
   dotY+=(pointerY-dotY)*.22;
   if(dot){dot.style.left=dotX+'px';dot.style.top=dotY+'px';}
   requestAnimationFrame(dotLoop);
+})();
+
+// ===== MOBILE HERO — scroll parallax on scene layers =====
+(function(){
+  if(innerWidth>680) return;
+  var scene=doc.getElementById('hmsScene');
+  if(!scene) return;
+  var raf,lastY=-1;
+  function apply(){
+    raf=0;
+    var y=window.scrollY;
+    if(y===lastY) return;
+    lastY=y;
+    // clamp — no need to move once past hero
+    var t=Math.min(y,800);
+    scene.style.setProperty('--pscroll',t+'px');
+  }
+  window.addEventListener('scroll',function(){
+    if(!raf) raf=requestAnimationFrame(apply);
+  },{passive:true});
 })();
 
 // ===== MOBILE HERO SCENE — bezel ticks + gyro tilt =====
