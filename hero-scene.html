@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aeternum Scene — Iteration 7</title>
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:#000;height:100%;width:100%}
+canvas{display:block}
+#info{position:fixed;top:8px;left:8px;color:#fff;font:11px/1.3 monospace;background:rgba(0,0,0,.55);padding:6px 10px;border-radius:4px;pointer-events:none;z-index:10}
+#err{position:fixed;top:40px;left:8px;color:#f88;font:11px/1.3 monospace;background:rgba(0,0,0,.75);padding:6px 10px;border-radius:4px;pointer-events:none;z-index:10;max-width:80vw;white-space:pre-wrap;display:none}
+</style>
+</head>
+<body>
+<div id="info">iter 7</div>
+<div id="err"></div>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+const info = document.getElementById('info');
+const errEl = document.getElementById('err');
+const showErr = (m)=>{errEl.style.display='block'; errEl.textContent += m + '\n';};
+window.addEventListener('error', e=>showErr('ERR: '+e.message));
+
+try {
+  const THREE = await import('three');
+  const { EffectComposer } = await import('three/addons/postprocessing/EffectComposer.js');
+  const { RenderPass } = await import('three/addons/postprocessing/RenderPass.js');
+  const { UnrealBloomPass } = await import('three/addons/postprocessing/UnrealBloomPass.js');
+  const { OutputPass } = await import('three/addons/postprocessing/OutputPass.js');
+
+  const renderer = new THREE.WebGLRenderer({antialias:true, powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  document.body.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x040108);
+
+  const camera = new THREE.PerspectiveCamera(38, innerWidth/innerHeight, 0.1, 8000);
+  camera.position.set(-4, 3.5, 22);
+  camera.lookAt(3, 3, 0);
+
+  const sun = new THREE.DirectionalLight(0xffb060, 3.2);
+  sun.position.set(-18, 3, 6);
+  scene.add(sun);
+  const rim = new THREE.DirectionalLight(0x99bbdd, 0.35);
+  rim.position.set(12, 15, -6);
+  scene.add(rim);
+  scene.add(new THREE.AmbientLight(0x151020, 0.4));
+
+  // ===== STARS (bigger, brighter) =====
+  {
+    const g = new THREE.BufferGeometry();
+    const N = 2000;
+    const pos = new Float32Array(N*3);
+    const col = new Float32Array(N*3);
+    const size = new Float32Array(N);
+    for(let i=0;i<N;i++){
+      const r = 800;
+      const th = Math.random()*Math.PI*2;
+      const ph = Math.acos(2*Math.random()-1);
+      pos[i*3]   = r*Math.sin(ph)*Math.cos(th);
+      pos[i*3+1] = r*Math.sin(ph)*Math.sin(th)*0.7 + 40;
+      pos[i*3+2] = r*Math.cos(ph);
+      const b = 0.6 + Math.random()*0.4;
+      col[i*3]=b; col[i*3+1]=b*0.98; col[i*3+2]=b*0.94;
+      size[i] = Math.random()<0.9 ? 1.8 : 3.5;
+    }
+    g.setAttribute('position', new THREE.BufferAttribute(pos,3));
+    g.setAttribute('color', new THREE.BufferAttribute(col,3));
+    g.setAttribute('size', new THREE.BufferAttribute(size,1));
+    const m = new THREE.PointsMaterial({size:2.0, vertexColors:true, sizeAttenuation:false, transparent:true, opacity:1.0});
+    scene.add(new THREE.Points(g, m));
+  }
+
+  // ===== PARTIAL PLANET (upper-right, arc visible curving into frame) =====
+  const planet = new THREE.Group();
+  {
+    const R = 55;
+    const bodyGeom = new THREE.SphereGeometry(R, 96, 96);
+    const bodyMat = new THREE.MeshStandardMaterial({
+      color: 0x0e0805,
+      roughness: 0.98,
+      metalness: 0.0,
+      emissive: 0x120904,
+      emissiveIntensity: 0.15
+    });
+    planet.add(new THREE.Mesh(bodyGeom, bodyMat));
+
+    // sharp bright limb
+    const atmGeom = new THREE.SphereGeometry(R*1.02, 128, 128);
+    const atmMat = new THREE.ShaderMaterial({
+      transparent: true, side: THREE.BackSide, blending: THREE.AdditiveBlending, depthWrite: false,
+      uniforms: {uColor:{value:new THREE.Color(0xffc078)}, uIntensity:{value:5.0}, uPower:{value:6.0}},
+      vertexShader: `varying vec3 vN; varying vec3 vV;
+        void main(){vec4 mv = modelViewMatrix*vec4(position,1.); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv;}`,
+      fragmentShader: `varying vec3 vN; varying vec3 vV; uniform vec3 uColor; uniform float uIntensity; uniform float uPower;
+        void main(){float f=pow(1.-abs(dot(vN,vV)),uPower); gl_FragColor=vec4(uColor*f*uIntensity, f);}`
+    });
+    planet.add(new THREE.Mesh(atmGeom, atmMat));
+
+    // wider soft halo
+    const haloGeom = new THREE.SphereGeometry(R*1.12, 96, 96);
+    const haloMat = new THREE.ShaderMaterial({
+      transparent: true, side: THREE.BackSide, blending: THREE.AdditiveBlending, depthWrite: false,
+      uniforms: {uColor:{value:new THREE.Color(0xff9540)}, uIntensity:{value:1.6}, uPower:{value:2.2}},
+      vertexShader: `varying vec3 vN; varying vec3 vV;
+        void main(){vec4 mv = modelViewMatrix*vec4(position,1.); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv;}`,
+      fragmentShader: `varying vec3 vN; varying vec3 vV; uniform vec3 uColor; uniform float uIntensity; uniform float uPower;
+        void main(){float f=pow(1.-abs(dot(vN,vV)),uPower); gl_FragColor=vec4(uColor*f*uIntensity, f*.4);}`
+    });
+    planet.add(new THREE.Mesh(haloGeom, haloMat));
+
+    // Position: upper-right, close enough that limb curves through frame
+    planet.position.set(80, 40, -70);
+    scene.add(planet);
+  }
+
+  // ===== WATER (custom shader: dark base + gold fresnel + sun specular) =====
+  const water = (()=>{
+    const geom = new THREE.PlaneGeometry(600, 400, 200, 50);
+    const pos = geom.attributes.position;
+    for(let i=0;i<pos.count;i++){
+      const x = pos.getX(i), y = pos.getY(i);
+      pos.setZ(i, Math.sin(x*.2)*.05 + Math.cos(y*.25+x*.1)*.04);
+    }
+    geom.computeVertexNormals();
+    const mat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime:      {value: 0},
+        uSunPos:    {value: new THREE.Vector3(-17, -1.0, -55)},
+        uSunColor:  {value: new THREE.Color(0xffb060)},
+        uBaseColor: {value: new THREE.Color(0x02040a)},
+        uSkyColor:  {value: new THREE.Color(0x2a1a12)}
+      },
+      vertexShader: `
+        varying vec3 vWorldPos; varying vec3 vNormal;
+        uniform float uTime;
+        void main(){
+          vec3 p = position;
+          // slight wave motion
+          p.z += sin(p.x*.5 + uTime*.6)*.04 + cos(p.y*.7 + uTime*.5)*.03;
+          vec4 wp = modelMatrix * vec4(p, 1.0);
+          vWorldPos = wp.xyz;
+          vNormal = normalize((modelMatrix * vec4(normal, 0.0)).xyz);
+          gl_Position = projectionMatrix * viewMatrix * wp;
+        }`,
+      fragmentShader: `
+        uniform vec3 uSunPos; uniform vec3 uSunColor; uniform vec3 uBaseColor; uniform vec3 uSkyColor;
+        varying vec3 vWorldPos; varying vec3 vNormal;
+        void main(){
+          vec3 n = normalize(vNormal);
+          vec3 v = normalize(cameraPosition - vWorldPos);
+          vec3 l = normalize(uSunPos - vWorldPos);
+          vec3 r = reflect(-l, n);
+
+          // fresnel: brighter at grazing (horizon) angles
+          float fres = pow(1.0 - max(dot(v, n), 0.0), 4.0);
+          vec3 col = mix(uBaseColor, uSkyColor, fres);
+
+          // sun specular highlight (bright band toward camera when facing sun direction)
+          float spec = pow(max(dot(r, v), 0.0), 40.0);
+          col += uSunColor * spec * 4.0;
+
+          // horizontal glitter band near sun's screen direction
+          float sunDir = normalize(uSunPos - vWorldPos).x;
+          float glitter = smoothstep(-0.15, 0.0, sunDir) * (1.0 - smoothstep(0.0, 0.2, sunDir));
+          col += uSunColor * glitter * fres * 1.2;
+
+          gl_FragColor = vec4(col, 1.0);
+        }`
+    });
+    const w = new THREE.Mesh(geom, mat);
+    w.rotation.x = -Math.PI/2;
+    w.position.set(0, -3.1, -40);
+    scene.add(w);
+    return w;
+  })();
+
+  // ===== SUN REFLECTION on water (bright vertical strip) =====
+  {
+    const c = document.createElement('canvas');
+    c.width = 128; c.height = 512;
+    const g = c.getContext('2d');
+    const grd = g.createLinearGradient(0,0,0,512);
+    grd.addColorStop(0,    'rgba(255,220,150,0)');
+    grd.addColorStop(0.15, 'rgba(255,215,140,.85)');
+    grd.addColorStop(0.5,  'rgba(255,170,80,.75)');
+    grd.addColorStop(0.85, 'rgba(255,140,50,.4)');
+    grd.addColorStop(1,    'rgba(200,90,30,0)');
+    g.fillStyle = grd; g.fillRect(0,0,128,512);
+    // add horizontal ripple bands
+    g.globalCompositeOperation = 'destination-in';
+    for(let i=0;i<25;i++){
+      g.fillStyle = `rgba(0,0,0,${.4+Math.random()*.6})`;
+      g.fillRect(0, i*20 + Math.random()*8, 128, 3+Math.random()*4);
+    }
+    const tex = new THREE.CanvasTexture(c);
+    const mat = new THREE.SpriteMaterial({map:tex, blending:THREE.AdditiveBlending, depthWrite:false, transparent:true, opacity:0.7});
+    const s = new THREE.Sprite(mat);
+    s.scale.set(3, 14, 1);
+    s.position.set(-16, -2.6, -18);
+    scene.add(s);
+  }
+
+  // ===== HORIZON SUN (bright disk + wide halo) =====
+  {
+    // wide warm glow (large sprite)
+    const c = document.createElement('canvas');
+    c.width = c.height = 512;
+    const g2 = c.getContext('2d');
+    const grd = g2.createRadialGradient(256,256,0,256,256,256);
+    grd.addColorStop(0,    'rgba(255,235,180,1)');
+    grd.addColorStop(0.08, 'rgba(255,210,130,.9)');
+    grd.addColorStop(0.25, 'rgba(255,160,60,.55)');
+    grd.addColorStop(0.55, 'rgba(210,100,30,.18)');
+    grd.addColorStop(1,    'rgba(0,0,0,0)');
+    g2.fillStyle = grd; g2.fillRect(0,0,512,512);
+    const tex = new THREE.CanvasTexture(c);
+    const mat = new THREE.SpriteMaterial({map:tex, blending:THREE.AdditiveBlending, depthWrite:false, transparent:true});
+    const s = new THREE.Sprite(mat);
+    s.scale.set(28, 28, 1);
+    s.position.set(-18, -0.5, -55);
+    scene.add(s);
+
+    // small bright sun disk
+    const c2 = document.createElement('canvas');
+    c2.width = c2.height = 256;
+    const g3 = c2.getContext('2d');
+    const grd2 = g3.createRadialGradient(128,128,0,128,128,128);
+    grd2.addColorStop(0, 'rgba(255,255,230,1)');
+    grd2.addColorStop(0.35, 'rgba(255,215,150,.9)');
+    grd2.addColorStop(1, 'rgba(255,150,50,0)');
+    g3.fillStyle = grd2; g3.fillRect(0,0,256,256);
+    const tex2 = new THREE.CanvasTexture(c2);
+    const mat2 = new THREE.SpriteMaterial({map:tex2, blending:THREE.AdditiveBlending, depthWrite:false, transparent:true});
+    const s2 = new THREE.Sprite(mat2);
+    s2.scale.set(4.5, 4.5, 1);
+    s2.position.set(-18, -0.9, -54);
+    scene.add(s2);
+  }
+
+  // ===== ROCKY GROUND UNDER AE (low plateau, doesn't block AE) =====
+  {
+    const geom = new THREE.PlaneGeometry(28, 16, 90, 45);
+    const pos = geom.attributes.position;
+    for(let i=0;i<pos.count;i++){
+      const x = pos.getX(i), y = pos.getY(i);
+      // low broad plateau under AE, no tall peak
+      const plateau = Math.exp(-((x-0)*(x-0)*.03 + (y-1)*(y-1)*.09)) * 1.3;
+      const n = plateau
+              + Math.sin(x*.5)*Math.cos(y*.6)*.32
+              + Math.sin(x*1.3+y)*.22
+              + (Math.random()-.5)*.18;
+      // fade edges softly to disappear
+      const edgeFade = Math.min(1, (14-Math.abs(x))*.18) * Math.min(1, (8-Math.abs(y))*.25);
+      pos.setZ(i, n * Math.max(0, edgeFade));
+    }
+    geom.computeVertexNormals();
+    const mat = new THREE.MeshStandardMaterial({
+      color: 0x1e100a, roughness: 0.98, metalness: 0.0, flatShading: true
+    });
+    const ground = new THREE.Mesh(geom, mat);
+    ground.rotation.x = -Math.PI/2;
+    ground.position.set(6, -3.0, 4);
+    scene.add(ground);
+  }
+
+  // ===== AE LOGO (right side, gold preserved via luminance alpha) =====
+  const aeGroup = new THREE.Group();
+  {
+    const loader = new THREE.TextureLoader();
+    const tex = loader.load('aeternum_solutions.png',
+      (t)=>{t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy();},
+      undefined,
+      (e)=>showErr('logo load fail: '+e)
+    );
+    const mat = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false,
+      uniforms: {uMap:{value:tex}, uBoost:{value:1.0}},
+      vertexShader: `varying vec2 vUv; void main(){vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+      fragmentShader: `uniform sampler2D uMap; uniform float uBoost; varying vec2 vUv;
+        void main(){
+          vec4 c = texture2D(uMap, vUv);
+          float lum = max(max(c.r,c.g),c.b);
+          float a = smoothstep(0.06, 0.35, lum);
+          gl_FragColor = vec4(c.rgb * uBoost, a);
+        }`
+    });
+    const geom = new THREE.PlaneGeometry(9.5, 9.5);
+    const mesh = new THREE.Mesh(geom, mat);
+    aeGroup.add(mesh);
+    aeGroup.position.set(6, 4.4, 4);
+    scene.add(aeGroup);
+  }
+
+  // ===== FLOATING ASTEROIDS =====
+  const rocks = [];
+  {
+    const positions = [[-2, 3.5, 6], [-4.5, 5.5, 3], [1.5, 6.5, 4], [10, 2, 3]];
+    for(let i=0;i<positions.length;i++){
+      const g = new THREE.DodecahedronGeometry(0.2 + Math.random()*0.25, 0);
+      const pos = g.attributes.position;
+      for(let j=0;j<pos.count;j++){
+        pos.setXYZ(j, pos.getX(j)*(0.8+Math.random()*.4), pos.getY(j)*(0.8+Math.random()*.4), pos.getZ(j)*(0.8+Math.random()*.4));
+      }
+      g.computeVertexNormals();
+      const m = new THREE.MeshStandardMaterial({color:0x1a0d06, roughness:.95, metalness:0.05, flatShading:true});
+      const r = new THREE.Mesh(g, m);
+      r.position.set(...positions[i]);
+      r.userData.spin = new THREE.Vector3(Math.random()*.01, Math.random()*.008, Math.random()*.005);
+      scene.add(r);
+      rocks.push(r);
+    }
+  }
+
+  // ===== POST =====
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+  const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.65, 0.7, 0.5);
+  composer.addPass(bloom);
+  composer.addPass(new OutputPass());
+
+  addEventListener('resize', ()=>{
+    camera.aspect = innerWidth/innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+    composer.setSize(innerWidth, innerHeight);
+  });
+
+  const clock = new THREE.Clock();
+  function loop(){
+    const t = clock.getElapsedTime();
+    planet.rotation.y = t * 0.02;
+    if(water.material.uniforms) water.material.uniforms.uTime.value = t;
+    rocks.forEach(r=>{r.rotation.x += r.userData.spin.x; r.rotation.y += r.userData.spin.y;});
+    requestAnimationFrame(loop);
+    composer.render();
+  }
+  loop();
+
+  setTimeout(()=>{info.textContent = 'iter 7';}, 800);
+} catch(e){
+  showErr('boot: '+e.message);
+}
+</script>
+</body>
+</html>
