@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Services | Aeternum Works</title>
+<meta name="description" content="Aeternum Works services — website design, web development, brand identity, UI/UX design and AI solutions. One focused team for the thinking, making and momentum behind your next chapter.">
+<meta name="author" content="Aeternum Works">
+<meta name="theme-color" content="#0a0508">
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="32x32" href="aeternum_solutions.png">
+<link rel="icon" type="image/png" sizes="16x16" href="aeternum_solutions.png">
+<link rel="shortcut icon" href="aeternum_solutions.png">
+<link rel="apple-touch-icon" sizes="180x180" href="aeternum_solutions.png">
+<!-- Open Graph / social sharing -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Services | Aeternum Works">
+<meta property="og:description" content="Website design, development, brand identity, UI/UX and AI solutions, crafted for businesses that refuse to blend in.">
+<meta property="og:image" content="aeternum_solutions.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Services | Aeternum Works">
+<meta name="twitter:description" content="Website design, development, brand identity, UI/UX and AI solutions, crafted for businesses that refuse to blend in.">
+<meta name="twitter:image" content="aeternum_solutions.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--black:oklch(5% .012 75);--deep:oklch(8% .015 75);--surface:oklch(12% .02 75);--surface2:oklch(16% .025 75);--line:oklch(27% .04 75);--softline:oklch(21% .03 75);--white:oklch(93% .018 75);--muted:oklch(68% .025 75);--dim:oklch(49% .025 75);--gold:oklch(79% .16 82);--gold2:oklch(68% .12 82);--gold3:oklch(43% .09 82);--rose:oklch(65% .18 16);--rose2:oklch(54% .14 16);--rose3:oklch(37% .10 16);--sapphire:oklch(68% .15 248);--sapphire2:oklch(57% .12 248);--sapphire3:oklch(38% .08 248);--amethyst:oklch(64% .18 312);--amethyst2:oklch(53% .14 312);--amethyst3:oklch(36% .09 312);--emerald:oklch(66% .18 158);--emerald2:oklch(55% .14 158);--emerald3:oklch(37% .10 158);--serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.56,.64,1);--snap:cubic-bezier(.22,.61,.36,1);--border-angle:0deg;--scroll-offset:0}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--black)}body{margin:0;color:var(--white);background:var(--black);font:16px/1.5 var(--sans);letter-spacing:.01em;-webkit-font-smoothing:antialiased;overflow-x:hidden}body.loading{overflow:hidden}body.menu-open{overflow:hidden}a{color:inherit;text-decoration:none}button{font:inherit;color:inherit}h1,h2,h3,p{margin:0;text-wrap:balance}button,a{outline:0}button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:4px}.wrap{width:min(1240px,calc(100% - 72px));margin:auto}.eyebrow{color:var(--gold);font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase}.serif{font-family:var(--serif)}
+@property --border-angle{syntax:'<angle>';initial-value:0deg;inherits:false}@keyframes borderSpin{to{--border-angle:360deg}}
+
+/* ===== LOADING SCREEN ===== */
+.loading-screen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:var(--black);overflow:hidden;transform-origin:50% 50%;transition:opacity .7s var(--ease),visibility .7s var(--ease),transform .7s var(--ease);will-change:opacity,transform}.loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none;transform:scale(1.55)}
+.ls-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,oklch(78% .16 82/.16),transparent 50%),radial-gradient(ellipse at 50% 62%,oklch(43% .09 82/.13),transparent 55%)}
+.ls-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}.ls-particle{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--gold);opacity:0;box-shadow:0 0 9px oklch(78% .16 82/.75);animation:lsFloat 5s ease-in-out infinite}.ls-particle:nth-child(1){left:12%;top:72%;animation-delay:0s}.ls-particle:nth-child(2){left:22%;top:22%;animation-delay:.7s}.ls-particle:nth-child(3){left:74%;top:78%;animation-delay:1.3s}.ls-particle:nth-child(4){left:82%;top:16%;animation-delay:2s}.ls-particle:nth-child(5){left:38%;top:86%;animation-delay:2.6s}.ls-particle:nth-child(6){left:56%;top:10%;animation-delay:3.2s}.ls-particle:nth-child(7){left:90%;top:48%;animation-delay:.4s}.ls-particle:nth-child(8){left:8%;top:42%;animation-delay:1.6s}@keyframes lsFloat{0%{opacity:0;transform:translateY(0) scale(1)}12%{opacity:.85}88%{opacity:.25}100%{opacity:0;transform:translateY(-130px) scale(.35)}}
+.ls-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:26px}
+.loader{width:44.8px;height:44.8px;color:var(--gold);position:relative;background:radial-gradient(11.2px,currentColor 94%,#0000);filter:drop-shadow(0 0 14px oklch(78% .16 82/.55))}
+.loader:before{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(10.08px at bottom right,#0000 94%,currentColor) top left,radial-gradient(10.08px at bottom left,#0000 94%,currentColor) top right,radial-gradient(10.08px at top right,#0000 94%,currentColor) bottom left,radial-gradient(10.08px at top left,#0000 94%,currentColor) bottom right;background-size:22.4px 22.4px;background-repeat:no-repeat;animation:loader 1.5s infinite cubic-bezier(0.3,1,0,1)}
+@keyframes loader{33%{inset:-11.2px;transform:rotate(0deg)}66%{inset:-11.2px;transform:rotate(90deg)}100%{inset:0;transform:rotate(90deg)}}
+.ls-brand{display:flex;flex-direction:column;align-items:center;gap:3px}.ls-brand-name{font:500 1.5rem/1 var(--serif);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);text-shadow:0 0 24px oklch(78% .16 82/.45)}.ls-brand-sub{font-size:.5rem;letter-spacing:.24em;color:var(--dim);text-transform:uppercase}
+.ls-bar{position:relative;display:flex;flex-direction:column;align-items:center;gap:0;width:220px}
+.ls-meter{position:relative;width:220px;height:6px;display:flex;align-items:center;justify-content:flex-start}
+.ls-meter::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:oklch(78% .16 82 / .12);transform:translateY(-50%)}
+.ls-meter-fill{position:absolute;left:0;top:50%;height:1px;width:0;background:linear-gradient(90deg,var(--gold3) 0%,var(--gold) 60%,oklch(96% .05 82) 100%);box-shadow:0 0 4px oklch(78% .16 82 / .55);transform:translateY(-50%);transition:width .3s cubic-bezier(.22,.61,.36,1);border-radius:1px}
+.ls-meter-fill::after{content:'';position:absolute;right:-1.5px;top:50%;width:4px;height:4px;transform:translateY(-50%);border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold),0 0 16px oklch(78% .16 82 / .75);animation:lsHeadPulse 1.4s ease-in-out infinite}
+@keyframes lsHeadPulse{0%,100%{opacity:1;transform:translateY(-50%) scale(1)}50%{opacity:.65;transform:translateY(-50%) scale(1.5)}}
+.ls-meter-row{display:flex;align-items:baseline;justify-content:space-between;width:220px;margin-top:22px;font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace}
+.ls-percent{font-size:1.5rem;font-weight:600;color:var(--white);font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1}
+.ls-percent-sub{margin-left:3px;font-size:.7rem;color:var(--gold);letter-spacing:.12em;font-weight:500}
+.ls-status{color:var(--gold);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;font-weight:500;opacity:.85}
+.ls-status::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-right:8px;vertical-align:middle;box-shadow:0 0 6px var(--gold);animation:lsPulseDot 1.2s ease-in-out infinite}
+@keyframes lsPulseDot{50%{opacity:.35;transform:scale(.8)}}
+
+/* ===== NAV ===== */
+.nav{position:fixed;z-index:20;inset:0 0 auto;padding:20px 0;transition:background .55s cubic-bezier(.4,0,.2,1),backdrop-filter .55s cubic-bezier(.4,0,.2,1),-webkit-backdrop-filter .55s cubic-bezier(.4,0,.2,1),box-shadow .5s ease,padding .4s var(--ease)}.nav.scrolled{background:oklch(5% .012 75/.82);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);box-shadow:0 1px 0 oklch(78% .16 82/.1),0 4px 30px oklch(0% 0 0/.4);padding:12px 0}.navrow{display:flex;align-items:center;justify-content:space-between;gap:28px;width:min(1240px,calc(100% - 72px));margin:0 auto 0 36px}.brand{display:inline-flex;align-items:center;gap:11px}.logo-mark{width:55px;height:55px;flex-shrink:0;filter:drop-shadow(0 0 12px oklch(78% .16 82/.45)) drop-shadow(0 0 28px oklch(78% .16 82/.25));transition:filter .4s ease,width .35s var(--ease),height .35s var(--ease)}.nav.scrolled .logo-mark{width:44px;height:44px}.logo-mark:hover{filter:drop-shadow(0 0 20px oklch(78% .16 82/.6)) drop-shadow(0 0 40px oklch(78% .16 82/.35))}.logo-img{width:100%;height:100%;display:block;object-fit:contain;border-radius:50%}.brandtext{display:grid;gap:1px}.brandname{font:500 1rem/1 var(--serif);letter-spacing:.17em;text-transform:uppercase;color:var(--gold)}.brandsub{font-size:.42rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}.links{display:flex;gap:41px;align-items:center}.links a{position:relative;font-size:.67rem;letter-spacing:.13em;text-transform:uppercase}.links a:after{content:'';position:absolute;left:50%;bottom:-9px;width:0;height:1px;background:var(--gold);transform:translateX(-50%);transition:width .35s var(--spring)}.links a:hover:after,.links a.active:after{width:100%}.links a.active{color:var(--gold)}.pill{min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:13px;padding:0 21px;border:1px solid var(--gold3);border-radius:999px;background:transparent;font-size:.67rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;transition:transform .25s var(--ease),background .2s,color .2s,border-color .2s,box-shadow .2s;cursor:pointer}.pill:hover{background:var(--gold);border-color:var(--gold);color:var(--black);box-shadow:0 0 30px oklch(78% .16 82/.3)}.pill.fill{background:var(--gold);border-color:var(--gold);color:var(--black)}.pill.fill:hover{background:oklch(86% .14 82)}.menu{display:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:oklch(8% .015 75/.7);color:var(--gold);font-size:1.1rem;cursor:pointer}
+
+/* ===== SECTION DIVIDER ===== */
+.section-divider{position:relative;height:48px;width:100%;display:flex;align-items:center;justify-content:center}.section-divider::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;transform:translateY(-50%);background:linear-gradient(90deg,transparent,var(--gold3) 15%,var(--gold) 50%,var(--gold3) 85%,transparent);background-size:220% 100%;animation:dividerSweep 5s ease-in-out infinite}.section-divider::after{content:'';position:absolute;top:50%;left:50%;width:13px;height:13px;transform:translate(-50%,-50%) rotate(45deg);border:1px solid var(--gold);background:var(--black);box-shadow:0 0 16px oklch(78% .16 82/.5),inset 0 0 6px oklch(78% .16 82/.35);animation:dividerGem 4s ease-in-out infinite}@keyframes dividerSweep{0%,100%{background-position:0% 0;opacity:.45}50%{background-position:100% 0;opacity:1}}@keyframes dividerGem{0%,100%{transform:translate(-50%,-50%) rotate(45deg) scale(1)}50%{transform:translate(-50%,-50%) rotate(45deg) scale(1.2);box-shadow:0 0 26px oklch(78% .16 82/.75),inset 0 0 10px oklch(78% .16 82/.55)}}
+
+/* ===== OVERLAYS / CURSOR ===== */
+.grain-overlay{position:fixed;inset:0;z-index:5;pointer-events:none;opacity:.04;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px;background-repeat:repeat}
+.color-grade{position:fixed;inset:0;pointer-events:none;z-index:4;mix-blend-mode:overlay;background:linear-gradient(180deg,oklch(90% .1 82 / .04) 0%,transparent 30%,transparent 70%,oklch(65% .12 30 / .06) 100%);opacity:.7}
+.cursor-glow{position:fixed;z-index:30;pointer-events:none;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,oklch(78% .16 82/.12),transparent 60%);transform:translate(-50%,-50%);mix-blend-mode:screen;opacity:0;transition:opacity .2s}.has-pointer .cursor-glow{opacity:1}
+.cursor-dot{position:fixed;left:0;top:0;width:8px;height:8px;border-radius:50%;background:var(--gold);z-index:31;pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .25s,height .25s,opacity .3s;opacity:0}.has-pointer .cursor-dot{opacity:1}.cursor-dot.on-interactive{width:22px;height:22px;background:transparent;border:1.5px solid var(--gold)}
+@media(hover:none){.cursor-dot,.cursor-glow{display:none}}
+
+/* ===== PAGE HEADER ===== */
+.svc-hero{position:relative;padding:190px 0 70px;overflow:hidden;isolation:isolate}
+.svc-hero-bg{position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse at 68% 30%,oklch(78% .16 82/.16),transparent 45%),radial-gradient(ellipse at 22% 78%,oklch(43% .09 82/.14),transparent 42%),var(--black)}
+.svc-hero-bg::after{content:'';position:absolute;inset:0;opacity:.5;background-image:radial-gradient(circle at 19% 24%,oklch(90% .04 82/.7) 0 1px,transparent 1.5px),radial-gradient(circle at 78% 22%,oklch(90% .04 82/.55) 0 1px,transparent 1.5px),radial-gradient(circle at 68% 44%,oklch(90% .04 82/.5) 0 1px,transparent 1.5px),radial-gradient(circle at 44% 31%,oklch(90% .04 82/.5) 0 1px,transparent 1.5px),radial-gradient(circle at 89% 63%,oklch(90% .04 82/.45) 0 1px,transparent 1.5px);background-size:221px 178px,307px 211px,173px 246px,251px 193px,330px 280px;animation:svcStars 30s linear infinite}
+@keyframes svcStars{to{background-position:221px 178px,-307px 211px,173px -246px,-251px 193px,330px -280px}}
+.svc-crumbs{display:flex;align-items:center;gap:10px;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:22px}
+.svc-crumbs a{color:var(--muted);transition:color .25s}.svc-crumbs a:hover{color:var(--gold)}.svc-crumbs span{color:var(--gold3)}
+.svc-title{font:500 clamp(2.9rem,6.4vw,5.6rem)/.95 var(--serif);letter-spacing:-.05em;max-width:16ch}
+.svc-title em{font-style:italic;color:transparent;background:linear-gradient(100deg,oklch(72% .14 82) 0%,oklch(94% .06 82) 45%,oklch(78% .16 82) 55%,oklch(60% .12 82) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:svcShimmer 5s ease-in-out infinite}
+@keyframes svcShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.svc-lead{max-width:56ch;margin-top:24px;color:var(--muted);font-size:1rem;line-height:1.7}
+.svc-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+.svc-chip{display:inline-flex;align-items:center;gap:9px;padding:11px 18px;border:1px solid var(--line);border-radius:999px;background:oklch(12% .02 75/.5);color:var(--muted);font-size:.68rem;font-weight:600;letter-spacing:.06em;transition:border-color .3s,color .3s,background .3s,transform .3s var(--spring)}
+.svc-chip i{font-style:normal;color:var(--gold);font-size:.85rem}
+.svc-chip:hover{border-color:var(--gold3);color:var(--white);transform:translateY(-2px)}
+.svc-chip .n{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--dim)}
+
+/* ===== SERVICE SECTIONS ===== */
+.svc{position:relative;padding:96px 0;isolation:isolate;scroll-margin-top:96px}
+.svc-bg{position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse at 40% 22%,color-mix(in oklab,var(--ac1) 20%,transparent),transparent 46%),radial-gradient(ellipse at 82% 78%,color-mix(in oklab,var(--ac3) 22%,transparent),transparent 44%),var(--black)}
+.svc .eyebrow{color:var(--ac1)}
+.svc-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start}
+.svc-num{font:500 6.5rem/.8 var(--serif);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px color-mix(in oklab,var(--ac1) 55%,transparent);display:block;margin-bottom:6px}
+.svc-icon-wrap{position:relative;width:66px;height:66px;display:grid;place-items:center;margin-bottom:20px}
+.svc-icon-ring{position:absolute;inset:0;border-radius:50%;border:1px solid var(--ac3);animation:iconRingPulse 2.6s ease-in-out infinite}
+.svc-icon-ring::after{content:'';position:absolute;inset:-7px;border-radius:50%;border:1px solid color-mix(in oklab,var(--ac1) 30%,transparent)}
+@keyframes iconRingPulse{0%,100%{transform:scale(1);opacity:.55}50%{transform:scale(1.14);opacity:1}}
+.svc-icon{font-size:1.5rem;color:var(--ac1);line-height:1}
+.svc h2{font:500 clamp(2.1rem,3.6vw,3.2rem)/1.02 var(--serif);letter-spacing:-.04em;margin-bottom:16px}
+.svc h2 em{font-style:normal;color:var(--ac1)}
+.svc-copy{color:var(--muted);font-size:.94rem;line-height:1.75;max-width:52ch}
+.svc-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.svc-cta{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border:1px solid var(--ac3);border-radius:999px;color:var(--ac1);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;transition:background .3s,color .3s,border-color .3s,box-shadow .3s,transform .3s}
+.svc-cta.primary{background:var(--ac1);border-color:var(--ac1);color:var(--black)}
+.svc-cta:hover{background:var(--ac1);border-color:var(--ac1);color:var(--black);transform:translateY(-2px);box-shadow:0 14px 34px color-mix(in oklab,var(--ac1) 28%,transparent)}
+.svc-cta.primary:hover{background:var(--ac2);border-color:var(--ac2)}
+.svc-meta{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:26px;padding-top:22px;border-top:1px solid var(--line);color:var(--dim);font-size:.68rem;letter-spacing:.04em}
+.svc-meta b{color:var(--ac1);font-weight:600}
+.svc-panel{position:relative;border-radius:20px;padding:34px 32px;background:linear-gradient(165deg,oklch(13% .025 75/.92),oklch(7% .015 75/.95));overflow:hidden}
+.svc-panel::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:conic-gradient(from var(--border-angle),transparent,var(--ac1) 50%,transparent);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:borderSpin 6s linear infinite;opacity:.4}
+.svc-panel h3{font:600 .72rem var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ac1);margin-bottom:20px}
+.svc-list{list-style:none;margin:0;padding:0;display:grid;gap:13px}
+.svc-list li{position:relative;padding-left:30px;color:var(--muted);font-size:.86rem;line-height:1.5;transition:color .25s}
+.svc-list li::before{content:'✦';position:absolute;left:0;top:0;color:var(--ac1);font-size:.72rem}
+.svc-list li:hover{color:var(--white)}
+.svc-panel-foot{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);font-size:.72rem;color:var(--dim);line-height:1.6}
+.svc-panel-foot b{color:var(--white);font-weight:600}
+
+/* ===== PROCESS ===== */
+.svc-process{padding:90px 0;position:relative}
+.svc-process .section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:44px}
+.svc-process .section-head>p:last-child{max-width:34ch;color:var(--muted);font-size:.88rem}
+.svc-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.svc-step{position:relative;padding:26px 18px;border:1px solid var(--line);border-radius:14px;background:oklch(12% .02 75/.45);transition:border-color .35s,transform .4s var(--spring),box-shadow .4s}
+.svc-step:hover{border-color:var(--gold3);transform:translateY(-6px);box-shadow:0 18px 44px oklch(0% 0 0/.35),0 0 30px oklch(78% .16 82/.08)}
+.svc-step b{display:block;font:500 1.5rem/1 var(--serif);color:var(--gold);margin-bottom:10px}
+.svc-step h4{font:600 1rem var(--serif);color:var(--gold2);margin:0 0 6px}
+.svc-step p{color:var(--muted);font-size:.74rem;line-height:1.5}
+
+/* ===== CTA ===== */
+.svc-cta-section{position:relative;overflow:hidden;padding:100px 0 110px;text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 50% 115%,oklch(66% .18 158/.16),transparent 55%),radial-gradient(ellipse at 18% 18%,oklch(37% .10 158/.14),transparent 45%),radial-gradient(ellipse at 82% 28%,oklch(55% .14 158/.1),transparent 42%),var(--deep)}
+.svc-cta-section .eyebrow{color:var(--emerald)}
+.svc-cta-section h2{font:500 clamp(2.6rem,5.6vw,5.4rem)/.94 var(--serif);letter-spacing:-.055em;background:linear-gradient(90deg,var(--white),var(--gold),var(--white));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:svcCtaShimmer 4s ease-in-out infinite}
+.svc-cta-section h2 em{font-style:normal;-webkit-text-fill-color:var(--gold)}
+.svc-cta-section p{margin:18px auto 28px;color:var(--muted);font-size:.92rem;max-width:44ch}
+.svc-cta-section .pill{border-color:var(--emerald3)}.svc-cta-section .pill.fill{background:var(--emerald);border-color:var(--emerald);color:var(--black)}
+.svc-cta-section .pill.fill:hover{background:var(--emerald2);border-color:var(--emerald2);box-shadow:0 0 30px oklch(66% .18 158/.35)}
+@keyframes svcCtaShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+/* ===== FOOTER ===== */
+footer{position:relative;padding:0;overflow:hidden}.footer-divider{height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold3),var(--gold),transparent);background-size:250% 100%;animation:dividerShift 5s linear infinite}@keyframes dividerShift{to{background-position:250% 0}}
+.footer-wordmark{position:absolute;left:0;right:0;bottom:-30px;text-align:center;font:600 clamp(6rem,18vw,20rem)/1 var(--serif);letter-spacing:-.03em;color:transparent;-webkit-text-stroke:1px oklch(78% .16 82 / .12);pointer-events:none;user-select:none;z-index:0;overflow:hidden}
+.footer-inner{padding:48px 0 28px;position:relative;z-index:1}.footergrid{display:grid;grid-template-columns:1.3fr repeat(3,1fr);gap:30px;padding-bottom:36px}.footerbrand p{max-width:25ch;margin-top:14px;color:var(--muted);font-size:.73rem}.footercol h3{margin-bottom:12px;color:var(--gold);font-size:.67rem;letter-spacing:.13em;text-transform:uppercase}.footercol a,.footercol address{display:block;margin-bottom:6px;color:var(--muted);font-size:.73rem;font-style:normal;width:fit-content}.footercol a:hover{color:var(--white)}.footbottom{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-top:20px;border-top:1px solid var(--line);color:var(--dim);font-size:.64rem}.socials{display:flex;gap:14px}.social-dot{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);color:var(--dim);font-size:.7rem;transition:all .3s var(--spring)}.social-dot:hover{background:radial-gradient(circle,var(--gold),var(--gold3));border-color:var(--gold);color:var(--black);transform:translateY(-3px)}.top-link{display:grid;place-items:center;width:34px;height:34px;border:1px solid var(--gold3);border-radius:50%;color:var(--gold);transition:all .3s var(--spring)}.top-link:hover{background:var(--gold);color:var(--black)}
+
+/* ===== WHATSAPP FLOAT ===== */
+.wa-float{position:fixed;right:24px;bottom:88px;z-index:60;display:grid;place-items:center;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold3));color:var(--black);box-shadow:0 6px 22px oklch(78% .16 82/.45);transition:transform .3s var(--spring)}.wa-float:hover{transform:translateY(-4px) scale(1.05)}.wa-float svg{width:33px;height:33px;display:block}
+
+/* ===== REVEAL ===== */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s var(--spring),transform .8s var(--spring)}.reveal.show{opacity:1;transform:none}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1080px){.links{gap:24px}.svc-grid{gap:38px}}
+@media(max-width:980px){.wrap{width:min(100% - 48px,760px)}.navrow{margin:0 auto;width:min(100% - 48px,760px)}.links{display:none}.menu{display:grid;place-items:center}.nav .pill{display:none}.svc-grid{grid-template-columns:1fr;gap:34px}.svc-steps{grid-template-columns:repeat(2,1fr)}.footergrid{grid-template-columns:1.4fr 1fr 1fr}}
+@media(max-width:680px){
+  .wrap{width:min(100% - 32px,520px)}.navrow{width:calc(100% - 32px);margin:0 auto}
+  .nav .brandtext{display:grid}.menu{display:grid;place-items:center}
+  .links{position:fixed;inset:0;z-index:5;display:none;flex-direction:column;align-items:flex-start;justify-content:center;gap:24px;padding:32px;background:var(--black)}
+  body.menu-open .links{display:flex}body.menu-open .menu{position:fixed;z-index:6;top:14px;right:16px}
+  .links a{font:500 2.3rem var(--serif);letter-spacing:-.03em;text-transform:none}
+  .svc-hero{padding:150px 0 46px;text-align:center}.svc-crumbs{justify-content:center}.svc-title{max-width:none}.svc-lead{margin-left:auto;margin-right:auto}.svc-chips{justify-content:center}
+  .svc{padding:64px 0}.svc-num{font-size:4.4rem}.svc-panel{padding:26px 22px}.svc-steps{grid-template-columns:1fr}.svc-process .section-head{display:block}
+  .svc-cta-section{padding:80px 0 90px}
+  .footergrid{grid-template-columns:1fr;gap:26px}.footbottom{flex-direction:column;align-items:flex-start}
+  .wa-float{right:16px;bottom:18px;width:50px;height:50px}.wa-float svg{width:26px;height:26px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:1ms!important;transition-duration:1ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body class="loading">
+
+<div class="grain-overlay" aria-hidden="true"></div>
+<div class="color-grade" aria-hidden="true"></div>
+<div class="cursor-glow" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
+<!-- ===== LOADING SCREEN ===== -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="ls-glow" aria-hidden="true"></div>
+  <div class="ls-particles" aria-hidden="true">
+    <span class="ls-particle"></span><span class="ls-particle"></span><span class="ls-particle"></span>
+    <span class="ls-particle"></span><span class="ls-particle"></span><span class="ls-particle"></span>
+    <span class="ls-particle"></span><span class="ls-particle"></span>
+  </div>
+  <div class="ls-inner">
+    <div class="loader" aria-hidden="true"></div>
+    <div class="ls-brand">
+      <span class="ls-brand-name">Aeternum</span>
+      <span class="ls-brand-sub">Design Beyond Ordinary</span>
+    </div>
+    <div class="ls-bar">
+      <div class="ls-meter" aria-hidden="true"><div class="ls-meter-fill" id="lsFill"></div></div>
+      <div class="ls-meter-row">
+        <span><b class="ls-percent" id="lsPercent">000</b><span class="ls-percent-sub">%</span></span>
+        <span class="ls-status" id="lsStatus">INITIALIZING</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NAVIGATION ===== -->
+<header class="nav" id="navbar">
+  <div class="wrap navrow">
+    <a class="brand" href="index.html" aria-label="Aeternum Works home">
+      <div class="logo-mark" aria-hidden="true">
+        <img src="aeternum_solutions.png" alt="Aeternum Works logo" class="logo-img">
+      </div>
+      <span class="brandtext">
+        <span class="brandname">Aeternum</span>
+        <span class="brandsub">Design Beyond Ordinary</span>
+      </span>
+    </a>
+    <nav class="links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="index.html#work">Work</a>
+      <a class="active" href="services.html">Services</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#plans">Plans</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="recruitment.html">Careers</a>
+    </nav>
+    <a class="pill magnetic-cta" href="index.html#contact">Let's connect <span>↗</span></a>
+    <button class="menu" aria-label="Open navigation" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ===== PAGE HEADER ===== -->
+<section class="svc-hero">
+  <div class="svc-hero-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="svc-crumbs"><a href="index.html">Home</a><span>/</span><span>Services</span></div>
+    <h1 class="svc-title reveal">Services built to make you <em>unmistakable</em></h1>
+    <p class="svc-lead reveal">One focused team for the thinking, making and momentum behind your next chapter. Strategy, design, code and intelligence under one roof — so nothing gets lost between the idea and the launch.</p>
+    <div class="svc-chips reveal">
+      <a class="svc-chip" href="#website-design"><i>▣</i> Website Design <span class="n">01</span></a>
+      <a class="svc-chip" href="#web-development"><i>&lt;/&gt;</i> Web Development <span class="n">02</span></a>
+      <a class="svc-chip" href="#brand-identity"><i>⌁</i> Brand Identity <span class="n">03</span></a>
+      <a class="svc-chip" href="#ui-ux-design"><i>⊞</i> UI / UX Design <span class="n">04</span></a>
+      <a class="svc-chip" href="#ai-solutions"><i>◉</i> AI Solutions <span class="n">05</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ===== 01 WEBSITE DESIGN ===== -->
+<section class="svc" id="website-design" style="--ac1:var(--gold);--ac2:var(--gold2);--ac3:var(--gold3)">
+  <div class="svc-bg" aria-hidden="true"></div>
+  <div class="wrap svc-grid">
+    <div class="svc-main reveal">
+      <span class="svc-num" aria-hidden="true">01</span>
+      <div class="svc-icon-wrap"><span class="svc-icon-ring"></span><span class="svc-icon">▣</span></div>
+      <h2>Website <em>Design</em></h2>
+      <p class="svc-copy">Your website is the first handshake. We design sites that look expensive, load instantly and turn quiet visitors into real enquiries. No templates, no stock layouts — every page is composed around your story and your goals.</p>
+      <div class="svc-actions">
+        <a class="svc-cta primary" href="index.html#contact">Start a project <span>↗</span></a>
+        <a class="svc-cta" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20website%20design." target="_blank" rel="noopener">Ask a question</a>
+      </div>
+      <div class="svc-meta"><span>Timeline <b>7–14 days</b></span><span>Revisions <b>Included</b></span><span>Best for <b>Brands that need to impress</b></span></div>
+    </div>
+    <div class="svc-panel reveal">
+      <h3>What's included</h3>
+      <ul class="svc-list">
+        <li>Strategy-led sitemap and wireframes</li>
+        <li>Custom visual design with zero templates</li>
+        <li>Responsive layouts across every breakpoint</li>
+        <li>Copy direction and content structure</li>
+        <li>SEO-ready markup and page structure</li>
+        <li>Motion, hover and micro-interactions</li>
+      </ul>
+      <div class="svc-panel-foot">You get a <b>design you own</b>, a launch-ready page set and a walkthrough of every decision so you can keep building on it.</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ===== 02 WEB DEVELOPMENT ===== -->
+<section class="svc" id="web-development" style="--ac1:var(--rose);--ac2:var(--rose2);--ac3:var(--rose3)">
+  <div class="svc-bg" aria-hidden="true"></div>
+  <div class="wrap svc-grid">
+    <div class="svc-main reveal">
+      <span class="svc-num" aria-hidden="true">02</span>
+      <div class="svc-icon-wrap"><span class="svc-icon-ring"></span><span class="svc-icon">&lt;/&gt;</span></div>
+      <h2>Web <em>Development</em></h2>
+      <p class="svc-copy">Beautiful is not enough if it falls over under real traffic. We build hand-coded, high-performance front-ends and solid backends that stay fast, secure and easy to extend long after launch day.</p>
+      <div class="svc-actions">
+        <a class="svc-cta primary" href="index.html#contact">Start a project <span>↗</span></a>
+        <a class="svc-cta" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20web%20development." target="_blank" rel="noopener">Ask a question</a>
+      </div>
+      <div class="svc-meta"><span>Timeline <b>10–21 days</b></span><span>Performance <b>Core Web Vitals tuned</b></span><span>Best for <b>Scaling businesses</b></span></div>
+    </div>
+    <div class="svc-panel reveal">
+      <h3>What's included</h3>
+      <ul class="svc-list">
+        <li>Hand-coded, pixel-accurate front-ends</li>
+        <li>CMS or headless setup you can actually edit</li>
+        <li>E-commerce, bookings and payments</li>
+        <li>Performance tuning for fast load times</li>
+        <li>SSL, security and data best practices</li>
+        <li>Analytics, tracking and integrations</li>
+      </ul>
+      <div class="svc-panel-foot">Built to be <b>maintained</b>, not rebuilt — clean code, documented handoff and room to grow.</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ===== 03 BRAND IDENTITY ===== -->
+<section class="svc" id="brand-identity" style="--ac1:var(--sapphire);--ac2:var(--sapphire2);--ac3:var(--sapphire3)">
+  <div class="svc-bg" aria-hidden="true"></div>
+  <div class="wrap svc-grid">
+    <div class="svc-main reveal">
+      <span class="svc-num" aria-hidden="true">03</span>
+      <div class="svc-icon-wrap"><span class="svc-icon-ring"></span><span class="svc-icon">⌁</span></div>
+      <h2>Brand <em>Identity</em></h2>
+      <p class="svc-copy">A brand is a feeling before it is a logo. We build identity systems — marks, colour, type and voice — that make you recognisable at a glance and impossible to confuse with anyone else.</p>
+      <div class="svc-actions">
+        <a class="svc-cta primary" href="index.html#contact">Start a project <span>↗</span></a>
+        <a class="svc-cta" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20brand%20identity." target="_blank" rel="noopener">Ask a question</a>
+      </div>
+      <div class="svc-meta"><span>Timeline <b>1–2 weeks</b></span><span>Deliverables <b>Full asset kit</b></span><span>Best for <b>New and rebranding ventures</b></span></div>
+    </div>
+    <div class="svc-panel reveal">
+      <h3>What's included</h3>
+      <ul class="svc-list">
+        <li>Logo design with all format variants</li>
+        <li>Colour palette and typography system</li>
+        <li>Brand guidelines document</li>
+        <li>Social, stationery and print kits</li>
+        <li>Tagline and tone of voice</li>
+        <li>Organised asset library handover</li>
+      </ul>
+      <div class="svc-panel-foot">Everything is delivered in <b>ready-to-use formats</b> for web, print and social, with guidance on how to apply it.</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ===== 04 UI / UX DESIGN ===== -->
+<section class="svc" id="ui-ux-design" style="--ac1:var(--amethyst);--ac2:var(--amethyst2);--ac3:var(--amethyst3)">
+  <div class="svc-bg" aria-hidden="true"></div>
+  <div class="wrap svc-grid">
+    <div class="svc-main reveal">
+      <span class="svc-num" aria-hidden="true">04</span>
+      <div class="svc-icon-wrap"><span class="svc-icon-ring"></span><span class="svc-icon">⊞</span></div>
+      <h2>UI / UX <em>Design</em></h2>
+      <p class="svc-copy">Interfaces should feel obvious. We map the journey, remove the friction and design screens people move through without thinking — then hand your developers a system, not a set of loose pictures.</p>
+      <div class="svc-actions">
+        <a class="svc-cta primary" href="index.html#contact">Start a project <span>↗</span></a>
+        <a class="svc-cta" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20UI%2FUX%20design." target="_blank" rel="noopener">Ask a question</a>
+      </div>
+      <div class="svc-meta"><span>Timeline <b>2–4 weeks</b></span><span>Output <b>Prototype + system</b></span><span>Best for <b>Apps and platforms</b></span></div>
+    </div>
+    <div class="svc-panel reveal">
+      <h3>What's included</h3>
+      <ul class="svc-list">
+        <li>User flows and journey mapping</li>
+        <li>Wireframes and clickable prototypes</li>
+        <li>Interface design system and components</li>
+        <li>Interaction and motion specifications</li>
+        <li>Usability review and testing</li>
+        <li>Developer-ready handoff</li>
+      </ul>
+      <div class="svc-panel-foot">You get a <b>reusable design system</b>, so every future screen stays consistent and fast to build.</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ===== 05 AI SOLUTIONS ===== -->
+<section class="svc" id="ai-solutions" style="--ac1:var(--emerald);--ac2:var(--emerald2);--ac3:var(--emerald3)">
+  <div class="svc-bg" aria-hidden="true"></div>
+  <div class="wrap svc-grid">
+    <div class="svc-main reveal">
+      <span class="svc-num" aria-hidden="true">05</span>
+      <div class="svc-icon-wrap"><span class="svc-icon-ring"></span><span class="svc-icon">◉</span></div>
+      <h2>AI <em>Solutions</em></h2>
+      <p class="svc-copy">Put AI to work on the repetitive parts. We build practical automation and intelligent features that save hours, answer customers instantly and turn your scattered data into decisions you can act on.</p>
+      <div class="svc-actions">
+        <a class="svc-cta primary" href="index.html#contact">Start a project <span>↗</span></a>
+        <a class="svc-cta" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20AI%20solutions." target="_blank" rel="noopener">Ask a question</a>
+      </div>
+      <div class="svc-meta"><span>Timeline <b>Scoped per build</b></span><span>Support <b>Ongoing available</b></span><span>Best for <b>Teams drowning in manual work</b></span></div>
+    </div>
+    <div class="svc-panel reveal">
+      <h3>What's included</h3>
+      <ul class="svc-list">
+        <li>AI chat and customer assistants</li>
+        <li>Workflow and task automation</li>
+        <li>Content and data pipelines</li>
+        <li>Custom model and API integration</li>
+        <li>Analytics and reporting dashboards</li>
+        <li>Ongoing tuning and support</li>
+      </ul>
+      <div class="svc-panel-foot">We start with a <b>small, useful win</b>, prove the value, then scale what works.</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ===== PROCESS ===== -->
+<section class="svc-process">
+  <div class="wrap">
+    <div class="section-head"><div><p class="eyebrow">How we work</p><h2 class="serif" style="font:500 clamp(2rem,4vw,3.2rem)/1 var(--serif);letter-spacing:-.04em;margin-top:12px">From first call to launch</h2></div><p>A clear path with no black boxes — you always know where the project stands and what happens next.</p></div>
+    <div class="svc-steps">
+      <div class="svc-step reveal"><b>01</b><h4>Discover</h4><p>We learn your goals, audience and what success actually looks like.</p></div>
+      <div class="svc-step reveal"><b>02</b><h4>Strategy</h4><p>Structure, positioning and the plan that gets you there.</p></div>
+      <div class="svc-step reveal"><b>03</b><h4>Design</h4><p>Craft the look, feel and flow — reviewed with you at every step.</p></div>
+      <div class="svc-step reveal"><b>04</b><h4>Build</h4><p>Pixel-accurate development, tuned for speed and reliability.</p></div>
+      <div class="svc-step reveal"><b>05</b><h4>Launch</h4><p>Go live, then refine with real data and feedback.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="svc-cta-section" id="contact">
+  <div class="wrap">
+    <p class="eyebrow">The next chapter starts here</p>
+    <h2>Ready to build something<br><em>extraordinary?</em></h2>
+    <p>Tell us which service you need — or the problem you're trying to solve — and we'll map the right path.</p>
+    <br>
+    <a class="pill fill magnetic-cta" href="mailto:sohith132@gmail.com">Let's create together <span>↗</span></a>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== WHATSAPP FLOAT ===== -->
+<a class="wa-float" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20your%20services." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#0d0b07" d="M16.04 4C9.72 4 4.6 9.12 4.6 15.44c0 2.02.53 3.99 1.54 5.73L4.5 27.5l6.48-1.6a11.4 11.4 0 0 0 5.06 1.2h.01c6.31 0 11.44-5.12 11.44-11.44S22.35 4 16.04 4Zm0 20.92h-.01a9.5 9.5 0 0 1-4.84-1.33l-.35-.21-3.84.95 1.02-3.75-.23-.36a9.48 9.48 0 0 1-1.45-5.06c0-5.26 4.28-9.54 9.55-9.54s9.54 4.28 9.54 9.54-4.28 9.54-9.54 9.54Zm5.24-7.15c-.29-.14-1.7-.84-1.96-.93-.26-.1-.45-.14-.64.14-.19.29-.74.93-.9 1.12-.17.19-.33.21-.62.07-.29-.14-1.21-.45-2.31-1.43-.85-.76-1.43-1.7-1.6-1.99-.17-.29-.02-.45.13-.59.13-.13.29-.34.43-.51.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.14-.64-1.54-.88-2.11-.23-.56-.47-.48-.64-.49h-.55c-.19 0-.5.07-.76.36-.26.29-1 .98-1 2.38 0 1.4 1.02 2.76 1.16 2.95.14.19 2.01 3.06 4.86 4.29.68.29 1.21.47 1.62.6.68.22 1.3.19 1.79.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33Z"/></svg>
+</a>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-divider"></div>
+  <div class="footer-wordmark" aria-hidden="true">AETERNUM</div>
+  <div class="footer-inner wrap">
+    <div class="footergrid">
+      <div class="footerbrand">
+        <a class="brand" href="index.html">
+          <div class="logo-mark" aria-hidden="true"><img src="aeternum_solutions.png" alt="Aeternum Works logo" class="logo-img"></div>
+          <span class="brandtext"><span class="brandname">Aeternum</span><span class="brandsub">Design Beyond Ordinary</span></span>
+        </a>
+        <p>We craft luxury digital experiences, brands and solutions that drive impact and leave a legacy.</p>
+      </div>
+      <div class="footercol"><h3>Quick links</h3><a href="index.html">Home</a><a href="index.html#work">Work</a><a href="services.html">Services</a><a href="index.html#about">About</a><a href="index.html#plans">Plans</a><a href="index.html#contact">Contact</a></div>
+      <div class="footercol"><h3>Services</h3><a href="services.html#website-design">Website Design</a><a href="services.html#web-development">Web Development</a><a href="services.html#brand-identity">Brand Identity</a><a href="services.html#ui-ux-design">UI / UX Design</a><a href="services.html#ai-solutions">AI Solutions</a></div>
+      <div class="footercol"><h3>Contact</h3><a href="mailto:sohith132@gmail.com">sohith132@gmail.com</a><a href="tel:+919640248157">+91 96402 48157</a><address>India</address></div>
+    </div>
+    <div class="footbottom"><span>© 2026 Aeternum Works. All rights reserved.</span><div class="socials"><a class="social-dot" href="index.html#contact">◎</a><a class="social-dot" href="index.html#contact">in</a><a class="social-dot" href="index.html#contact">◉</a><a class="social-dot" href="index.html#contact">𝕏</a></div><a class="top-link" href="#top" aria-label="Back to top">↑</a></div>
+    <div style="margin-top:14px;font-size:.6rem;color:oklch(49% .025 75/.55);letter-spacing:.05em"><a href="hackathon.html" style="color:inherit;text-decoration:none">Hackathon</a> <span style="margin:0 8px;opacity:.5">·</span> <a href="admin.html" style="color:inherit;text-decoration:none">Admin</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+var doc=document,body=doc.body;
+
+// ===== LOADING SCREEN =====
+var loadingScreen=doc.getElementById('loadingScreen');
+var lsPercent=doc.getElementById('lsPercent');
+var lsStatus=doc.getElementById('lsStatus');
+var lsFill=doc.getElementById('lsFill');
+var dismissed=false,progress=0;
+var pad=function(n){return n<10?'00'+n:n<100?'0'+n:'100'};
+var statusSteps=[[0,'INITIALIZING'],[20,'MAPPING SERVICES'],[45,'RENDERING'],[70,'CALIBRATING'],[90,'FINALIZING'],[100,'READY']];
+function setProgress(p){
+  progress=p;
+  if(lsPercent) lsPercent.textContent=pad(p);
+  if(lsFill) lsFill.style.width=p+'%';
+  if(lsStatus){for(var s=statusSteps.length-1;s>=0;s--){if(p>=statusSteps[s][0]){lsStatus.textContent=statusSteps[s][1];break}}}
+}
+function dismissLoader(){
+  if(dismissed) return; dismissed=true;
+  setProgress(100);
+  if(!loadingScreen){body.classList.remove('loading');body.classList.add('loaded');return}
+  setTimeout(function(){
+    loadingScreen.classList.add('hidden');
+    body.classList.remove('loading');body.classList.add('loaded');
+    setTimeout(function(){loadingScreen.style.display='none'},800);
+  },420);
+}
+var t0=Date.now();
+function tick(){
+  var elapsed=Date.now()-t0;
+  var p=Math.min(96,Math.round((elapsed/1300)*100));
+  setProgress(p);
+  if(p<96){requestAnimationFrame(tick)}
+}
+requestAnimationFrame(tick);
+if(doc.readyState==='complete'){setTimeout(dismissLoader,300)}
+else{window.addEventListener('load',function(){setTimeout(dismissLoader,300)});setTimeout(dismissLoader,2600)}
+
+// ===== NAV SCROLL =====
+var nav=doc.getElementById('navbar');
+function onScroll(){if(nav) nav.classList.toggle('scrolled',window.scrollY>40)}
+onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+// ===== MOBILE MENU =====
+var menuBtn=doc.querySelector('.menu');
+if(menuBtn){menuBtn.addEventListener('click',function(){
+  var open=body.classList.toggle('menu-open');
+  menuBtn.setAttribute('aria-expanded',open?'true':'false');
+  menuBtn.textContent=open?'✕':'☰';
+  menuBtn.setAttribute('aria-label',open?'Close navigation':'Open navigation');
+})}
+doc.querySelectorAll('.links a').forEach(function(a){a.addEventListener('click',function(){body.classList.remove('menu-open');if(menuBtn){menuBtn.textContent='☰';menuBtn.setAttribute('aria-expanded','false')}})});
+
+// ===== REVEAL ON SCROLL =====
+var revealEls=doc.querySelectorAll('.reveal');
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}});
+  },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+  revealEls.forEach(function(el,i){el.style.transitionDelay=(i%3)*70+'ms';io.observe(el)});
+}else{revealEls.forEach(function(el){el.classList.add('show')})}
+
+// ===== CURSOR GLOW + DOT =====
+var glow=doc.querySelector('.cursor-glow'),dot=doc.querySelector('.cursor-dot');
+if(window.matchMedia('(hover:hover)').matches && (glow||dot)){
+  body.classList.add('has-pointer');
+  var gx=0,gy=0,dx=0,dy=0,cx=window.innerWidth/2,cy=window.innerHeight/2;
+  window.addEventListener('mousemove',function(e){
+    gx=e.clientX;gy=e.clientY;
+    if(dot){dot.style.left=gx+'px';dot.style.top=gy+'px'}
+    var inter=e.target.closest&&e.target.closest('a,button');
+    if(dot) dot.classList.toggle('on-interactive',!!inter);
+  });
+  (function loop(){
+    cx+=(gx-cx)*.12;cy+=(gy-cy)*.12;
+    if(glow){glow.style.left=cx+'px';glow.style.top=cy+'px'}
+    requestAnimationFrame(loop);
+  })();
+}
+})();
+</script>
+</body>
+</html>
