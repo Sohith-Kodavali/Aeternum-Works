@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Client Space — Aeternum</title>
+<link rel="icon" type="image/png" href="aeternum_solutions.png">
+<link rel="apple-touch-icon" href="aeternum_solutions.png">
+<meta name="theme-color" content="#0a0508">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:oklch(5% .012 75);--deep:oklch(8% .015 75);--surface:oklch(12% .02 75);--surface2:oklch(16% .025 75);
+  --line:oklch(27% .04 75);--softline:oklch(21% .03 75);--white:oklch(93% .018 75);--muted:oklch(68% .025 75);--dim:oklch(49% .025 75);
+  --gold:oklch(79% .16 82);--gold2:oklch(68% .12 82);--gold3:oklch(43% .09 82);
+  --sapphire:oklch(68% .15 248);--sapphire2:oklch(57% .12 248);
+  --amethyst:oklch(64% .18 312);--amethyst2:oklch(53% .14 312);
+  --emerald:oklch(66% .18 158);--emerald2:oklch(55% .14 158);
+  --rose:oklch(65% .18 16);
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--mono:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:16px/1.5 var(--sans);letter-spacing:.01em;color:var(--white);background:var(--black);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+input{font:inherit}
+img{display:block;max-width:100%}
+::selection{background:oklch(78% .16 82/.3)}
+
+/* ===== BACKDROP ===== */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}
+.bg-glow.g1{width:60vw;height:60vw;top:-22vw;right:-14vw;background:radial-gradient(circle,oklch(47% .12 78/.28),transparent 62%)}
+.bg-glow.g2{width:52vw;height:52vw;bottom:-24vw;left:-16vw;background:radial-gradient(circle,oklch(36% .08 77/.24),transparent 62%)}
+.bg-grain{position:absolute;inset:0;opacity:.04;mix-blend-mode:overlay}
+.bg-grain svg{width:100%;height:100%}
+
+/* ===== VIEWS ===== */
+.view{position:relative;z-index:1;min-height:100vh;display:none;flex-direction:column;animation:viewIn .55s var(--ease) both}
+.view.active{display:flex}
+@keyframes viewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.view.gate-view{align-items:center;justify-content:center;padding:28px}
+
+/* ===== BRAND ===== */
+.brand{display:inline-flex;align-items:center;gap:12px}
+.brand .mark{width:46px;height:46px;border-radius:50%;flex-shrink:0;filter:drop-shadow(0 0 12px oklch(78% .16 82/.4))}
+.brand .bt{display:grid;gap:2px;text-align:left}
+.brand .bn{font:500 .95rem/1 var(--serif);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.brand .bs{font:500 .44rem/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+
+/* ===== TOPBAR ===== */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;width:min(1120px,calc(100% - 48px));margin:0 auto;padding:24px 0 22px;border-bottom:1px solid var(--softline)}
+.topbar .back{display:inline-flex;align-items:center;gap:8px;font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .25s,transform .25s;padding:8px 14px;border:1px solid var(--softline);border-radius:999px}
+.topbar .back:hover{color:var(--gold);border-color:var(--gold3);transform:translateX(-3px)}
+.topbar .signout{font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:9px 16px;border:1px solid var(--softline);border-radius:999px;transition:all .25s}
+.topbar .signout:hover{color:var(--rose);border-color:oklch(45% .1 16)}
+
+/* ===== GATE CARD ===== */
+.gate-card{position:relative;width:min(440px,100%);padding:52px 42px 46px;text-align:center;border:1px solid var(--softline);border-radius:26px;background:linear-gradient(180deg,oklch(11% .018 75/.9),oklch(7% .014 75/.92));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 40px 90px oklch(0% 0 0/.55),inset 0 1px 0 oklch(100% 0 0/.04);overflow:hidden}
+.gate-card::before{content:'';position:absolute;inset:-1px;border-radius:27px;padding:1px;background:linear-gradient(140deg,oklch(78% .16 82/.5),transparent 40%,transparent 60%,oklch(78% .16 82/.22));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.gate-brand{margin-bottom:30px}
+.gate-brand .brand{flex-direction:column;gap:14px}
+.gate-brand .brand .bt{text-align:center}
+.lock-ring{position:relative;width:78px;height:78px;margin:0 auto 22px;display:grid;place-items:center}
+.lock-ring svg.ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.lock-ring .ring-bg{fill:none;stroke:oklch(27% .04 75);stroke-width:2}
+.lock-ring .ring-fg{fill:none;stroke:var(--gold);stroke-width:2;stroke-linecap:round;stroke-dasharray:214;stroke-dashoffset:214;filter:drop-shadow(0 0 5px oklch(78% .16 82/.6))}
+.lock-ring.unlocking .ring-fg{animation:ringFill 1s var(--ease) forwards}
+@keyframes ringFill{to{stroke-dashoffset:42}}
+.lock-ring .glyph{position:relative;z-index:1;font-size:1.5rem;color:var(--gold);text-shadow:0 0 18px oklch(78% .16 82/.6)}
+.gate-card h1{font:600 1.75rem/1.15 var(--serif);letter-spacing:-.01em;margin-bottom:8px}
+.gate-card .sub{font-size:.74rem;letter-spacing:.04em;color:var(--muted);margin-bottom:28px;line-height:1.6}
+.field{position:relative}
+.field input{width:100%;padding:16px 20px;font:.95rem var(--mono);letter-spacing:.28em;text-align:center;color:var(--white);background:oklch(8% .014 75);border:1.5px solid var(--softline);border-radius:14px;outline:0;transition:all .28s}
+.field input::placeholder{color:var(--dim);letter-spacing:.28em}
+.field input:focus{border-color:var(--gold3);background:oklch(10% .016 75);box-shadow:0 0 0 4px oklch(78% .16 82/.08)}
+.field input.error{border-color:var(--rose);box-shadow:0 0 0 4px oklch(65% .18 16/.12);animation:shake .45s ease-in-out}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+.gate-btn{width:100%;margin-top:18px;padding:16px;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--black);background:linear-gradient(135deg,oklch(90% .1 84),var(--gold),var(--gold2));background-size:200% 100%;transition:transform .3s var(--spring),box-shadow .3s,background-position .5s}
+.gate-btn:hover{transform:translateY(-2px);box-shadow:0 16px 34px oklch(78% .16 82/.28);background-position:100% 0}
+.gate-err{font-size:.68rem;letter-spacing:.08em;color:var(--rose);margin-top:16px;min-height:14px;opacity:0;transition:opacity .3s}
+.gate-err.show{opacity:1}
+.gate-note{margin-top:26px;font:.52rem var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gold3);opacity:.7}
+
+/* ===== HUB ===== */
+.hub{flex:1;width:min(1120px,calc(100% - 48px));margin:0 auto;padding:52px 0 80px}
+.hub-head{max-width:560px;margin-bottom:44px}
+.eyebrow{font:.64rem var(--mono);font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.hub-head h1{font:600 clamp(2.2rem,5vw,3.2rem)/1.05 var(--serif);letter-spacing:-.02em;margin-bottom:14px}
+.hub-head p{font-size:.86rem;color:var(--muted);line-height:1.7}
+.client-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px}
+.client-card{position:relative;display:flex;flex-direction:column;gap:20px;padding:30px 28px 26px;border:1px solid var(--softline);border-radius:22px;background:linear-gradient(180deg,oklch(11% .018 75/.85),oklch(7.5% .014 75/.9));overflow:hidden;transition:transform .4s var(--spring),border-color .3s,box-shadow .4s;cursor:pointer;text-align:left}
+.client-card::after{content:'';position:absolute;top:-45%;right:-25%;width:60%;height:110%;border-radius:50%;filter:blur(60px);opacity:.16;pointer-events:none;transition:opacity .4s}
+.client-card:hover{transform:translateY(-6px);border-color:oklch(40% .05 75);box-shadow:0 30px 60px oklch(0% 0 0/.5)}
+.client-card:hover::after{opacity:.32}
+.client-card.accent-sapphire::after{background:radial-gradient(circle,var(--sapphire),transparent 65%)}
+.client-card.accent-emerald::after{background:radial-gradient(circle,var(--emerald),transparent 65%)}
+.client-card .cc-top{display:flex;align-items:center;justify-content:space-between;gap:14px;position:relative;z-index:1}
+.client-monogram{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font:600 1.55rem/1 var(--serif);letter-spacing:.02em;color:var(--white);border:1px solid var(--softline);background:oklch(9% .016 75)}
+.accent-sapphire .client-monogram,.client-monogram.accent-sapphire{color:var(--sapphire);border-color:oklch(45% .1 248/.6);box-shadow:inset 0 0 22px oklch(68% .15 248/.12)}
+.accent-emerald .client-monogram,.client-monogram.accent-emerald{color:var(--emerald);border-color:oklch(45% .1 158/.6);box-shadow:inset 0 0 22px oklch(66% .18 158/.12)}
+.cc-status{display:inline-flex;align-items:center;gap:7px;font:.55rem var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:6px 12px;border:1px solid var(--softline);border-radius:999px}
+.cc-status .dot{width:6px;height:6px;border-radius:50%;background:var(--emerald);box-shadow:0 0 8px var(--emerald);animation:pulseDot 2s ease-in-out infinite}
+@keyframes pulseDot{50%{opacity:.35;transform:scale(.75)}}
+.client-card .cc-body{position:relative;z-index:1}
+.client-card h2{font:600 1.7rem/1.1 var(--serif);letter-spacing:-.01em;margin-bottom:6px}
+.client-card .cc-tag{font-size:.72rem;color:var(--dim);letter-spacing:.02em}
+.client-card .cc-open{position:relative;z-index:1;display:inline-flex;align-items:center;gap:9px;margin-top:4px;font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);transition:gap .3s}
+.client-card:hover .cc-open{gap:15px}
+.hub-foot{margin-top:56px;padding-top:24px;border-top:1px solid var(--softline);font:.54rem var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gold3);opacity:.7}
+
+/* ===== WORKSPACE ===== */
+.ws{flex:1;width:min(1120px,calc(100% - 48px));margin:0 auto;padding:46px 0 80px}
+.ws-head{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-bottom:34px}
+.ws-head .client-monogram{width:72px;height:72px;border-radius:20px;font-size:2rem}
+.ws-head .meta h1{font:600 clamp(1.9rem,4vw,2.8rem)/1.05 var(--serif);letter-spacing:-.02em}
+.ws-head .meta .cc-tag{font-size:.72rem;color:var(--dim);margin-top:5px}
+.ws-head .cc-status{margin-left:auto}
+.panel{border:1px solid var(--softline);border-radius:22px;background:linear-gradient(180deg,oklch(10.5% .017 75/.8),oklch(7% .013 75/.85));overflow:hidden}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:20px 26px;border-bottom:1px solid var(--softline)}
+.panel-head h3{font:600 1.05rem var(--sans);letter-spacing:.01em}
+.panel-head .tag{font:.52rem var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--gold3)}
+.panel-body{min-height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 30px;gap:14px}
+.panel-body .ph-icon{font-size:1.6rem;color:var(--gold);opacity:.75;filter:drop-shadow(0 0 14px oklch(78% .16 82/.4))}
+.panel-body h4{font:500 1.35rem var(--serif);letter-spacing:-.01em}
+.panel-body p{font-size:.78rem;color:var(--muted);max-width:440px;line-height:1.7}
+.composer{display:flex;gap:10px;align-items:center;padding:16px 22px;border-top:1px solid var(--softline);opacity:.55}
+.composer input{flex:1;padding:13px 18px;font:.8rem var(--sans);color:var(--white);background:oklch(8% .014 75);border:1.5px solid var(--softline);border-radius:12px;outline:0}
+.composer input::placeholder{color:var(--dim)}
+.composer .send{padding:13px 22px;border-radius:12px;font-size:.64rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--black);background:var(--gold2);cursor:not-allowed}
+
+@media(max-width:640px){
+  .gate-card{padding:42px 24px 38px}
+  .topbar{padding:18px 0 16px}
+  .brand .mark{width:40px;height:40px}
+  .hub,.ws{padding-top:36px}
+  .hub-head{margin-bottom:30px}
+  .ws-head .cc-status{margin-left:0}
+  .panel-body{padding:48px 22px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true">
+  <div class="bg-glow g1"></div>
+  <div class="bg-glow g2"></div>
+  <div class="bg-grain"><svg xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg></div>
+</div>
+
+<!-- ===== 1. CLIENT SPACE PASSWORD GATE ===== -->
+<section class="view gate-view active" id="view-space-gate">
+  <div class="gate-card">
+    <div class="gate-brand">
+      <span class="brand">
+        <img class="mark" src="aeternum_solutions.png" alt="Aeternum logo">
+        <span class="bt"><span class="bn">Aeternum</span><span class="bs">Client Space</span></span>
+      </span>
+    </div>
+    <div class="lock-ring" id="spaceRing">
+      <svg class="ring" viewBox="0 0 76 76"><circle class="ring-bg" cx="38" cy="38" r="34"/><circle class="ring-fg" cx="38" cy="38" r="34"/></svg>
+      <span class="glyph">🔒</span>
+    </div>
+    <h1>Client Space</h1>
+    <p class="sub">Enter the client space password to continue.</p>
+    <div class="field"><input type="password" id="spacePw" placeholder="••••••••" autocomplete="off" autofocus></div>
+    <button class="gate-btn" id="spaceBtn">Unlock</button>
+    <p class="gate-err" id="spaceErr">Incorrect password. Try again.</p>
+    <p class="gate-note">Aeternum Works · Private</p>
+  </div>
+</section>
+
+<!-- ===== 2. HUB (CLIENT LIST) ===== -->
+<section class="view" id="view-hub">
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <img class="mark" src="aeternum_solutions.png" alt="Aeternum logo">
+      <span class="bt"><span class="bn">Aeternum</span><span class="bs">Client Space</span></span>
+    </a>
+    <button class="signout" id="hubSignout">Sign out</button>
+  </div>
+  <div class="hub">
+    <div class="hub-head">
+      <div class="eyebrow">Workspace Access</div>
+      <h1>Select a client</h1>
+      <p>Each client workspace is protected. Choose a client below and enter its access password to continue.</p>
+    </div>
+    <div class="client-grid" id="clientGrid"><!-- client cards injected --></div>
+    <div class="hub-foot">Aeternum Works · Client Space</div>
+  </div>
+</section>
+
+<!-- ===== 3. CLIENT PASSWORD GATE ===== -->
+<section class="view gate-view" id="view-client-gate">
+  <div class="gate-card">
+    <div class="gate-brand">
+      <span class="brand">
+        <img class="mark" src="aeternum_solutions.png" alt="Aeternum logo">
+        <span class="bt"><span class="bn">Aeternum</span><span class="bs">Secure Access</span></span>
+      </span>
+    </div>
+    <div class="lock-ring" id="clientRing">
+      <svg class="ring" viewBox="0 0 76 76"><circle class="ring-bg" cx="38" cy="38" r="34"/><circle class="ring-fg" cx="38" cy="38" r="34"/></svg>
+      <span class="glyph">🔒</span>
+    </div>
+    <h1 id="clientGateName">Client</h1>
+    <p class="sub">Enter the password for this client workspace.</p>
+    <div class="field"><input type="password" id="clientPw" placeholder="••••••••" autocomplete="off"></div>
+    <button class="gate-btn" id="clientBtn">Unlock</button>
+    <p class="gate-err" id="clientErr">Incorrect password. Try again.</p>
+    <button class="signout" id="clientBack" style="margin-top:22px">← Back to clients</button>
+  </div>
+</section>
+
+<!-- ===== 4. CLIENT WORKSPACE (placeholder — convo goes here later) ===== -->
+<section class="view" id="view-workspace">
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <img class="mark" src="aeternum_solutions.png" alt="Aeternum logo">
+      <span class="bt"><span class="bn">Aeternum</span><span class="bs">Client Space</span></span>
+    </a>
+    <button class="back" id="wsBack">← All clients</button>
+  </div>
+  <div class="ws">
+    <div class="ws-head">
+      <div class="client-monogram" id="wsMonogram">Z</div>
+      <div class="meta"><h1 id="wsName">Client</h1><div class="cc-tag" id="wsTag">Client workspace</div></div>
+      <span class="cc-status"><span class="dot"></span>Active</span>
+    </div>
+
+    <!-- ===== CONVERSATION MODULE (to be built) ===== -->
+    <div class="panel" id="conversationPanel">
+      <div class="panel-head"><h3>Conversation</h3><span class="tag">Coming soon</span></div>
+      <div class="panel-body">
+        <div class="ph-icon">✦</div>
+        <h4>Your shared thread with Aeternum</h4>
+        <p>This is where the conversation between you and Aeternum will live. Nothing here yet — the messaging module is coming next.</p>
+      </div>
+      <div class="composer" aria-disabled="true">
+        <input type="text" placeholder="Messaging will be enabled soon…" disabled>
+        <button class="send" disabled>Send</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  // ===== HARDCODED CREDENTIALS (SHA-256) — change hashes to rotate passwords =====
+  // Space password : "aeternum"
+  // Zyppyn         : "zyppyn"
+  // Envirosystech  : "enviro"
+  var SPACE_HASH = '36fb24ba4f097961e8c78860e135bfd639764b25c58fd60dd7b823a2b49d99cf';
+
+  var CLIENTS = {
+    zyppyn:        { name:'Zyppyn',        tag:'Client workspace', accent:'sapphire', initial:'Z', hash:'df91da27ee230f2febc5b49c004ef815904db50b57ae4ff76b6e8b976372b00f' },
+    envirosystech: { name:'Envirosystech', tag:'Client workspace', accent:'emerald',  initial:'E', hash:'a0da361379a27cd883c73057cf89c9227693e0df4e05c9566e7204e6b12a60d9' }
+  };
+
+  var SPACE_KEY = 'client_space_authed';
+  var clientKey = function(id){ return 'client_authed_' + id; };
+
+  var views = {
+    spaceGate: document.getElementById('view-space-gate'),
+    hub:       document.getElementById('view-hub'),
+    clientGate:document.getElementById('view-client-gate'),
+    workspace: document.getElementById('view-workspace')
+  };
+
+  var pendingClient = null;   // client id chosen while space gate is open
+  var activeClient  = null;   // client id currently in workspace / gate
+
+  // ===== HELPERS =====
+  function sha256(str){
+    var buf = new TextEncoder().encode(str);
+    return crypto.subtle.digest('SHA-256', buf).then(function(hash){
+      return Array.from(new Uint8Array(hash)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+    });
+  }
+  function showView(key){
+    Object.keys(views).forEach(function(k){ views[k].classList.toggle('active', k===key); });
+    window.scrollTo(0,0);
+  }
+  function flashError(input, err){
+    input.classList.add('error');
+    err.classList.add('show');
+    setTimeout(function(){ input.classList.remove('error'); }, 450);
+  }
+
+  // ===== HUB CARDS =====
+  function renderClients(){
+    var grid = document.getElementById('clientGrid');
+    grid.innerHTML = Object.keys(CLIENTS).map(function(id){
+      var c = CLIENTS[id];
+      return '<button class="client-card accent-'+c.accent+'" data-client="'+id+'">'+
+        '<div class="cc-top">'+
+          '<span class="client-monogram">'+c.initial+'</span>'+
+          '<span class="cc-status"><span class="dot"></span>Active</span>'+
+        '</div>'+
+        '<div class="cc-body"><h2>'+c.name+'</h2><div class="cc-tag">'+c.tag+'</div></div>'+
+        '<span class="cc-open">Open workspace <span aria-hidden="true">→</span></span>'+
+      '</button>';
+    }).join('');
+  }
+
+  // ===== ROUTING =====
+  function hashClient(){
+    var h = (location.hash || '').replace('#','').toLowerCase();
+    return CLIENTS[h] ? h : null;
+  }
+  function route(){
+    var id = hashClient();
+
+    if(sessionStorage.getItem(SPACE_KEY) !== 'true'){
+      pendingClient = id;
+      spacePw.value = '';
+      document.getElementById('spaceErr').classList.remove('show');
+      document.getElementById('spaceRing').classList.remove('unlocking');
+      showView('spaceGate');
+      setTimeout(function(){ spacePw.focus(); }, 50);
+      return;
+    }
+    if(id){
+      activeClient = id;
+      if(sessionStorage.getItem(clientKey(id)) === 'true'){
+        openWorkspace(id);
+      }else{
+        openClientGate(id);
+      }
+    }else{
+      showView('hub');
+    }
+  }
+  function goHash(id){
+    var target = id ? '#' + id : '';
+    if((location.hash || '') === target){ route(); return; }
+    if(id){
+      location.hash = id;            // triggers hashchange -> route()
+    }else{
+      history.replaceState(null,'',location.pathname + location.search);
+      route();
+    }
+  }
+
+  // ===== CLIENT GATE =====
+  function openClientGate(id){
+    var c = CLIENTS[id];
+    document.getElementById('clientGateName').textContent = c.name;
+    var inp = document.getElementById('clientPw');
+    inp.value = '';
+    document.getElementById('clientErr').classList.remove('show');
+    document.getElementById('clientRing').classList.remove('unlocking');
+    showView('clientGate');
+    setTimeout(function(){ inp.focus(); }, 60);
+  }
+
+  // ===== WORKSPACE =====
+  function openWorkspace(id){
+    var c = CLIENTS[id];
+    document.getElementById('wsName').textContent = c.name;
+    document.getElementById('wsTag').textContent = c.tag;
+    var mono = document.getElementById('wsMonogram');
+    mono.textContent = c.initial;
+    mono.className = 'client-monogram accent-'+c.accent;
+    showView('workspace');
+  }
+
+  // ===== SPACE GATE EVENTS =====
+  var spacePw = document.getElementById('spacePw');
+  function unlockSpace(){
+    var pw = spacePw.value.trim();
+    if(!pw) return;
+    sha256(pw).then(function(h){
+      if(h === SPACE_HASH){
+        document.getElementById('spaceRing').classList.add('unlocking');
+        sessionStorage.setItem(SPACE_KEY,'true');
+        setTimeout(function(){
+          if(pendingClient) goHash(pendingClient);
+          else route();
+        }, 650);
+      }else{
+        flashError(spacePw, document.getElementById('spaceErr'));
+      }
+    });
+  }
+  document.getElementById('spaceBtn').addEventListener('click', unlockSpace);
+  spacePw.addEventListener('keydown', function(e){ if(e.key === 'Enter') unlockSpace(); });
+
+  // ===== CLIENT GATE EVENTS =====
+  var clientPw = document.getElementById('clientPw');
+  function unlockClient(){
+    if(!activeClient) return;
+    var pw = clientPw.value.trim();
+    if(!pw) return;
+    sha256(pw).then(function(h){
+      if(h === CLIENTS[activeClient].hash){
+        document.getElementById('clientRing').classList.add('unlocking');
+        sessionStorage.setItem(clientKey(activeClient),'true');
+        setTimeout(function(){ openWorkspace(activeClient); }, 650);
+      }else{
+        flashError(clientPw, document.getElementById('clientErr'));
+      }
+    });
+  }
+  document.getElementById('clientBtn').addEventListener('click', unlockClient);
+  clientPw.addEventListener('keydown', function(e){ if(e.key === 'Enter') unlockClient(); });
+  document.getElementById('clientBack').addEventListener('click', function(){ goHash(null); });
+
+  // ===== HUB EVENTS =====
+  document.getElementById('clientGrid').addEventListener('click', function(e){
+    var card = e.target.closest('.client-card');
+    if(!card) return;
+    activeClient = card.dataset.client;
+    goHash(activeClient);
+  });
+
+  document.getElementById('wsBack').addEventListener('click', function(){ goHash(null); });
+
+  document.getElementById('hubSignout').addEventListener('click', function(){
+    sessionStorage.removeItem(SPACE_KEY);
+    Object.keys(CLIENTS).forEach(function(id){ sessionStorage.removeItem(clientKey(id)); });
+    goHash(null);
+  });
+
+  window.addEventListener('hashchange', route);
+
+  // ===== INIT =====
+  renderClients();
+  route();
+})();
+</script>
+</body>
+</html>
