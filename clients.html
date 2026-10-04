@@ -134,6 +134,53 @@ img{display:block;max-width:100%}
 .composer input::placeholder{color:var(--dim)}
 .composer .send{padding:13px 22px;border-radius:12px;font-size:.64rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--black);background:var(--gold2);cursor:not-allowed}
 
+/* ===== CHECKLIST ===== */
+.panel+.panel{margin-top:22px}
+.ws-progress{height:6px;background:oklch(10% .016 75);border-radius:999px;overflow:hidden;margin:16px 26px 0}
+.ws-progress-bar{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--gold3),var(--gold));transition:width .5s var(--ease)}
+.phase{border-top:1px solid var(--softline);margin-top:6px}
+.phase:first-child{border-top:0}
+.phase-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 26px 8px}
+.phase-head h4{font:600 .82rem var(--sans);letter-spacing:.02em;color:var(--gold)}
+.phase-head .count{font:.52rem var(--mono);letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+.tasks{display:flex;flex-direction:column}
+.task{display:flex;gap:14px;padding:13px 26px;border-top:1px solid var(--softline);transition:background .2s}
+.task:hover{background:oklch(13% .02 75/.5)}
+.task:first-child{border-top:0}
+.status-pill{flex-shrink:0;height:26px;padding:0 12px;border-radius:999px;font:.52rem var(--mono);letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--softline);transition:transform .2s,box-shadow .2s}
+.status-pill:hover{transform:translateY(-1px)}
+.status-pending{color:var(--dim);border-color:var(--softline)}
+.status-in_progress{color:var(--gold);border-color:var(--gold3);background:oklch(78% .16 82/.08)}
+.status-done{color:var(--emerald);border-color:oklch(45% .1 158/.6);background:oklch(66% .18 158/.08)}
+.status-blocked{color:var(--rose);border-color:oklch(45% .1 16/.6);background:oklch(65% .18 16/.08)}
+.task-main{flex:1;min-width:0}
+.task-title{font-size:.86rem;font-weight:600;color:var(--white)}
+.task-desc{font-size:.74rem;color:var(--muted);margin-top:3px;line-height:1.55}
+.task.done .task-title{color:var(--dim);text-decoration:line-through;text-decoration-color:oklch(49% .025 75)}
+.task-actions{display:flex;gap:16px;margin-top:8px;align-items:center}
+.comment-toggle{font:.52rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gold3);transition:color .2s}
+.comment-toggle:hover{color:var(--gold)}
+.comment-toggle.del:hover{color:var(--rose)}
+.thread{margin:2px 26px 16px 66px;border-left:2px solid var(--softline);padding:8px 0 8px 16px;display:flex;flex-direction:column;gap:12px}
+.thread.general{margin:16px 26px 6px;border-left:0;padding-left:0}
+.thread.hidden{display:none}
+.comment .who{font:.58rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.comment .who .when{color:var(--dim);text-transform:none;letter-spacing:.04em;margin-left:6px}
+.comment .body{font-size:.78rem;color:var(--white);opacity:.9;line-height:1.6;white-space:pre-wrap}
+.comment-form{display:flex;gap:8px;margin-top:4px}
+.comment-form input{flex:1;min-width:0;padding:9px 12px;font-size:.74rem;color:var(--white);background:oklch(8% .014 75);border:1px solid var(--softline);border-radius:10px;outline:0}
+.comment-form input:focus{border-color:var(--gold3)}
+.comment-form input::placeholder{color:var(--dim)}
+.comment-form .send{padding:9px 16px;border-radius:10px;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--black);background:var(--gold2);transition:transform .2s}
+.comment-form .send:hover{transform:translateY(-1px)}
+.add-row{display:flex;gap:10px;padding:18px 26px;border-top:1px solid var(--softline);flex-wrap:wrap;margin-top:16px}
+.add-row input{flex:1;min-width:170px;padding:10px 12px;font-size:.74rem;color:var(--white);background:oklch(8% .014 75);border:1px solid var(--softline);border-radius:10px;outline:0}
+.add-row input:focus{border-color:var(--gold3)}
+.add-row input::placeholder{color:var(--dim)}
+.add-row .send{padding:10px 18px;border-radius:10px;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--black);background:var(--gold2);transition:transform .2s}
+.add-row .send:hover{transform:translateY(-1px)}
+.empty{color:var(--muted);font-size:.78rem;padding:22px 26px;line-height:1.6}
+
 @media(max-width:640px){
   .gate-card{padding:42px 24px 38px}
   .topbar{padding:18px 0 16px}
@@ -143,6 +190,73 @@ img{display:block;max-width:100%}
   .ws-head .cc-status{margin-left:0}
   .panel-body{padding:48px 22px}
 }
+
+/* ==========================================================================
+   LIGHT THEME
+   ========================================================================== */
+:root{
+  --black:#f7f3ea;--deep:#efe7d8;--surface:#ffffff;--surface2:#f4eee2;
+  --line:#e2d8c6;--softline:#e9e0d0;
+  --white:#2b2418;--muted:#6e6453;--dim:#8d8371;
+  --gold:oklch(56% .12 70);--gold2:oklch(64% .12 75);--gold3:oklch(74% .09 80);
+  --sapphire:oklch(50% .14 248);--sapphire2:oklch(58% .12 248);
+  --amethyst:oklch(48% .16 312);--amethyst2:oklch(56% .14 312);
+  --emerald:oklch(46% .13 158);--emerald2:oklch(54% .12 158);
+  --rose:oklch(52% .17 16);
+  --ink:#241d12;
+  --shadow:0 16px 40px oklch(35% .05 75/.10);
+}
+body{background:var(--black);color:var(--white)}
+.bg-glow{opacity:.4}
+.bg-glow.g1{background:radial-gradient(circle,oklch(84% .1 82/.35),transparent 62%)}
+.bg-glow.g2{background:radial-gradient(circle,oklch(88% .07 80/.28),transparent 62%)}
+.bg-grain{opacity:.02}
+.gate-card{background:linear-gradient(180deg,#ffffff,#fbf7ef);box-shadow:0 24px 56px oklch(35% .05 75/.14),inset 0 1px 0 #fff}
+.gate-card::before{background:linear-gradient(140deg,oklch(70% .12 78/.55),transparent 40%,transparent 60%,oklch(70% .12 78/.28))}
+.lock-ring .ring-bg{stroke:#e4dac9}
+.lock-ring .glyph{text-shadow:none}
+.field input{background:#fff;border-color:#e2d8c6}
+.field input:focus{background:#fff}
+.client-card{background:linear-gradient(180deg,#ffffff,#fbf7ef);box-shadow:none}
+.client-card:hover{box-shadow:var(--shadow);border-color:#d8cdb8}
+.client-monogram{background:#fff;border-color:#e2d8c6}
+.panel{background:#fff}
+.panel-head{background:#fbf8f2}
+.composer input,.comment-form input,.add-row input{background:#fff;border-color:#e2d8c6}
+.ws-progress{background:#ece3d3}
+.task:hover{background:oklch(96.5% .012 80)}
+.gate-btn,.composer .send,.comment-form .send,.add-row .send{color:var(--ink)}
+.cc-status{background:#fff}
+.cc-status .dot{box-shadow:0 0 8px oklch(60% .13 158/.6)}
+
+/* ==========================================================================
+   SESSION -> WEEK -> TASK  (with comments at every level)
+   ========================================================================== */
+.session{border:1px solid var(--softline);border-radius:18px;margin-bottom:20px;overflow:hidden;background:#fff;box-shadow:var(--shadow)}
+.session-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;background:linear-gradient(180deg,#fbf8f1,#f5efe3);border-bottom:1px solid var(--softline)}
+.session-head h3{font:600 1.05rem/1.2 var(--serif);color:var(--gold);letter-spacing:-.01em}
+.session-head .count{font:.54rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.week{border-top:1px solid var(--softline)}
+.week:first-of-type{border-top:0}
+.week-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px 4px}
+.week-head h4{font:600 .84rem var(--sans);color:var(--white);letter-spacing:.02em}
+.week-head .count{font:.52rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.cblock{display:flex;flex-direction:column;gap:10px;padding:8px 22px 14px}
+.cblock-session{padding-top:4px;padding-bottom:12px}
+.cblock-week{padding-top:2px}
+.cblock-task{padding-top:6px}
+.cnone{font-size:.72rem;color:var(--dim);opacity:.85}
+.tasks{display:flex;flex-direction:column;border-top:1px solid var(--softline)}
+.task{display:block;padding:12px 22px 6px}
+.tasks .task{border-top:1px solid var(--softline)}
+.tasks .task:first-child{border-top:0}
+.task-row{display:flex;gap:12px;align-items:flex-start}
+.task-main{flex:1;min-width:0}
+.task-actions{display:flex;gap:16px;margin-top:6px}
+.comment{background:#fbf8f2;border:1px solid var(--softline);border-radius:10px;padding:9px 12px}
+.comment .who{font:.56rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.comment .who .when{color:var(--dim);text-transform:none;letter-spacing:.04em;margin-left:6px}
+.comment .body{font-size:.78rem;color:var(--white);line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -233,24 +347,43 @@ img{display:block;max-width:100%}
       <span class="cc-status"><span class="dot"></span>Active</span>
     </div>
 
-    <!-- ===== CONVERSATION MODULE (to be built) ===== -->
-    <div class="panel" id="conversationPanel">
-      <div class="panel-head"><h3>Conversation</h3><span class="tag">Coming soon</span></div>
-      <div class="panel-body">
-        <div class="ph-icon">✦</div>
-        <h4>Your shared thread with Aeternum</h4>
-        <p>This is where the conversation between you and Aeternum will live. Nothing here yet — the messaging module is coming next.</p>
+    <!-- ===== PROJECT CHECKLIST ===== -->
+    <div class="panel" id="checklistPanel">
+      <div class="panel-head"><h3>Project Checklist</h3><span class="tag" id="wsProgressLabel">Loading…</span></div>
+      <div class="ws-progress"><div class="ws-progress-bar" id="wsProgressBar"></div></div>
+      <div id="taskList"><div class="empty">Loading checklist…</div></div>
+      <div class="add-row">
+        <input type="text" id="newSession" placeholder="Session" list="sessionList">
+        <datalist id="sessionList"></datalist>
+        <input type="text" id="newPhase" placeholder="Week (e.g. Week 1 …)" list="phaseList">
+        <datalist id="phaseList"></datalist>
+        <input type="text" id="newTitle" placeholder="New task title…">
+        <button class="send" id="addTask">Add task</button>
       </div>
-      <div class="composer" aria-disabled="true">
-        <input type="text" placeholder="Messaging will be enabled soon…" disabled>
-        <button class="send" disabled>Send</button>
+    </div>
+
+    <!-- ===== COMMENTS ===== -->
+    <div class="panel" id="generalPanel">
+      <div class="panel-head"><h3>Comments</h3><span class="tag">Visible to Aeternum &amp; you</span></div>
+      <div class="thread general" id="generalThread"></div>
+      <div class="comment-form" style="margin:10px 26px 22px">
+        <input type="text" id="cName" placeholder="Your name">
+        <input type="text" id="cBody" placeholder="Add a comment…">
+        <button class="send" id="cSend">Post</button>
       </div>
     </div>
   </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
+  // ===== SUPABASE =====
+  var SUPABASE_URL='https://hjdxbihbmbzfndexszqo.supabase.co';
+  var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhqZHhiaWhibWJ6Zm5kZXhzenFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxNzcyNzksImV4cCI6MjEwMjc1MzI3OX0.3Cs4-GkJU1ejNngvd1em9lNGrYGaCqaaTZEewx27nOg';
+  var sb=null;
+  try{ sb = window.supabase ? window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY) : null; }catch(e){ sb=null; }
+
   // ===== HARDCODED CREDENTIALS (SHA-256) — change hashes to rotate passwords =====
   // Space password : "aeternum"
   // Zyppyn         : "zyppyn"
@@ -367,7 +500,9 @@ img{display:block;max-width:100%}
     var mono = document.getElementById('wsMonogram');
     mono.textContent = c.initial;
     mono.className = 'client-monogram accent-'+c.accent;
+    document.getElementById('cName').value = whoami();
     showView('workspace');
+    loadChecklist(id);
   }
 
   // ===== SPACE GATE EVENTS =====
@@ -428,6 +563,228 @@ img{display:block;max-width:100%}
   });
 
   window.addEventListener('hashchange', route);
+
+  // ===== CHECKLIST + COMMENTS =====
+  var STATUS_CYCLE=['pending','in_progress','done'];
+  var STATUS_LABEL={pending:'Pending',in_progress:'In progress',done:'Done',blocked:'Blocked'};
+  var wsTasks=[],wsComments=[],wsClientId=null;
+
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  function fmtDate(s){ try{ return new Date(s).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}); }catch(e){ return ''; } }
+  function whoami(){ return localStorage.getItem('aeternum_author') || 'Client'; }
+
+  function loadChecklist(id){
+    wsClientId=id;
+    var listEl=document.getElementById('taskList');
+    listEl.innerHTML='<div class="empty">Loading checklist…</div>';
+    document.getElementById('wsProgressLabel').textContent='Loading…';
+    if(!sb){ listEl.innerHTML='<div class="empty">Checklist unavailable — Supabase not connected.</div>'; document.getElementById('wsProgressLabel').textContent='Offline'; return; }
+    Promise.all([
+      sb.from('client_tasks').select('*').eq('client_id',id).order('sort_order',{ascending:true}),
+      sb.from('client_comments').select('*').eq('client_id',id).order('created_at',{ascending:true})
+    ]).then(function(r){
+      var err=(r[0]&&r[0].error)||(r[1]&&r[1].error);
+      if(err){
+        console.error(err);
+        listEl.innerHTML='<div class="empty">Checklist not set up yet. Run the Supabase setup SQL (supabase_client_space.sql), then refresh.<br><span style="opacity:.6">'+esc(err.message||'')+'</span></div>';
+        document.getElementById('wsProgressLabel').textContent='Not set up';
+        return;
+      }
+      wsTasks=(r[0]&&r[0].data)||[];
+      wsComments=(r[1]&&r[1].data)||[];
+      renderChecklist();
+    }).catch(function(e){
+      console.error(e);
+      listEl.innerHTML='<div class="empty">Could not load the checklist. Please refresh.</div>';
+    });
+  }
+
+  function renderChecklist(){
+    var total=wsTasks.length;
+    var done=wsTasks.filter(function(t){return t.status==='done';}).length;
+    var pct=total?Math.round(done/total*100):0;
+    document.getElementById('wsProgressBar').style.width=pct+'%';
+    document.getElementById('wsProgressLabel').textContent=done+' / '+total+' done · '+pct+'%';
+
+    var sessionsList=[],weeksList=[];
+    wsTasks.forEach(function(t){
+      var s=t.session||'General';
+      if(sessionsList.indexOf(s)<0) sessionsList.push(s);
+      if(weeksList.indexOf(t.phase)<0) weeksList.push(t.phase);
+    });
+    document.getElementById('sessionList').innerHTML=sessionsList.map(function(s){return '<option value="'+esc(s)+'">';}).join('');
+    document.getElementById('phaseList').innerHTML=weeksList.map(function(p){return '<option value="'+esc(p)+'">';}).join('');
+
+    var listEl=document.getElementById('taskList');
+    if(!total){ listEl.innerHTML='<div class="empty">No tasks yet. Add the first one below.</div>'; renderGeneral(); return; }
+
+    var sessions=[];
+    wsTasks.forEach(function(t){
+      var sName=t.session||'General';
+      var s=sessions.filter(function(x){return x.name===sName;})[0];
+      if(!s){ s={name:sName,weeks:[]}; sessions.push(s); }
+      var w=s.weeks.filter(function(x){return x.name===t.phase;})[0];
+      if(!w){ w={name:t.phase,tasks:[]}; s.weeks.push(w); }
+      w.tasks.push(t);
+    });
+
+    var html='';
+    sessions.forEach(function(s){
+      var sTasks=[]; s.weeks.forEach(function(w){ sTasks=sTasks.concat(w.tasks); });
+      var sDone=sTasks.filter(function(t){return t.status==='done';}).length;
+      html+='<div class="session">';
+      html+='<div class="session-head"><h3>'+esc(s.name)+'</h3><span class="count">'+sDone+' / '+sTasks.length+' done</span></div>';
+      html+=commentBlock('session',{session:s.name},'cblock-session');
+      s.weeks.forEach(function(w){
+        var wDone=w.tasks.filter(function(t){return t.status==='done';}).length;
+        html+='<div class="week"><div class="week-head"><h4>'+esc(w.name)+'</h4><span class="count">'+wDone+' / '+w.tasks.length+' done</span></div>';
+        html+=commentBlock('week',{session:s.name,phase:w.name},'cblock-week');
+        html+='<div class="tasks">';
+        w.tasks.forEach(function(t){ html+=taskHtml(t); });
+        html+='</div></div>';
+      });
+      html+='</div>';
+    });
+    listEl.innerHTML=html;
+    renderGeneral();
+  }
+
+  function commentsFor(level,keys){
+    return wsComments.filter(function(c){
+      if(level==='task') return c.task_id===keys.task;
+      if(level==='week') return !c.task_id && c.phase===keys.phase && (c.session||'')===(keys.session||'');
+      if(level==='session') return !c.task_id && !c.phase && (c.session||'')===(keys.session||'');
+      return false;
+    });
+  }
+
+  function commentAttrs(level,keys){
+    var a=' data-act="comment" data-level="'+level+'"';
+    if(keys.session) a+=' data-session="'+esc(keys.session)+'"';
+    if(keys.phase) a+=' data-phase="'+esc(keys.phase)+'"';
+    if(keys.task) a+=' data-task="'+keys.task+'"';
+    return a;
+  }
+
+  function commentBlock(level,keys,cls){
+    var cs=commentsFor(level,keys);
+    return '<div class="cblock '+(cls||'')+'">'+
+      (cs.length?cs.map(commentHtml).join(''):'<div class="cnone">No comments yet.</div>')+
+      '<div class="comment-form">'+
+        '<input type="text" placeholder="Add a comment…">'+
+        '<button class="send"'+commentAttrs(level,keys)+'>Post</button>'+
+      '</div>'+
+    '</div>';
+  }
+
+  function taskHtml(t){
+    var cs=commentsFor('task',{task:t.id});
+    return '<div class="task '+(t.status==='done'?'done':'')+'">'+
+      '<div class="task-row">'+
+        '<button class="status-pill status-'+t.status+'" data-act="cycle" data-id="'+t.id+'" title="Click to change status">'+(STATUS_LABEL[t.status]||t.status)+'</button>'+
+        '<div class="task-main">'+
+          '<div class="task-title">'+esc(t.title)+'</div>'+
+          (t.description?'<div class="task-desc">'+esc(t.description)+'</div>':'')+
+          '<div class="task-actions"><button class="comment-toggle del" data-act="del" data-id="'+t.id+'">Delete</button></div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="cblock cblock-task">'+
+        (cs.length?cs.map(commentHtml).join(''):'<div class="cnone">No comments yet.</div>')+
+        '<div class="comment-form">'+
+          '<input type="text" placeholder="Add a comment…">'+
+          '<button class="send"'+commentAttrs('task',{task:t.id})+'>Post</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }
+
+  function commentHtml(c){
+    return '<div class="comment"><div class="who">'+esc(c.author||'Client')+'<span class="when">'+fmtDate(c.created_at)+'</span></div><div class="body">'+esc(c.body)+'</div></div>';
+  }
+
+  function renderGeneral(){
+    var g=wsComments.filter(function(c){return !c.task_id && !c.phase && !c.session;});
+    document.getElementById('generalThread').innerHTML=g.length?g.map(commentHtml).join(''):'<div class="cnone">No comments yet.</div>';
+  }
+
+  document.getElementById('taskList').addEventListener('click',function(e){
+    var btn=e.target.closest('[data-act]');
+    if(!btn) return;
+    var act=btn.dataset.act,id=btn.dataset.id;
+    if(act==='cycle'){
+      var t=wsTasks.filter(function(x){return x.id===id;})[0];
+      if(!t) return;
+      var next=STATUS_CYCLE[(STATUS_CYCLE.indexOf(t.status)+1)%STATUS_CYCLE.length];
+      t.status=next; renderChecklist();
+      if(sb) sb.from('client_tasks').update({status:next}).eq('id',id).then(function(){},function(err){console.error(err);});
+    }else if(act==='del'){
+      if(!confirm('Delete this task?')) return;
+      wsTasks=wsTasks.filter(function(x){return x.id!==id;}); renderChecklist();
+      if(sb) sb.from('client_tasks').delete().eq('id',id).then(function(){},function(err){console.error(err);});
+    }else if(act==='comment'){
+      var form=btn.parentNode;
+      var inp=form?form.querySelector('input'):null;
+      var body=inp?inp.value.trim():'';
+      if(!body) return;
+      var author=whoami();
+      var row={client_id:wsClientId,task_id:null,phase:null,session:null,author:author,body:body};
+      var level=btn.dataset.level||'task';
+      if(level==='task') row.task_id=btn.dataset.task;
+      else if(level==='week'){ row.phase=btn.dataset.phase; row.session=btn.dataset.session; }
+      else if(level==='session'){ row.session=btn.dataset.session; }
+      if(sb){
+        sb.from('client_comments').insert(row).select().single().then(function(r){
+          if(r&&r.error){ console.error(r.error); alert('Could not post the comment:\n'+r.error.message); return; }
+          if(r&&r.data) wsComments.push(r.data);
+          renderChecklist();
+        },function(err){console.error(err);});
+      }else{
+        row.id='local'+Date.now(); row.created_at=new Date().toISOString(); wsComments.push(row);
+        renderChecklist();
+      }
+    }
+  });
+
+  document.getElementById('addTask').addEventListener('click',function(){
+    var session=document.getElementById('newSession').value.trim()||'General';
+    var phase=document.getElementById('newPhase').value.trim()||'General';
+    var title=document.getElementById('newTitle').value.trim();
+    if(!title) return;
+    var maxOrder=wsTasks.reduce(function(m,t){return Math.max(m,t.sort_order||0);},0);
+    var row={client_id:wsClientId,session:session,phase:phase,title:title,description:null,status:'pending',sort_order:maxOrder+10};
+    if(sb){
+      sb.from('client_tasks').insert(row).select().single().then(function(r){
+        if(r&&r.error){ console.error(r.error); alert('Could not add the task:\n'+r.error.message); return; }
+        if(r&&r.data) wsTasks.push(r.data);
+        document.getElementById('newTitle').value='';
+        renderChecklist();
+      },function(err){console.error(err);});
+    }else{
+      row.id='local'+Date.now(); wsTasks.push(row);
+      document.getElementById('newTitle').value='';
+      renderChecklist();
+    }
+  });
+
+  document.getElementById('cSend').addEventListener('click',function(){
+    var name=document.getElementById('cName').value.trim();
+    var body=document.getElementById('cBody').value.trim();
+    if(!body) return;
+    if(name) localStorage.setItem('aeternum_author',name);
+    var author=name||whoami();
+    var after=function(){ document.getElementById('cBody').value=''; renderGeneral(); };
+    if(sb){
+      sb.from('client_comments').insert({client_id:wsClientId,task_id:null,author:author,body:body}).select().single().then(function(r){
+        if(r&&r.error){ console.error(r.error); alert('Could not post the comment:\n'+r.error.message); return; }
+        if(r&&r.data) wsComments.push(r.data);
+        after();
+      },function(err){console.error(err);});
+    }else{
+      wsComments.push({id:'local'+Date.now(),client_id:wsClientId,task_id:null,author:author,body:body,created_at:new Date().toISOString()});
+      after();
+    }
+  });
+  document.getElementById('cBody').addEventListener('keydown',function(e){ if(e.key==='Enter') document.getElementById('cSend').click(); });
 
   // ===== INIT =====
   renderClients();
