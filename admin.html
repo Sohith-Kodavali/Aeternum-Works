@@ -239,6 +239,7 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
       <span class="nav-section">Management</span>
       <a href="#" data-view="jobs"><span>💼</span> Job Posts <span class="badge" id="badgeJobs">0</span></a>
       <a href="#" data-view="queries"><span>💬</span> Queries <span class="badge" id="badgeQueries">0</span></a>
+      <a href="#" data-view="clients"><span>🗂</span> Client Checklists</a>
       <span class="nav-section">By Status</span>
       <a href="#" data-filter="status:new"><span>🆕</span> New <span class="badge" id="badgeNew">0</span></a>
       <a href="#" data-filter="status:reviewed"><span>👁</span> Reviewed <span class="badge" id="badgeReviewed">0</span></a>
@@ -335,6 +336,18 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
         <div class="card-skeleton"><div class="sk-line skeleton"></div><div class="sk-line skeleton short"></div><div class="sk-line skeleton"></div></div>
       </div>
     </div>
+
+    <!-- Client Checklists -->
+    <div class="table-wrap" id="clientsWrap" style="display:none">
+      <div class="table-header">
+        <h3>Client Checklists</h3>
+        <div style="display:flex;gap:10px;align-items:center">
+          <select id="clientPicker" class="search-input" style="max-width:230px"></select>
+          <button class="add-job-btn" id="addTaskBtn">+ New Task</button>
+        </div>
+      </div>
+      <div id="clientTaskList" style="padding:20px"></div>
+    </div>
   </div>
 </div>
 
@@ -368,6 +381,46 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
     <div class="modal-actions">
       <button class="cancel-btn" id="jobCancelBtn">Cancel</button>
       <button class="save-btn" id="jobSaveBtn">Save Job</button>
+    </div>
+  </div>
+</div>
+
+<!-- Task Modal -->
+<div class="modal-overlay" id="taskModalOverlay">
+  <div class="modal">
+    <h2 id="taskModalTitle">New Task</h2>
+    <div class="form-field">
+      <label>Session *</label>
+      <input type="text" id="taskSession" placeholder="e.g. Session 1 — Weeks 1–2">
+    </div>
+    <div class="form-field">
+      <label>Week / Phase *</label>
+      <input type="text" id="taskPhase" placeholder="e.g. Week 1 — Content, Pages & Link Completion">
+    </div>
+    <div class="form-field">
+      <label>Task Title *</label>
+      <input type="text" id="taskTitle" placeholder="e.g. Fix footer navigation links">
+    </div>
+    <div class="form-field">
+      <label>Description</label>
+      <textarea id="taskDesc" placeholder="Details..."></textarea>
+    </div>
+    <div class="form-field">
+      <label>Status</label>
+      <select id="taskStatus">
+        <option value="pending">Pending</option>
+        <option value="in_progress">In Progress</option>
+        <option value="done">Done</option>
+        <option value="blocked">Blocked</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label>Order</label>
+      <input type="number" id="taskOrder" placeholder="10">
+    </div>
+    <div class="modal-actions">
+      <button class="cancel-btn" id="taskCancelBtn">Cancel</button>
+      <button class="save-btn" id="taskSaveBtn">Save Task</button>
     </div>
   </div>
 </div>
@@ -647,6 +700,15 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
       return;
     }
 
+    if(a.dataset.view==='clients'){
+      document.querySelectorAll('#sideNav a').forEach(function(l){l.classList.remove('active')});
+      a.classList.add('active');
+      currentView='clients';
+      showClientsView();
+      sidebar.classList.remove('open');sidebarOverlay.classList.remove('open');
+      return;
+    }
+
     if(!a.dataset.filter) return;
     document.querySelectorAll('#sideNav a').forEach(function(l){l.classList.remove('active')});
     a.classList.add('active');
@@ -661,16 +723,27 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
     document.getElementById('candidatesWrap').style.display='none';
     document.getElementById('jobsWrap').style.display='block';
     document.getElementById('queriesWrap').style.display='none';
+    document.getElementById('clientsWrap').style.display='none';
   }
   function showCandidatesView(){
     document.getElementById('jobsWrap').style.display='none';
     document.getElementById('candidatesWrap').style.display='block';
     document.getElementById('queriesWrap').style.display='none';
+    document.getElementById('clientsWrap').style.display='none';
   }
   function showQueriesView(){
     document.getElementById('candidatesWrap').style.display='none';
     document.getElementById('jobsWrap').style.display='none';
     document.getElementById('queriesWrap').style.display='block';
+    document.getElementById('clientsWrap').style.display='none';
+  }
+  function showClientsView(){
+    document.getElementById('candidatesWrap').style.display='none';
+    document.getElementById('jobsWrap').style.display='none';
+    document.getElementById('queriesWrap').style.display='none';
+    document.getElementById('clientsWrap').style.display='block';
+    initClientPicker();
+    loadClientTasks();
   }
 
   // ===== CHIP FILTERS =====
@@ -838,6 +911,182 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
         loadJobs();
       }catch(err){console.error(err)}
     }
+  });
+
+  // ===== CLIENT CHECKLISTS MANAGEMENT =====
+  var CL_LIST=[
+    {id:'envirosystech',label:'Envirosys Technologies'},
+    {id:'zyppyn',label:'Zyppyn'}
+  ];
+  var CL_STATUS={pending:'Pending',in_progress:'In Progress',done:'Done',blocked:'Blocked'};
+  var clientTasks=[],clientComments=[],currentClientId='envirosystech',editingTaskId=null;
+
+  function numOf(s){ var m=String(s||'').match(/\d+/); return m?m[0]:'•'; }
+
+  function initClientPicker(){
+    var sel=document.getElementById('clientPicker');
+    sel.innerHTML=CL_LIST.map(function(c){return '<option value="'+c.id+'">'+esc(c.label)+'</option>'}).join('');
+    sel.value=currentClientId;
+  }
+
+  async function loadClientTasks(){
+    var wrap=document.getElementById('clientTaskList');
+    wrap.innerHTML='<div style="color:var(--muted);padding:24px">Loading…</div>';
+    try{
+      var r1=await supabase.from('client_tasks').select('*').eq('client_id',currentClientId).order('sort_order',{ascending:true});
+      if(r1.error) throw r1.error;
+      clientTasks=r1.data||[];
+      var r2=await supabase.from('client_comments').select('*').eq('client_id',currentClientId).order('created_at',{ascending:true});
+      clientComments=r2.error?[]:(r2.data||[]);
+    }catch(e){
+      console.error(e);
+      wrap.innerHTML='<div style="color:var(--muted);padding:24px">Could not load. Make sure the setup SQL has been run.<br><span style="font-size:12px">'+esc(e.message||e)+'</span></div>';
+      return;
+    }
+    renderClientTasks();
+  }
+
+  function taskRow(t){
+    var cs=clientComments.filter(function(c){return c.task_id===t.id;});
+    var cm=cs.map(function(c){
+      return '<div style="font-size:12px;margin-top:4px;background:#f7f8fc;border:1px solid var(--border);border-radius:8px;padding:6px 9px">'+
+        '<strong style="color:var(--purple)">'+esc(c.author||'Client')+'</strong> <span style="color:var(--muted)">'+esc(c.body)+'</span></div>';
+    }).join('');
+    return '<div style="display:flex;gap:12px;align-items:flex-start;padding:11px 18px;border-top:1px solid #eef0f7">'+
+      '<select class="cl-status" data-id="'+t.id+'" style="padding:5px 8px;border-radius:8px;border:1px solid var(--border);font-size:12px;flex-shrink:0;margin-top:1px">'+
+        ['pending','in_progress','done','blocked'].map(function(s){return '<option value="'+s+'"'+(t.status===s?' selected':'')+'>'+CL_STATUS[s]+'</option>'}).join('')+
+      '</select>'+
+      '<div style="flex:1;min-width:0">'+
+        '<div style="font-weight:600;font-size:13px">'+esc(t.title)+'</div>'+
+        (t.description?'<div style="color:var(--muted);font-size:12px;margin-top:2px">'+esc(t.description)+'</div>':'')+
+        cm+
+      '</div>'+
+      '<div style="display:flex;gap:6px;flex-shrink:0">'+
+        '<button class="edit-task" data-id="'+t.id+'" style="padding:5px 10px;border-radius:8px;border:1px solid var(--border);background:#fff;font-size:12px">Edit</button>'+
+        '<button class="danger delete-task" data-id="'+t.id+'" style="padding:5px 10px;border-radius:8px;border:1px solid #f3c4c4;background:#fff;color:#c0392b;font-size:12px">Delete</button>'+
+      '</div>'+
+    '</div>';
+  }
+
+  function renderClientTasks(){
+    var wrap=document.getElementById('clientTaskList');
+    if(!clientTasks.length){ wrap.innerHTML='<div style="text-align:center;color:var(--muted);padding:40px">No tasks yet. Click "+ New Task" to add one.</div>'; return; }
+    var sessions=[];
+    clientTasks.forEach(function(t){
+      var sName=t.session||'General';
+      var s=sessions.filter(function(x){return x.name===sName})[0];
+      if(!s){ s={name:sName,weeks:[]}; sessions.push(s); }
+      var w=s.weeks.filter(function(x){return x.name===t.phase})[0];
+      if(!w){ w={name:t.phase,tasks:[]}; s.weeks.push(w); }
+      w.tasks.push(t);
+    });
+    var html='';
+    sessions.forEach(function(s){
+      var sTot=0,sDone=0; s.weeks.forEach(function(w){ w.tasks.forEach(function(t){ sTot++; if(t.status==='done') sDone++; }); });
+      html+='<div style="background:#fff;border:1px solid var(--border);border-radius:14px;margin-bottom:16px;overflow:hidden">';
+      html+='<div style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:#f7f8fc;border-bottom:1px solid var(--border)">'+
+        '<span style="width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-weight:700;color:#fff;background:linear-gradient(135deg,#FFD166,#e0a92e)">'+esc(numOf(s.name))+'</span>'+
+        '<strong style="flex:1;font-size:14px">'+esc(s.name)+'</strong>'+
+        '<span style="color:var(--muted);font-size:12px">'+sDone+' / '+sTot+' done</span>'+
+      '</div>';
+      s.weeks.forEach(function(w){
+        var wDone=w.tasks.filter(function(t){return t.status==='done'}).length;
+        html+='<div style="border-top:1px solid var(--border)">'+
+          '<div style="display:flex;align-items:center;gap:10px;padding:12px 18px 4px">'+
+            '<span style="width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:700;font-size:12px;color:#9a7414;background:#fff;border:1.5px solid #FFD166">'+esc(numOf(w.name))+'</span>'+
+            '<strong style="flex:1;font-size:13px">'+esc(w.name)+'</strong>'+
+            '<span style="color:var(--muted);font-size:12px">'+wDone+' / '+w.tasks.length+'</span>'+
+          '</div>'+
+          '<div>'+w.tasks.map(taskRow).join('')+'</div>'+
+        '</div>';
+      });
+      html+='</div>';
+    });
+    wrap.innerHTML=html;
+  }
+
+  var taskModalOverlay=document.getElementById('taskModalOverlay');
+  document.getElementById('addTaskBtn').addEventListener('click',function(){
+    editingTaskId=null;
+    document.getElementById('taskModalTitle').textContent='New Task';
+    document.getElementById('taskSession').value='';
+    document.getElementById('taskPhase').value='';
+    document.getElementById('taskTitle').value='';
+    document.getElementById('taskDesc').value='';
+    document.getElementById('taskStatus').value='pending';
+    document.getElementById('taskOrder').value='';
+    taskModalOverlay.classList.add('open');
+  });
+  document.getElementById('taskCancelBtn').addEventListener('click',function(){taskModalOverlay.classList.remove('open')});
+  taskModalOverlay.addEventListener('click',function(e){if(e.target===taskModalOverlay)taskModalOverlay.classList.remove('open')});
+
+  document.getElementById('taskSaveBtn').addEventListener('click',async function(){
+    var title=document.getElementById('taskTitle').value.trim();
+    if(!title){alert('Task title is required');return}
+    var maxOrder=clientTasks.reduce(function(m,t){return Math.max(m,t.sort_order||0)},0);
+    var payload={
+      client_id:currentClientId,
+      session:document.getElementById('taskSession').value.trim()||'General',
+      phase:document.getElementById('taskPhase').value.trim()||'General',
+      title:title,
+      description:document.getElementById('taskDesc').value.trim()||null,
+      status:document.getElementById('taskStatus').value,
+      sort_order:parseInt(document.getElementById('taskOrder').value,10)||(maxOrder+10)
+    };
+    try{
+      if(editingTaskId){
+        var up=await supabase.from('client_tasks').update(payload).eq('id',editingTaskId);
+        if(up.error) throw up.error;
+      }else{
+        var ins=await supabase.from('client_tasks').insert(payload);
+        if(ins.error) throw ins.error;
+      }
+      taskModalOverlay.classList.remove('open');
+      loadClientTasks();
+    }catch(e){console.error(e);alert('Failed to save task')}
+  });
+
+  document.getElementById('clientTaskList').addEventListener('change',async function(e){
+    var sel=e.target.closest('.cl-status');
+    if(!sel) return;
+    try{
+      var r=await supabase.from('client_tasks').update({status:sel.value}).eq('id',sel.dataset.id);
+      if(r.error) throw r.error;
+      var t=clientTasks.find(function(x){return x.id===sel.dataset.id});
+      if(t) t.status=sel.value;
+      renderClientTasks();
+    }catch(err){console.error(err);alert('Failed to update status')}
+  });
+
+  document.getElementById('clientTaskList').addEventListener('click',async function(e){
+    var btn=e.target.closest('button');
+    if(!btn) return;
+    var id=btn.dataset.id;
+    var t=clientTasks.find(function(x){return x.id===id});
+    if(!t) return;
+    if(btn.classList.contains('edit-task')){
+      editingTaskId=id;
+      document.getElementById('taskModalTitle').textContent='Edit Task';
+      document.getElementById('taskSession').value=t.session||'';
+      document.getElementById('taskPhase').value=t.phase||'';
+      document.getElementById('taskTitle').value=t.title||'';
+      document.getElementById('taskDesc').value=t.description||'';
+      document.getElementById('taskStatus').value=t.status||'pending';
+      document.getElementById('taskOrder').value=t.sort_order||0;
+      taskModalOverlay.classList.add('open');
+    }else if(btn.classList.contains('delete-task')){
+      if(!confirm('Delete this task?')) return;
+      try{
+        var r=await supabase.from('client_tasks').delete().eq('id',id);
+        if(r.error) throw r.error;
+        loadClientTasks();
+      }catch(err){console.error(err);alert('Failed to delete task')}
+    }
+  });
+
+  document.getElementById('clientPicker').addEventListener('change',function(){
+    currentClientId=this.value;
+    loadClientTasks();
   });
 
   // ===== QUERIES MANAGEMENT =====
