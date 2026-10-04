@@ -141,6 +141,10 @@ footer{position:relative;padding:0;overflow:hidden}.footer-divider{height:2px;ba
 /* ===== WHATSAPP FLOAT ===== */
 .wa-float{position:fixed;right:24px;bottom:88px;z-index:60;display:grid;place-items:center;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold3));color:var(--black);box-shadow:0 6px 22px oklch(78% .16 82/.45);transition:transform .3s var(--spring)}.wa-float:hover{transform:translateY(-4px) scale(1.05)}.wa-float svg{width:33px;height:33px;display:block}
 
+/* ===== CLIENT SPACE FLOAT ===== */
+.cs-float{position:fixed;right:24px;bottom:162px;z-index:60;display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,oklch(20% .03 75),oklch(11% .02 75));border:1px solid var(--gold3);color:var(--gold);font:700 .64rem var(--sans);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;box-shadow:0 6px 22px oklch(0% 0 0/.4);transition:transform .3s var(--spring),box-shadow .3s,border-color .3s}.cs-float:hover{transform:translateY(-4px) scale(1.03);border-color:var(--gold);box-shadow:0 12px 30px oklch(78% .16 82/.35)}.cs-float svg{width:16px;height:16px;display:block}
+@media(max-width:680px){.cs-float{right:16px;bottom:80px;padding:11px 15px;font-size:.6rem}}
+
 /* ===== REVEAL ===== */
 .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s var(--spring),transform .8s var(--spring)}.reveal.show{opacity:1;transform:none}
 
@@ -426,6 +430,12 @@ footer{position:relative;padding:0;overflow:hidden}.footer-divider{height:2px;ba
 </section>
 
 </main>
+
+<!-- ===== CLIENT SPACE FLOAT ===== -->
+<a class="cs-float" href="clients.html" aria-label="Client Space">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Z"/><circle cx="12" cy="11" r="2.3"/><path d="M7.6 16.8c.7-1.8 2.3-2.8 4.4-2.8s3.7 1 4.4 2.8"/></svg>
+  Client Space
+</a>
 
 <!-- ===== WHATSAPP FLOAT ===== -->
 <a class="wa-float" href="https://wa.me/919640248157?text=Hi%20Aeternum%2C%20I%27m%20interested%20in%20your%20services." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
