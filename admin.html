@@ -931,7 +931,8 @@ tbody tr.expanded{background:rgba(132,94,194,.04)}
 
   async function loadClientTasks(){
     var wrap=document.getElementById('clientTaskList');
-    wrap.innerHTML='<div style="color:var(--muted);padding:24px">Loading…</div>';
+    var sk=''; for(var i=0;i<4;i++){ sk+='<div class="card-skeleton"><div class="sk-line skeleton"></div><div class="sk-line skeleton short"></div><div class="sk-line skeleton"></div></div>'; }
+    wrap.innerHTML='<div class="job-manage-grid">'+sk+'</div>';
     try{
       var r1=await supabase.from('client_tasks').select('*').eq('client_id',currentClientId).order('sort_order',{ascending:true});
       if(r1.error) throw r1.error;
