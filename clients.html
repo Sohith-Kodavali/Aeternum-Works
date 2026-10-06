@@ -31,6 +31,8 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
 input{font:inherit}
 img{display:block;max-width:100%}
 ::selection{background:oklch(78% .16 82/.3)}
+:focus-visible{outline:2px solid var(--sapphire);outline-offset:2px}
+button:focus-visible,a:focus-visible,.cbtn:focus-visible,.gate-btn:focus-visible{outline-offset:3px}
 
 /* ===== BACKDROP ===== */
 .bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
@@ -138,6 +140,17 @@ img{display:block;max-width:100%}
 .panel+.panel{margin-top:22px}
 .ws-progress{height:6px;background:oklch(10% .016 75);border-radius:999px;overflow:hidden;margin:16px 26px 0}
 .ws-progress-bar{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--gold3),var(--gold));transition:width .5s var(--ease)}
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:14px 26px 2px}
+.legend .lg-item{display:inline-flex;align-items:center}
+.legend .lg-note{font-size:.68rem;color:var(--muted);flex-basis:100%}
+@media(min-width:720px){.legend .lg-note{flex-basis:auto;margin-left:auto}}
+.sprog{display:inline-flex;align-items:center;gap:9px;flex-shrink:0}
+.sprog .sp-bar{width:72px;height:5px;border-radius:999px;background:#ece3d3;overflow:hidden}
+.sprog .sp-fill{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--gold3),var(--gold));transition:width .5s var(--ease)}
+.sprog .sp-txt{font:.54rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.cur-badge{flex-shrink:0;font:.5rem var(--mono);font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--gold3);padding:3px 8px;border-radius:999px}
+.week.current{background:oklch(97.6% .022 84)}
+#taskList{padding-top:16px}
 .phase{border-top:1px solid var(--softline);margin-top:6px}
 .phase:first-child{border-top:0}
 .phase-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 26px 8px}
@@ -147,8 +160,7 @@ img{display:block;max-width:100%}
 .task{display:flex;gap:14px;padding:13px 26px;border-top:1px solid var(--softline);transition:background .2s}
 .task:hover{background:oklch(13% .02 75/.5)}
 .task:first-child{border-top:0}
-.status-pill{flex-shrink:0;height:26px;padding:0 12px;border-radius:999px;font:.52rem var(--mono);letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--softline);transition:transform .2s,box-shadow .2s}
-.status-pill:hover{transform:translateY(-1px)}
+.status-pill{flex-shrink:0;display:inline-flex;align-items:center;height:24px;padding:0 11px;border-radius:999px;font:.55rem var(--mono);letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--softline);cursor:default}
 .status-pending{color:var(--dim);border-color:var(--softline)}
 .status-in_progress{color:var(--gold);border-color:var(--gold3);background:oklch(78% .16 82/.08)}
 .status-done{color:var(--emerald);border-color:oklch(45% .1 158/.6);background:oklch(66% .18 158/.08)}
@@ -189,6 +201,9 @@ img{display:block;max-width:100%}
   .hub-head{margin-bottom:30px}
   .ws-head .cc-status{margin-left:0}
   .panel-body{padding:48px 22px}
+  .field input,.comment-form input,.add-row input,#cName,#cBody{font-size:16px}
+  .session-head{flex-wrap:wrap}
+  .sprog{margin-left:0;flex-basis:100%}
 }
 
 /* ==========================================================================
@@ -270,10 +285,10 @@ body{background:var(--black);color:var(--white)}
 .week-head h4{flex:1}
 .week-head .count{margin-left:auto}
 .week-head .wnum{flex-shrink:0;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font:700 .8rem/1 var(--sans);color:var(--gold);background:#fff;border:1.5px solid var(--gold3)}
-.cbtn{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;padding:4px 9px;border-radius:8px;color:var(--gold3);border:1px solid var(--softline);background:#fff;transition:color .2s,border-color .2s}
-.cbtn:hover{color:var(--gold);border-color:var(--gold3)}
-.cbtn svg{width:15px;height:15px;display:block}
-.cnum{font:.56rem var(--mono);color:var(--gold)}
+.cbtn{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;min-height:34px;padding:7px 13px;border-radius:9px;font:.6rem var(--mono);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold3);border:1px solid var(--softline);background:#fff;transition:color .2s,border-color .2s,background .2s;touch-action:manipulation}
+.cbtn:hover{color:var(--gold);border-color:var(--gold3);background:#fdfaf3}
+.cbtn svg{width:15px;height:15px;display:block;flex-shrink:0}
+.cbtn .cnum{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:999px;font:.56rem var(--mono);color:#fff;background:var(--gold3)}
 
 /* ===== SKELETON LOADERS ===== */
 .skl{position:relative;overflow:hidden;background:#ece4d5;border-radius:8px}
@@ -378,6 +393,13 @@ body{background:var(--black);color:var(--white)}
     <div class="panel" id="checklistPanel">
       <div class="panel-head"><h3>Project Checklist</h3><span class="tag" id="wsProgressLabel">Loading…</span></div>
       <div class="ws-progress"><div class="ws-progress-bar" id="wsProgressBar"></div></div>
+      <div class="legend" id="statusLegend">
+        <span class="lg-item"><span class="status-pill status-pending">Pending</span></span>
+        <span class="lg-item"><span class="status-pill status-in_progress">In progress</span></span>
+        <span class="lg-item"><span class="status-pill status-done">Done</span></span>
+        <span class="lg-item"><span class="status-pill status-blocked">Blocked</span></span>
+        <span class="lg-note">Read-only tracker. Aeternum keeps these statuses up to date.</span>
+      </div>
       <div id="taskList"><div class="empty">Loading checklist…</div></div>
     </div>
 
@@ -386,7 +408,7 @@ body{background:var(--black);color:var(--white)}
       <div class="panel-head"><h3>Comments</h3><span class="tag">Visible to Aeternum &amp; you</span></div>
       <div class="thread general" id="generalThread"></div>
       <div class="cblock" style="padding:4px 26px 20px">
-        <button class="cbtn" data-act="ctoggle" data-key="general" title="Add a comment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></button>
+        <button class="cbtn" data-act="ctoggle" data-key="general" aria-label="Add a comment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span>Add comment</span></button>
         <div class="comment-form hidden" data-cbox="general">
           <input type="text" id="cName" placeholder="Your name">
           <input type="text" id="cBody" placeholder="Add a comment…">
@@ -609,7 +631,7 @@ body{background:var(--black);color:var(--white)}
     wsClientId=id;
     var listEl=document.getElementById('taskList');
     listEl.innerHTML=skeletonChecklist();
-    document.getElementById('wsProgressLabel').textContent='Loading…';
+    document.getElementById('wsProgressLabel').textContent='Loading tasks…';
     if(!sb){ listEl.innerHTML='<div class="empty">Checklist unavailable — Supabase not connected.</div>'; document.getElementById('wsProgressLabel').textContent='Offline'; return; }
     Promise.all([
       sb.from('client_tasks').select('*').eq('client_id',id).order('sort_order',{ascending:true}),
@@ -618,8 +640,8 @@ body{background:var(--black);color:var(--white)}
       var err=(r[0]&&r[0].error)||(r[1]&&r[1].error);
       if(err){
         console.error(err);
-        listEl.innerHTML='<div class="empty">Checklist not set up yet. Run the Supabase setup SQL (supabase_client_space.sql), then refresh.<br><span style="opacity:.6">'+esc(err.message||'')+'</span></div>';
-        document.getElementById('wsProgressLabel').textContent='Not set up';
+        listEl.innerHTML='<div class="empty">This checklist isn\'t available yet. Please refresh in a moment.</div>';
+        document.getElementById('wsProgressLabel').textContent='Unavailable';
         return;
       }
       wsTasks=(r[0]&&r[0].data)||[];
@@ -636,10 +658,10 @@ body{background:var(--black);color:var(--white)}
     var done=wsTasks.filter(function(t){return t.status==='done';}).length;
     var pct=total?Math.round(done/total*100):0;
     document.getElementById('wsProgressBar').style.width=pct+'%';
-    document.getElementById('wsProgressLabel').textContent=done+' / '+total+' done · '+pct+'%';
+    document.getElementById('wsProgressLabel').textContent='Overall · '+done+' / '+total+' done · '+pct+'%';
 
     var listEl=document.getElementById('taskList');
-    if(!total){ listEl.innerHTML='<div class="empty">No tasks yet.</div>'; renderGeneral(); return; }
+    if(!total){ listEl.innerHTML='<div class="empty">No tasks yet. Aeternum will add them here as the project starts.</div>'; renderGeneral(); return; }
 
     var sessions=[];
     wsTasks.forEach(function(t){
@@ -651,16 +673,28 @@ body{background:var(--black);color:var(--white)}
       w.tasks.push(t);
     });
 
+    var curS=null,curW=null,foundCur=false;
+    for(var a=0;a<sessions.length&&!foundCur;a++){
+      for(var b=0;b<sessions[a].weeks.length&&!foundCur;b++){
+        for(var c=0;c<sessions[a].weeks[b].tasks.length;c++){
+          if(sessions[a].weeks[b].tasks[c].status!=='done'){ curS=sessions[a].name; curW=sessions[a].weeks[b].name; foundCur=true; break; }
+        }
+      }
+    }
+
     var html='';
     sessions.forEach(function(s){
       var sTasks=[]; s.weeks.forEach(function(w){ sTasks=sTasks.concat(w.tasks); });
       var sDone=sTasks.filter(function(t){return t.status==='done';}).length;
+      var sPct=sTasks.length?Math.round(sDone/sTasks.length*100):0;
       html+='<div class="session">';
-      html+='<div class="session-head"><span class="snum">'+esc(numOf(s.name))+'</span><h3>'+esc(s.name)+'</h3><span class="count">'+sDone+' / '+sTasks.length+' done</span></div>';
+      html+='<div class="session-head"><span class="snum">'+esc(numOf(s.name))+'</span><h3>'+esc(s.name)+'</h3>'+
+        '<span class="sprog"><span class="sp-bar"><span class="sp-fill" style="width:'+sPct+'%"></span></span><span class="sp-txt">'+sDone+' / '+sTasks.length+' done</span></span></div>';
       html+=commentBlock('session',{session:s.name},'cblock-session');
       s.weeks.forEach(function(w){
         var wDone=w.tasks.filter(function(t){return t.status==='done';}).length;
-        html+='<div class="week"><div class="week-head"><span class="wnum">'+esc(numOf(w.name))+'</span><h4>'+esc(w.name)+'</h4><span class="count">'+wDone+' / '+w.tasks.length+' done</span></div>';
+        var cur=(s.name===curS&&w.name===curW);
+        html+='<div class="week'+(cur?' current':'')+'"><div class="week-head"><span class="wnum">'+esc(numOf(w.name))+'</span><h4>'+esc(w.name)+'</h4>'+(cur?'<span class="cur-badge">In progress</span>':'')+'<span class="count">'+wDone+' / '+w.tasks.length+' done</span></div>';
         html+=commentBlock('week',{session:s.name,phase:w.name},'cblock-week');
         html+='<div class="tasks">';
         w.tasks.forEach(function(t){ html+=taskHtml(t); });
@@ -694,7 +728,7 @@ body{background:var(--black);color:var(--white)}
     var key=ckey(level,keys);
     return '<div class="cblock '+(cls||'')+'">'+
       (cs.length?cs.map(commentHtml).join(''):'')+
-      '<button class="cbtn" data-act="ctoggle" data-key="'+esc(key)+'" title="Add a comment">'+ICON_COMMENT+(cs.length?'<span class="cnum">'+cs.length+'</span>':'')+'</button>'+
+      '<button class="cbtn" data-act="ctoggle" data-key="'+esc(key)+'" aria-label="Add a comment">'+ICON_COMMENT+'<span>Add comment</span>'+(cs.length?'<span class="cnum">'+cs.length+'</span>':'')+'</button>'+
       '<div class="comment-form hidden" data-cbox="'+esc(key)+'">'+
         '<input type="text" placeholder="Add a comment…">'+
         '<button class="send"'+commentAttrs(level,keys)+'>Post</button>'+
@@ -721,7 +755,7 @@ body{background:var(--black);color:var(--white)}
 
   function renderGeneral(){
     var g=wsComments.filter(function(c){return !c.task_id && !c.phase && !c.session;});
-    document.getElementById('generalThread').innerHTML=g.length?g.map(commentHtml).join(''):'<div class="cnone">No comments yet.</div>';
+    document.getElementById('generalThread').innerHTML=g.length?g.map(commentHtml).join(''):'<div class="cnone">No comments yet. Add the first one below.</div>';
   }
 
   document.getElementById('taskList').addEventListener('click',function(e){
