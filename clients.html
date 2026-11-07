@@ -116,36 +116,44 @@ button:focus-visible,a:focus-visible,.cbtn:focus-visible,.gate-btn:focus-visible
 .client-card:hover .cc-open{gap:15px}
 .hub-foot{margin-top:56px;padding-top:24px;border-top:1px solid var(--softline);font:.54rem var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gold3);opacity:.7}
 
-/* ===== WORKSPACE (desktop-first, left dashboard) ===== */
-.ws{flex:1;width:min(1440px,calc(100% - 56px));margin:0 auto;padding:36px 0 80px}
-.ws-layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:28px;align-items:start}
-.sidebar{position:sticky;top:24px;display:flex;flex-direction:column;gap:18px}
-.side-card{border:1px solid var(--softline);border-radius:22px;background:linear-gradient(180deg,#ffffff,#fbf7ef);box-shadow:var(--shadow);padding:22px;overflow:hidden}
-.side-brand{display:flex;align-items:center;gap:14px;padding-bottom:18px;border-bottom:1px solid var(--softline);margin-bottom:18px}
-.side-brand .client-monogram{width:54px;height:54px;border-radius:16px;font-size:1.5rem;flex-shrink:0}
-.side-brand h1{font:600 1.35rem/1.1 var(--serif);letter-spacing:-.01em}
-.side-brand .cc-tag{font-size:.68rem;color:var(--dim);margin-top:3px}
-.side-label{font:.56rem var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--gold3);margin-bottom:10px}
-.side-nav{display:flex;flex-direction:column;gap:8px}
-.side-nav button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:14px 16px;border-radius:14px;border:1px solid var(--softline);background:#fff;transition:all .25s}
-.side-nav button:hover{border-color:var(--gold3)}
-.side-nav button.active{border-color:var(--gold3);background:linear-gradient(135deg,oklch(78% .16 82/.12),oklch(78% .16 82/.04));box-shadow:inset 0 0 0 1px oklch(70% .12 78/.25)}
-.side-nav button .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#f4eee2;color:var(--gold);flex-shrink:0;font-size:1rem}
+/* ===== WORKSPACE — collapsible left sidebar, desktop-first ===== */
+.ws{flex:1;width:min(1560px,100%);margin:0 auto;padding:28px 28px 80px}
+.ws-layout{display:grid;grid-template-columns:288px minmax(0,1fr);gap:26px;align-items:start;transition:grid-template-columns .45s var(--ease)}
+.ws-layout.collapsed{grid-template-columns:0 minmax(0,1fr);gap:0}
+.sidebar{position:sticky;top:22px;display:flex;flex-direction:column;gap:16px;min-width:0;opacity:1;transform:none;transition:opacity .3s,transform .35s var(--ease)}
+.ws-layout.collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-events:none;overflow:hidden}
+.side-card{border:1px solid var(--softline);border-radius:18px;background:linear-gradient(180deg,#ffffff,#fbf7ef);box-shadow:var(--shadow);padding:20px}
+.side-brand{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--softline);margin-bottom:16px}
+.side-brand .client-monogram{width:48px;height:48px;border-radius:14px;font-size:1.3rem;flex-shrink:0}
+.side-brand h1{font:600 1.2rem/1.1 var(--serif);letter-spacing:-.01em}
+.side-brand .cc-tag{font-size:.64rem;color:var(--dim);margin-top:3px}
+.side-label{font:.54rem var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--gold3);margin-bottom:9px}
+.side-nav{display:flex;flex-direction:column;gap:6px}
+.side-nav button{display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:12px 13px;border-radius:12px;border:1px solid transparent;background:transparent;transition:all .22s}
+.side-nav button:hover{background:#f8f3e8;border-color:var(--softline)}
+.side-nav button.active{background:linear-gradient(135deg,oklch(78% .16 82/.14),oklch(78% .16 82/.05));border-color:oklch(70% .12 78/.35)}
+.side-nav button .ic{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:#f4eee2;color:var(--gold);flex-shrink:0;font-size:.95rem}
 .side-nav button.active .ic{background:var(--gold);color:#241d12}
-.side-nav button .t{font-size:.84rem;font-weight:700;color:var(--white)}
-.side-nav button .d{display:block;font-size:.66rem;font-weight:400;color:var(--muted);margin-top:2px}
-.side-nav button .wip{margin-left:auto;flex-shrink:0;font:.5rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold3);padding:4px 8px;border-radius:999px}
-.side-progress .big{font:600 1.9rem/1 var(--serif);color:var(--gold);margin:4px 0 8px}
-.side-progress .bar{height:6px;border-radius:999px;background:#ece3d3;overflow:hidden;margin-bottom:10px}
+.side-nav button .t{font-size:.82rem;font-weight:700;color:var(--white);line-height:1.2}
+.side-nav button .d{display:block;font-size:.64rem;font-weight:400;color:var(--muted);margin-top:2px}
+.side-nav button .wip{margin-left:auto;flex-shrink:0;font:.48rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold3);padding:3px 7px;border-radius:999px}
+.side-progress .big{font:600 1.7rem/1 var(--serif);color:var(--gold);margin:2px 0 8px}
+.side-progress .bar{height:6px;border-radius:999px;background:#ece3d3;overflow:hidden;margin-bottom:9px}
 .side-progress .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold3),var(--gold));transition:width .5s var(--ease)}
-.side-progress p{font-size:.72rem;color:var(--muted);line-height:1.6}
-.week-now{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--softline)}
-.week-now .l{font:.54rem var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
-.week-now .v{font:700 .78rem var(--sans);color:var(--gold)}
+.side-progress p{font-size:.7rem;color:var(--muted);line-height:1.55}
+.week-now{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--softline)}
+.week-now .l{font:.52rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.week-now .v{font:700 .76rem var(--sans);color:var(--gold)}
 .ws-main{min-width:0}
-.ws-main .ws-head{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:22px}
-.ws-main .ws-head h2{font:600 clamp(1.7rem,3vw,2.3rem)/1.05 var(--serif);letter-spacing:-.02em}
-.ws-main .ws-head p{font-size:.8rem;color:var(--muted);margin-top:6px;max-width:560px;line-height:1.65}
+.ws-main .ws-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.ws-main .ws-head h2{font:600 clamp(1.6rem,2.6vw,2.1rem)/1.05 var(--serif);letter-spacing:-.02em}
+.ws-main .ws-head p{font-size:.78rem;color:var(--muted);margin-top:5px;max-width:580px;line-height:1.6}
+/* sidebar toggle */
+.side-toggle{display:inline-flex;align-items:center;gap:9px;padding:10px 16px;border-radius:11px;border:1px solid var(--softline);background:#fff;transition:all .25s;flex-shrink:0}
+.side-toggle:hover{border-color:var(--gold3);color:var(--gold)}
+.side-toggle .bars{display:grid;gap:4px}
+.side-toggle .bars i{display:block;width:18px;height:2px;background:currentColor;border-radius:2px;transition:transform .3s,opacity .3s}
+.ws-layout.collapsed ~ *{}
 .pane{display:none}.pane.active{display:block;animation:viewIn .4s var(--ease) both}
 .wip-card{padding:56px 36px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
 .wip-card .ph-icon{font-size:2rem;color:var(--gold);filter:drop-shadow(0 0 14px oklch(78% .16 82/.4))}
@@ -179,7 +187,8 @@ button:focus-visible,a:focus-visible,.cbtn:focus-visible,.gate-btn:focus-visible
 .sprog .sp-fill{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--gold3),var(--gold));transition:width .5s var(--ease)}
 .sprog .sp-txt{font:.54rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 .cur-badge{flex-shrink:0;font:.5rem var(--mono);font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--gold3);padding:3px 8px;border-radius:999px}
-.week.current{background:oklch(97.6% .022 84)}
+/* current week: same colors as every other week — only the badge marks it */
+.week.current{background:transparent}
 #taskList{padding-top:16px}
 .phase{border-top:1px solid var(--softline);margin-top:6px}
 .phase:first-child{border-top:0}
@@ -440,7 +449,10 @@ body{background:var(--black);color:var(--white)}
       <div class="ws-main">
         <div class="ws-head">
           <div><h2 id="paneTitle">Work Progress</h2><p id="paneSub">Live checklist for this project — statuses are kept up to date by Aeternum. You can comment on any task, week, or session.</p></div>
-          <span class="cc-status"><span class="dot"></span>Active</span>
+          <div style="display:flex;align-items:center;gap:10px;margin-left:auto">
+            <button class="side-toggle" id="sideToggle" aria-label="Toggle dashboard"><span class="bars"><i></i><i></i><i></i></span><span id="sideToggleLabel">Hide</span></button>
+            <span class="cc-status"><span class="dot"></span>Active</span>
+          </div>
         </div>
 
         <div class="pane active" id="pane-progress">
@@ -687,6 +699,13 @@ body{background:var(--black);color:var(--white)}
   }
   document.querySelector('.side-nav').addEventListener('click',function(e){
     var b=e.target.closest('[data-pane]'); if(b) setPane(b.dataset.pane);
+  });
+
+  // ===== SIDEBAR COLLAPSE =====
+  document.getElementById('sideToggle').addEventListener('click',function(){
+    var layout=document.querySelector('.ws-layout');
+    layout.classList.toggle('collapsed');
+    document.getElementById('sideToggleLabel').textContent=layout.classList.contains('collapsed')?'Show':'Hide';
   });
 
   // ===== CHECKLIST + COMMENTS =====
