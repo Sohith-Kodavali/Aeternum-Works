@@ -59,15 +59,63 @@ create index if not exists client_tasks_client_idx    on public.client_tasks (cl
 create index if not exists client_comments_client_idx on public.client_comments (client_id, created_at);
 
 -- ---------------------------------------------------------------------------
+-- client_projects  (Project Details pane — one row per client)
+-- ---------------------------------------------------------------------------
+create table if not exists public.client_projects (
+  client_id     text primary key,                     -- e.g. 'envirosystech'
+  name          text,                                 -- project / brand name shown in the hero
+  tagline       text,                                 -- one-line summary
+  status        text not null default 'active',       -- active | in_progress | completed | on_hold
+  description   text,                                 -- longer "about this project" paragraph
+  industry      text,
+  services      text[] default '{}',                  -- scope chips, e.g. {SEO,"Web Development"}
+  project_lead  text,
+  contact_name  text,
+  contact_email text,
+  contact_phone text,
+  website       text,
+  location      text,
+  start_date    date,
+  due_date      date,
+  created_at    timestamptz not null default now(),
+  updated_at    timestamptz not null default now()
+);
+
+-- ---------------------------------------------------------------------------
+-- client_invoices  (Payment Invoices pane)
+-- ---------------------------------------------------------------------------
+create table if not exists public.client_invoices (
+  id          uuid primary key default gen_random_uuid(),
+  client_id   text not null,
+  invoice_no  text not null,                          -- e.g. 'INV-2026-001'
+  title       text,                                   -- e.g. 'Session 1 — Website audit & fixes'
+  period      text,                                   -- e.g. 'Session 1 · Weeks 1–2'
+  amount      numeric(12,2) not null default 0,
+  currency    text not null default 'USD',
+  status      text not null default 'pending',        -- draft | pending | paid | overdue
+  issue_date  date,
+  due_date    date,
+  paid_at     timestamptz,
+  notes       text,
+  file_url    text,                                   -- public/link URL to the invoice PDF
+  created_at  timestamptz not null default now()
+);
+
+create index if not exists client_projects_client_idx on public.client_projects (client_id);
+create index if not exists client_invoices_client_idx on public.client_invoices (client_id, issue_date);
+
+-- ---------------------------------------------------------------------------
 -- Row Level Security
 --   The console talks to Supabase with the anon key, so anon needs access.
 --   NOTE: this means anyone holding the anon key can read/write these rows.
---   The page is still gated by the client password, but for anything
+--   The page is still gated by the access ID + project name, but for anything
 --   sensitive, move to Supabase Auth + per-user policies later.
 -- ---------------------------------------------------------------------------
 alter table public.settings        enable row level security;
 alter table public.client_tasks    enable row level security;
 alter table public.client_comments enable row level security;
+alter table public.client_projects enable row level security;
+alter table public.client_invoices enable row level security;
 
 drop policy if exists settings_all on public.settings;
 create policy settings_all on public.settings
@@ -81,11 +129,21 @@ drop policy if exists client_comments_all on public.client_comments;
 create policy client_comments_all on public.client_comments
   for all using (true) with check (true);
 
+drop policy if exists client_projects_all on public.client_projects;
+create policy client_projects_all on public.client_projects
+  for all using (true) with check (true);
+
+drop policy if exists client_invoices_all on public.client_invoices;
+create policy client_invoices_all on public.client_invoices
+  for all using (true) with check (true);
+
 -- Explicit grants so the anon key can actually use the new tables/sequences
 grant usage on schema public to anon, authenticated;
 grant all privileges on public.settings        to anon, authenticated;
 grant all privileges on public.client_tasks    to anon, authenticated;
 grant all privileges on public.client_comments to anon, authenticated;
+grant all privileges on public.client_projects to anon, authenticated;
+grant all privileges on public.client_invoices to anon, authenticated;
 grant all privileges on all sequences in schema public to anon, authenticated;
 
 -- ---------------------------------------------------------------------------
@@ -101,6 +159,11 @@ $$ language plpgsql;
 drop trigger if exists client_tasks_touch on public.client_tasks;
 create trigger client_tasks_touch
   before update on public.client_tasks
+  for each row execute function public.touch_updated_at();
+
+drop trigger if exists client_projects_touch on public.client_projects;
+create trigger client_projects_touch
+  before update on public.client_projects
   for each row execute function public.touch_updated_at();
 
 -- ============================================================================
@@ -161,3 +224,54 @@ insert into public.client_tasks (client_id, session, phase, title, description, 
 --  Done. Refresh clients.html — the Envirosys workspace shows Session ->
 --  Week -> Task, each with its own comment box.
 -- ============================================================================
+
+-- ============================================================================
+--  PROJECT DETAILS — template (fill in, then run once per client)
+--  client_id: 'envirosystech' | 'zyppyn'
+-- ============================================================================
+-- insert into public.client_projects
+--   (client_id, name, tagline, status, description, industry, services,
+--    project_lead, contact_name, contact_email, contact_phone, website, location,
+--    start_date, due_date)
+-- values
+--   ('envirosystech',
+--    'Envirosys Technologies',
+--    'One-line summary of the engagement.',
+--    'active',
+--    'Longer paragraph describing the project, scope and goals.',
+--    'Environmental & engineering consulting',
+--    array['Website audit','Technical SEO','On-page SEO','Local SEO','Content'],
+--    'Project lead name',
+--    'Client contact name',
+--    'contact@example.com',
+--    '+1 555 000 0000',
+--    'https://example.com',
+--    'Gaithersburg, Maryland, USA',
+--    '2026-01-05',
+--    '2026-02-06')
+-- on conflict (client_id) do update set
+--   name=excluded.name, tagline=excluded.tagline, status=excluded.status,
+--   description=excluded.description, industry=excluded.industry, services=excluded.services,
+--   project_lead=excluded.project_lead, contact_name=excluded.contact_name,
+--   contact_email=excluded.contact_email, contact_phone=excluded.contact_phone,
+--   website=excluded.website, location=excluded.location,
+--   start_date=excluded.start_date, due_date=excluded.due_date;
+
+-- ============================================================================
+--  PAYMENT INVOICES — template
+--  status: draft | pending | paid | overdue
+-- ============================================================================
+-- insert into public.client_invoices
+--   (client_id, invoice_no, title, period, amount, currency, status, issue_date, due_date, file_url)
+-- values
+--   ('envirosystech',
+--    'INV-2026-001',
+--    'Session 1 — Website audit & fixes',
+--    'Session 1 · Weeks 1–2',
+--    1200.00,
+--    'USD',
+--    'pending',
+--    '2026-01-05',
+--    '2026-01-19',
+--    null);
+
