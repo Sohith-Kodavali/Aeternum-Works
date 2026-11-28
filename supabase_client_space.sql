@@ -226,20 +226,17 @@ insert into public.client_tasks (client_id, session, phase, title, description, 
 --   even before these tables exist. Running this makes the DB the source.)
 -- ============================================================================
 insert into public.client_projects
-  (client_id, name, tagline, status, description, industry, services, location)
+  (client_id, name, tagline, status, services)
 values
   ('envirosystech',
    'Envirosys Technologies, LLC',
    'Website audit, technical SEO and on-page optimization for a Maryland-based environmental & engineering consultancy.',
    'active',
-   'A multi-session engagement covering a full website audit and issue register, technical SEO foundations, on-page optimization, local SEO and a final handover report.',
-   'Environmental & engineering consulting',
-   array['Website audit','Technical SEO','On-page SEO','Local SEO','Content'],
-   'Gaithersburg, Maryland, USA')
+   array['Website audit','Technical SEO','On-page SEO','Local SEO','Content'])
 on conflict (client_id) do update set
   name=excluded.name, tagline=excluded.tagline, status=excluded.status,
-  description=excluded.description, industry=excluded.industry,
-  services=excluded.services, location=excluded.location;
+  services=excluded.services,
+  description=null, industry=null, location=null;
 
 delete from public.client_invoices where client_id = 'envirosystech';
 
