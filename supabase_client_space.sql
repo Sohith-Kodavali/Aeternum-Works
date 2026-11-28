@@ -221,6 +221,40 @@ insert into public.client_tasks (client_id, session, phase, title, description, 
 ('envirosystech','Session 3 — Week 5','Week 5 — Off-Page, Reporting & Handover','Handover session & documentation','Walk the client through everything and hand over the docs.', 'pending', 350);
 
 -- ============================================================================
+--  SEED — Envirosys project details + paid invoices
+--  (clients.html ships the same values as a local fallback, so the pane works
+--   even before these tables exist. Running this makes the DB the source.)
+-- ============================================================================
+insert into public.client_projects
+  (client_id, name, tagline, status, description, industry, services, location)
+values
+  ('envirosystech',
+   'Envirosys Technologies, LLC',
+   'Website audit, technical SEO and on-page optimization for a Maryland-based environmental & engineering consultancy.',
+   'active',
+   'A multi-session engagement covering a full website audit and issue register, technical SEO foundations, on-page optimization, local SEO and a final handover report.',
+   'Environmental & engineering consulting',
+   array['Website audit','Technical SEO','On-page SEO','Local SEO','Content'],
+   'Gaithersburg, Maryland, USA')
+on conflict (client_id) do update set
+  name=excluded.name, tagline=excluded.tagline, status=excluded.status,
+  description=excluded.description, industry=excluded.industry,
+  services=excluded.services, location=excluded.location;
+
+delete from public.client_invoices where client_id = 'envirosystech';
+
+insert into public.client_invoices
+  (client_id, invoice_no, title, period, amount, currency, status, issue_date, due_date, paid_at, notes, file_url)
+values
+  ('envirosystech','INV-2026-001','Session 1 — Website audit & fixes','Session 1 · Weeks 1–2',
+   50.00,'USD','paid','2026-10-05','2026-10-05','2026-10-05 21:42+05:30',
+   'UPI transfer · Txn #X37AQPAT · ₹4,804.00 received','envirosys/invoices/payment-05-oct.jpeg'),
+  ('envirosystech','INV-2026-002','Session 2 — On-page & local SEO','Session 2 · Weeks 3–4',
+   200.00,'USD','paid','2026-10-16','2026-10-16','2026-10-16 20:40+05:30',
+   'UPI transfer · Txn #XWT3PZPG · ₹18,869.00 received','envirosys/invoices/payment-16-oct.jpeg');
+
+-- Contract total (900 USD) is set in clients.html → PROJECT_TOTALS.
+-- ============================================================================
 --  Done. Refresh clients.html — the Envirosys workspace shows Session ->
 --  Week -> Task, each with its own comment box.
 -- ============================================================================

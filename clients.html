@@ -157,6 +157,18 @@ button:focus-visible,a:focus-visible,.cbtn:focus-visible,.gate-btn:focus-visible
 .inv-dl:hover{color:var(--gold);border-color:var(--gold3);background:#fdfaf3}
 .inv-dl.none{color:var(--dim);opacity:.55;border-style:dashed}
 .inv-none{font-size:.78rem;color:var(--muted);padding:22px 4px}
+.inv-progress{margin-top:16px;padding:18px 22px;border:1px solid var(--softline);border-radius:18px;background:#fff;box-shadow:var(--shadow)}
+.inv-progress .ip-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.inv-progress .ip-top .k{font:.54rem var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.inv-progress .ip-top .v{font:.68rem var(--mono);letter-spacing:.04em;color:var(--muted)}
+.inv-progress .ip-top .v b{color:var(--gold)}
+.inv-progress .ip-bar{height:8px;border-radius:999px;background:#ece3d3;overflow:hidden;margin-top:12px}
+.inv-progress .ip-bar i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--gold3),var(--gold));box-shadow:0 0 12px oklch(78% .16 82/.35);transition:width .7s var(--ease)}
+.inv-proof{position:relative;display:block;width:78px;height:52px;border-radius:10px;overflow:hidden;border:1px solid var(--softline);background:#f4eee2;flex-shrink:0;transition:border-color .2s,transform .2s,box-shadow .2s}
+.inv-proof img{width:100%;height:100%;object-fit:cover;transition:transform .35s var(--ease)}
+.inv-proof span{position:absolute;left:0;right:0;bottom:0;padding:3px 2px;text-align:center;font:.43rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#fff;background:oklch(30% .04 75/.7);backdrop-filter:blur(3px)}
+.inv-proof:hover{border-color:var(--gold3);transform:translateY(-1px);box-shadow:0 10px 22px oklch(35% .05 75/.18)}
+.inv-proof:hover img{transform:scale(1.07)}
 @media(max-width:860px){
   .inv-row{grid-template-columns:1fr auto;gap:10px 12px}
   .inv-main{grid-column:1/-1}
@@ -166,6 +178,53 @@ button:focus-visible,a:focus-visible,.cbtn:focus-visible,.gate-btn:focus-visible
   .inv-status{grid-column:2;grid-row:2;justify-self:end;align-self:center}
   .inv-dl{grid-column:1/-1;justify-self:start}
   .inv-dl.none{display:none}
+  .inv-proof{grid-column:1/-1;justify-self:start;width:104px;height:66px}
+}
+
+/* ===== MEDIA VIEWER (payment proofs + decks) ===== */
+.modal{position:fixed;inset:0;z-index:120;display:none;padding:24px;background:oklch(16% .02 75/.66);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow-y:auto}
+.modal.open{display:flex;align-items:flex-start;justify-content:center}
+.modal-card{position:relative;width:min(880px,100%);margin:auto;background:linear-gradient(180deg,#fff,#fdfaf3);border:1px solid var(--softline);border-radius:22px;box-shadow:0 40px 96px oklch(18% .03 75/.5);overflow:hidden;animation:viewIn .35s var(--ease) both}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 26px;border-bottom:1px solid var(--softline);background:#fff}
+.modal-eyebrow{font:.54rem var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.modal-head h3{font:600 1.35rem/1.2 var(--serif);letter-spacing:-.01em;margin-top:6px}
+.modal-close{flex-shrink:0;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:1.35rem;line-height:1;color:var(--muted);border:1px solid var(--softline);background:#fff;transition:color .2s,border-color .2s,transform .3s var(--ease)}
+.modal-close:hover{color:var(--rose);border-color:oklch(60% .12 16/.4);transform:rotate(90deg)}
+.modal-body{padding:22px 26px;display:grid;place-items:center;background:#f4eee2}
+.modal-body img{max-width:100%;max-height:70vh;border-radius:12px;border:1px solid var(--softline);background:#fff}
+.modal-body iframe{width:100%;height:70vh;border:1px solid var(--softline);border-radius:12px;background:#fff}
+.modal-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:16px 26px;border-top:1px solid var(--softline);background:#fff}
+.modal-meta{font:.58rem var(--mono);letter-spacing:.06em;color:var(--dim)}
+.modal-link{font:.56rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold3);padding:9px 15px;border-radius:999px;background:#fff;transition:background .2s,color .2s}
+.modal-link:hover{background:oklch(78% .16 82/.12)}
+
+/* ===== PROJECT DOCUMENTS ===== */
+.pd-docs{margin-top:18px}
+.pd-docs-title{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.pd-docs-title .k{font:.54rem var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
+.pd-docs-title .ln{flex:1;height:1px;background:var(--softline)}
+.pd-doc{position:relative;display:flex;gap:20px;align-items:flex-start;padding:24px 26px;border:1px solid var(--softline);border-radius:20px;background:#fff;box-shadow:var(--shadow);overflow:hidden;transition:border-color .2s,transform .2s}
+.pd-doc::after{content:'';position:absolute;top:-60%;right:-8%;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,oklch(84% .1 82/.4),transparent 65%);filter:blur(32px);pointer-events:none}
+.pd-doc:hover{border-color:#d8cdb8;transform:translateY(-1px)}
+.pd-doc-ic{position:relative;flex-shrink:0;width:58px;height:72px;border-radius:10px;display:grid;place-items:center;font:.6rem var(--mono);font-weight:700;letter-spacing:.08em;color:#fff;background:linear-gradient(160deg,var(--gold),var(--gold2));box-shadow:0 10px 22px oklch(56% .12 70/.26)}
+.pd-doc-ic::before{content:'';position:absolute;top:0;right:0;border-style:solid;border-width:0 16px 16px 0;border-color:transparent #fff transparent transparent;opacity:.9}
+.pd-doc-main{position:relative;min-width:0;flex:1}
+.pd-doc-main .k{display:block;font:.52rem var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.pd-doc-main h4{font:600 1.22rem/1.2 var(--serif);letter-spacing:-.01em;margin-top:6px}
+.pd-doc-main p{font-size:.79rem;color:var(--muted);line-height:1.65;margin-top:6px;max-width:540px}
+.pd-doc-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:16px}
+.pd-doc-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 19px;border-radius:999px;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:linear-gradient(135deg,oklch(90% .1 84),var(--gold));box-shadow:0 10px 22px oklch(56% .12 70/.2);transition:transform .2s,box-shadow .2s}
+.pd-doc-btn:hover{transform:translateY(-1px);box-shadow:0 14px 28px oklch(56% .12 70/.3)}
+.pd-doc-link{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;font:.56rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--gold3);border:1px solid var(--softline);background:#fff;transition:color .2s,border-color .2s}
+.pd-doc-link:hover{color:var(--gold);border-color:var(--gold3)}
+@media(max-width:640px){
+  .modal{padding:14px}
+  .modal-head{padding:18px 18px}
+  .modal-body{padding:14px}
+  .modal-body iframe{height:60vh}
+  .modal-foot{padding:14px 18px}
+  .pd-doc{padding:20px 18px;gap:14px}
+  .pd-doc-ic{width:46px;height:58px;font-size:.54rem}
 }
 
 /* ===== WORKSPACE — slide-out left dashboard drawer ===== */
@@ -523,6 +582,18 @@ body{background:var(--black);color:var(--white)}
   </div>
 </aside>
 
+<!-- ===== MEDIA VIEWER ===== -->
+<div class="modal" id="mediaModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="mediaTitle">
+    <div class="modal-head">
+      <div><div class="modal-eyebrow" id="mediaEyebrow">Payment proof</div><h3 id="mediaTitle">Payment</h3></div>
+      <button type="button" class="modal-close" id="mediaClose" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body" id="mediaBody"></div>
+    <div class="modal-foot" id="mediaFoot"></div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
@@ -540,6 +611,43 @@ body{background:var(--black);color:var(--white)}
   var CLIENTS = {
     envirosystech: { name:'Envirosys Technologies', tag:'Client workspace', accent:'emerald',  initial:'E', access:'enviro' },
     zyppyn:        { name:'Zyppyn',                 tag:'Client workspace', accent:'sapphire', initial:'Z', access:'zyppyn' }
+  };
+
+  // ===== CLIENT CONTENT (used when the matching Supabase tables are unavailable/empty) =====
+  var PROJECT_TOTALS = {
+    envirosystech: { total:900, currency:'USD' }
+  };
+  var LOCAL_PROJECTS = {
+    envirosystech: {
+      name:'Envirosys Technologies, LLC',
+      tagline:'Website audit, technical SEO and on-page optimization for a Maryland-based environmental & engineering consultancy.',
+      status:'active',
+      description:'A multi-session engagement covering a full website audit and issue register, technical SEO foundations, on-page optimization, local SEO and a final handover report.',
+      industry:'Environmental & engineering consulting',
+      services:['Website audit','Technical SEO','On-page SEO','Local SEO','Content'],
+      location:'Gaithersburg, Maryland, USA'
+    }
+  };
+  var CLIENT_DOCS = {
+    envirosystech:[{
+      title:'Session 2 & 3 Deck',
+      kind:'Presentation deck · PDF',
+      eyebrow:'Project deck',
+      desc:'The full walkthrough for Sessions 2 and 3 — on-page optimization, local SEO, link building and the reporting handover.',
+      url:'envirosys/project-details/session-2-3-deck.pdf'
+    }]
+  };
+  var LOCAL_INVOICES = {
+    envirosystech:[
+      { invoice_no:'INV-2026-001', title:'Session 1 — Website audit & fixes', period:'Session 1 · Weeks 1–2',
+        amount:50, currency:'USD', status:'paid', issue_date:'2026-10-05', due_date:'2026-10-05', paid_at:'2026-10-05',
+        file_url:'envirosys/invoices/payment-05-oct.jpeg',
+        notes:'UPI transfer · Txn #X37AQPAT · ₹4,804.00 received' },
+      { invoice_no:'INV-2026-002', title:'Session 2 — On-page & local SEO', period:'Session 2 · Weeks 3–4',
+        amount:200, currency:'USD', status:'paid', issue_date:'2026-10-16', due_date:'2026-10-16', paid_at:'2026-10-16',
+        file_url:'envirosys/invoices/payment-16-oct.jpeg',
+        notes:'UPI transfer · Txn #XWT3PZPG · ₹18,869.00 received' }
+    ]
   };
 
   var SPACE_KEY  = 'client_space_authed';
@@ -929,23 +1037,47 @@ body{background:var(--black);color:var(--white)}
   function loadProject(id){
     var el=document.getElementById('projectDetails');
     el.innerHTML=skeletonDetails();
-    if(!sb){ el.innerHTML=emptyCard('◈','Project Details','Project details aren\'t connected yet. Please refresh in a moment.'); return; }
+    var local=LOCAL_PROJECTS[id];
+    var fallback=function(){ if(local){ renderProject(local); return true; } return false; };
+    if(!sb){ if(!fallback()) el.innerHTML=emptyCard('◈','Project Details','Project details aren\'t connected yet. Please refresh in a moment.'); return; }
     sb.from('client_projects').select('*').eq('client_id',id).limit(1).then(function(r){
       if(r&&r.error){
         console.error(r.error);
-        el.innerHTML=emptyCard('◈','Project Details','The project brief isn\'t available yet. It will appear here soon.');
+        if(!fallback()) el.innerHTML=emptyCard('◈','Project Details','The project brief isn\'t available yet. It will appear here soon.');
         return;
       }
-      renderProject((r&&r.data&&r.data[0])||null);
+      var row=(r&&r.data&&r.data[0])||null;
+      if(!row && fallback()) return;
+      renderProject(row);
     },function(e){
       console.error(e);
-      el.innerHTML=emptyCard('◈','Project Details','Could not load the project brief. Please refresh.');
+      if(!fallback()) el.innerHTML=emptyCard('◈','Project Details','Could not load the project brief. Please refresh.');
     });
+  }
+  function docsHtml(){
+    var docs=CLIENT_DOCS[activeClient]||[];
+    if(!docs.length) return '';
+    return '<div class="pd-docs">'+
+      '<div class="pd-docs-title"><span class="k">Documents</span><span class="ln"></span></div>'+
+      docs.map(function(d){
+        return '<article class="pd-doc">'+
+          '<div class="pd-doc-ic">PDF</div>'+
+          '<div class="pd-doc-main">'+
+            '<span class="k">'+esc(d.kind)+'</span>'+
+            '<h4>'+esc(d.title)+'</h4>'+
+            '<p>'+esc(d.desc)+'</p>'+
+            '<div class="pd-doc-actions">'+
+              '<button type="button" class="pd-doc-btn" data-media-pdf="'+esc(d.url)+'" data-title="'+esc(d.title)+'" data-eyebrow="'+esc(d.eyebrow||'Document')+'" data-meta="'+esc(d.kind)+'">View deck</button>'+
+              '<a class="pd-doc-link" href="'+esc(d.url)+'" target="_blank" rel="noopener">Open in new tab ↗</a>'+
+            '</div>'+
+          '</div>'+
+        '</article>';
+      }).join('')+'</div>';
   }
   function renderProject(p){
     var el=document.getElementById('projectDetails');
     if(!p){
-      el.innerHTML=emptyCard('◈','Project brief coming soon','Aeternum is preparing the details for this project. The brief, scope, timeline and key contacts will appear here.');
+      el.innerHTML=emptyCard('◈','Project brief coming soon','Aeternum is preparing the details for this project. The brief, scope, timeline and key contacts will appear here.')+docsHtml();
       return;
     }
     var c=CLIENTS[activeClient]||{};
@@ -984,6 +1116,7 @@ body{background:var(--black);color:var(--white)}
     if(p.description){
       html+='<div class="pd-desc"><span class="k">About this project</span><p>'+esc(p.description)+'</p></div>';
     }
+    html+=docsHtml();
     el.innerHTML=html;
   }
 
@@ -1013,18 +1146,21 @@ body{background:var(--black);color:var(--white)}
     invoiceRows=[]; invFilter='all';
     var el=document.getElementById('invoicesWrap');
     el.innerHTML=skeletonInvoices();
-    if(!sb){ el.innerHTML=emptyCard('▦','Payment Invoices','Invoices aren\'t connected yet. Please refresh in a moment.'); return; }
+    var local=LOCAL_INVOICES[id];
+    var fallback=function(){ if(local){ invoiceRows=local.slice(); renderInvoices(); return true; } return false; };
+    if(!sb){ if(!fallback()) el.innerHTML=emptyCard('▦','Payment Invoices','Invoices aren\'t connected yet. Please refresh in a moment.'); return; }
     sb.from('client_invoices').select('*').eq('client_id',id).order('issue_date',{ascending:false,nullsFirst:false}).then(function(r){
       if(r&&r.error){
         console.error(r.error);
-        el.innerHTML=emptyCard('▦','Payment Invoices','Invoices aren\'t available yet. They will appear here once issued.');
+        if(!fallback()) el.innerHTML=emptyCard('▦','Payment Invoices','Invoices aren\'t available yet. They will appear here once issued.');
         return;
       }
       invoiceRows=(r&&r.data)||[];
+      if(!invoiceRows.length && fallback()) return;
       renderInvoices();
     },function(e){
       console.error(e);
-      el.innerHTML=emptyCard('▦','Payment Invoices','Could not load invoices. Please refresh.');
+      if(!fallback()) el.innerHTML=emptyCard('▦','Payment Invoices','Could not load invoices. Please refresh.');
     });
   }
   function invSum(list){ return list.reduce(function(a,b){ return a+Number(b.amount||0); },0); }
@@ -1036,9 +1172,11 @@ body{background:var(--black);color:var(--white)}
     }
     var cur=invoiceRows[0].currency||'USD';
     var live=invoiceRows.filter(function(i){ return (i.status||'pending')!=='draft'; });
-    var total=invSum(live);
+    var contract=PROJECT_TOTALS[activeClient];
+    var total=contract?Number(contract.total||0):invSum(live);
     var paid=invSum(live.filter(function(i){ return i.status==='paid'; }));
-    var out=invSum(live.filter(function(i){ return i.status==='pending'||i.status==='overdue'; }));
+    var out=contract?Math.max(total-paid,0):invSum(live.filter(function(i){ return i.status==='pending'||i.status==='overdue'; }));
+    var paidPct=total?Math.min(100,Math.round(paid/total*100)):0;
 
     var counts={all:invoiceRows.length,paid:0,pending:0,overdue:0,draft:0};
     invoiceRows.forEach(function(i){ var s=(i.status||'pending').toLowerCase(); counts[s]=(counts[s]||0)+1; });
@@ -1050,26 +1188,37 @@ body{background:var(--black);color:var(--white)}
     var shown=invFilter==='all'?invoiceRows:invoiceRows.filter(function(i){ return (i.status||'pending').toLowerCase()===invFilter; });
     var rows=shown.map(function(i){
       var st=(i.status||'pending').toLowerCase();
-      var dl=i.file_url?'<a class="inv-dl" href="'+esc(i.file_url)+'" target="_blank" rel="noopener">View</a>':'<span class="inv-dl none">—</span>';
+      var isPaid=st==='paid';
+      var secondLabel=isPaid?'Paid':'Due';
+      var secondDate=isPaid?(i.paid_at||i.due_date):i.due_date;
+      var proof=i.file_url
+        ? '<button type="button" class="inv-proof" data-proof="'+esc(i.file_url)+'" data-proof-title="'+esc(i.title||i.invoice_no||'Payment proof')+'" data-proof-meta="'+esc(i.notes||'')+'"><img src="'+esc(i.file_url)+'" alt="Payment proof for '+esc(i.invoice_no||'invoice')+'" loading="lazy"><span>View proof</span></button>'
+        : '<span class="inv-dl none">—</span>';
       return '<div class="inv-row">'+
         '<div class="inv-main"><span class="inv-no">'+esc(i.invoice_no||'Invoice')+'</span>'+
           '<span class="inv-title">'+esc(i.title||i.period||'Payment invoice')+'</span>'+
           (i.period&&i.title?'<span class="inv-sub">'+esc(i.period)+'</span>':'')+
         '</div>'+
         '<div class="inv-date"><span class="k">Issued</span><span class="v">'+(fmtDate(i.issue_date)||'—')+'</span></div>'+
-        '<div class="inv-date"><span class="k">Due</span><span class="v">'+(fmtDate(i.due_date)||'—')+'</span></div>'+
+        '<div class="inv-date"><span class="k">'+secondLabel+'</span><span class="v">'+(fmtDate(secondDate)||'—')+'</span></div>'+
         '<div class="inv-amt">'+fmtMoney(i.amount,cur)+'</div>'+
         '<span class="inv-status st-'+esc(st)+'">'+esc(INV_STATUS[st]||st)+'</span>'+
-        dl+
+        proof+
       '</div>';
     }).join('');
 
+    var progress=contract
+      ? '<div class="inv-progress"><div class="ip-top"><span class="k">Payment progress</span>'+
+          '<span class="v"><b>'+fmtMoney(paid,cur)+'</b> of '+fmtMoney(total,cur)+' paid · '+paidPct+'%</span></div>'+
+          '<div class="ip-bar"><i style="width:'+paidPct+'%"></i></div></div>'
+      : '';
+
     el.innerHTML=
       '<div class="inv-summary">'+
-        '<div class="inv-stat total"><div class="k">Total invoiced</div><div class="v">'+fmtMoney(total,cur)+'</div></div>'+
+        '<div class="inv-stat total"><div class="k">'+(contract?'Total project value':'Total invoiced')+'</div><div class="v">'+fmtMoney(total,cur)+'</div></div>'+
         '<div class="inv-stat paid"><div class="k">Paid</div><div class="v">'+fmtMoney(paid,cur)+'</div></div>'+
         '<div class="inv-stat out"><div class="k">Outstanding</div><div class="v">'+fmtMoney(out,cur)+'</div></div>'+
-      '</div>'+
+      '</div>'+ progress +
       '<div class="inv-toolbar"><div class="inv-chips">'+chips+'</div>'+
         '<span class="inv-count">'+shown.length+' invoice'+(shown.length===1?'':'s')+'</span></div>'+
       '<div class="inv-list">'+(rows||'<div class="inv-none">No invoices in this view.</div>')+'</div>';
@@ -1079,6 +1228,39 @@ body{background:var(--black);color:var(--white)}
     if(!b) return;
     invFilter=b.dataset.inv;
     renderInvoices();
+  });
+
+  // ===== MEDIA VIEWER (payment proofs + decks) =====
+  var mediaModal=document.getElementById('mediaModal');
+  function openMedia(opts){
+    var src=opts.src||'';
+    var isPdf=/\.pdf(\?|#|$)/i.test(src);
+    document.getElementById('mediaEyebrow').textContent=opts.eyebrow||'Document';
+    document.getElementById('mediaTitle').textContent=opts.title||'Preview';
+    document.getElementById('mediaBody').innerHTML=isPdf
+      ? '<iframe src="'+esc(src)+'#view=FitH" title="'+esc(opts.title||'Deck')+'"></iframe>'
+      : '<img src="'+esc(src)+'" alt="'+esc(opts.title||'Payment proof')+'">';
+    document.getElementById('mediaFoot').innerHTML=
+      '<span class="modal-meta">'+esc(opts.meta||'')+'</span>'+
+      '<a class="modal-link" href="'+esc(src)+'" target="_blank" rel="noopener">'+(isPdf?'Open deck ↗':'Open full image ↗')+'</a>';
+    mediaModal.classList.add('open');
+    mediaModal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+  }
+  function closeMedia(){
+    mediaModal.classList.remove('open');
+    mediaModal.setAttribute('aria-hidden','true');
+    document.getElementById('mediaBody').innerHTML='';
+    document.body.style.overflow='';
+  }
+  document.getElementById('mediaClose').addEventListener('click',closeMedia);
+  mediaModal.addEventListener('click',function(e){ if(e.target===mediaModal) closeMedia(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&mediaModal.classList.contains('open')) closeMedia(); });
+  document.addEventListener('click',function(e){
+    var p=e.target.closest('[data-proof]');
+    if(p){ openMedia({src:p.dataset.proof,title:p.dataset.proofTitle,eyebrow:'Payment proof',meta:p.dataset.proofMeta}); return; }
+    var d=e.target.closest('[data-media-pdf]');
+    if(d){ openMedia({src:d.dataset.mediaPdf,title:d.dataset.title,eyebrow:d.dataset.eyebrow,meta:d.dataset.meta}); }
   });
 
   // ===== INIT =====
